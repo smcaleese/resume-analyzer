@@ -3,4 +3,4 @@ All of your source code (and other program resources) should be placed in this s
 
 
 The LinkedIn jobs scraping script scrapes LinkedIn for jobs and outputs the result to 'scraped-data.csv'
-
+The Indeed jobs scraping script scrapes Indeed.com for jobs and outputs the result to 'scraped-data-indeed.csv'

@@ -68,6 +68,7 @@ def main():
     # Add multicoutry support https://www.indeed.com/worldwide
     # Look into adding filter=0 to request to stop job hiding
     # Fix rate limit problem
+    # Issue where description is sometimes in divs and sometimes in p
 
     # Execute program as python indeed-jobs-scraping-script.py <Search Term> <Search Location>
     # Leave search term blank to get all jobs in a country
@@ -78,7 +79,7 @@ def main():
         search_term = input("Search Term: ")
         search_location = input("Search Location: ")
 
-    with open('./indeed-scraped-data.csv', 'w') as f:
+    with open('./indeed-scraped-data.csv', 'w', newline='', encoding='utf-8') as f:
 
         # CSV writer set up
         writer = csv.writer(f)

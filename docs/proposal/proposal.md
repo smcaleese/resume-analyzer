@@ -1,58 +1,40 @@
 # School of Computing &mdash; Year 4 Project Proposal Form
 
-> Edit (then commit and push) this document to complete your proposal form.
-> Make use of figures / diagrams where appropriate.
->
-> Do not rename this file.
-
 ## SECTION A
 
-|                     |                            |
-| ------------------- | -------------------------- |
-| Project Title:      | Job Posting Insights (???) |
-| Student 1 Name:     | Darragh McGonigle          |
-| Student 1 ID:       | 18316121                     |
-| Student 2 Name:     | Stephen McAleese           |
-| Student 2 ID:       | 18921756                   |
-| Project Supervisor: | Michael Scriney            |
-
-> Ensure that the Supervisor formally agrees to supervise your project; this is only recognised once the
-> Supervisor assigns herself/himself via the project Dashboard.
->
-> Project proposals without an assigned
-> Supervisor will not be accepted for presentation to the Approval Panel.
+|                     |                                 |
+| ------------------- | ------------------------------- |
+| Project Title:      | Job Posting and Resume Analyzer |
+| Student 1 Name:     | Darragh McGonigle               |
+| Student 1 ID:       | 18316121                        |
+| Student 2 Name:     | Stephen McAleese                |
+| Student 2 ID:       | 18921756                        |
+| Project Supervisor: | Michael Scriney                 |
 
 ## SECTION B
-
-> Guidance: This document is expected to be approximately 3 pages in length, but it can exceed this page limit.
-> It is also permissible to carry forward content from this proposal to your later documents (e.g. functional
-> specification) as appropriate.
->
-> Your proposal must include *at least* the following sections.
 
 
 ### Introduction
 
-> Describe the general area covered by the project.
+A common problem faced students and job seekers in the field of Software Engineering is finding out which skills are most in-demand and whether their resume contains the skills that are relevant to the current job market. Traditionally, acquiring insights on skills involved reading dozens of resume's which can take a long time and doesn't scale well. Evaluating resume's was and still is often done manually which can be slow and expensive.
 
-We want to set out to develop a tool which will evaluate the quality of an uploaded resume and display analytical data for the job market. This application would be a web app with 2 distinct sections (1 for market analysis and 1 for resume upload).
+Our 4th year project seeks to automatically gather insights from Software Engineering job posts from sites such as Indeed and resumes to quickly and cheaply provide the insights job seekers and students need to succeed in the job market.
 
 ### Outline
 
-> Outline the proposed project.
+Our project is composed of two components: an application that obtains insights on skills and industry trends from large numbers of job posts from websites like Indeed and a tool that allows users to evaluate the quality of their resumes and suggest improvements.
 
-With this tool we want to make something which will help users find jobs and progress through their careers. The plan is to have a user upload resume which will then be parsed for skills characteristics and other key qualities, these will then be analysed against the market data to see what skills and certifications would be most beneficial and improve the value of the employee in the eyes of the market. On top of this market based evaluation we would also conduct linguistic analysis to check and correct for errors (spelling and grammar), determine sentiment and tonality and calculate reading level. Once complete the user will receive feedback on how to improve their CV and they will be presented with the most applicable jobs (Jobs which ask for skills and qualities that the user mentions in their resume)
+To acquire valuable insights on the Software Engineering job market, we plan to ingest large numbers of job posts from websites such as Indeed and LinkedIn. This can be done via their APIs or using web scraping. We plan to store this data in a large SQL database. It can then be scraped and analyzed using statistical and machine learning methods to extract relevant and valuable insights about the kind of skills that are currently desired in the job market today.
+
+The second feature is to have a user upload resume which will then be parsed for skills characteristics and other key qualities. These will then be analysed against the market data to see what skills and certifications would be most beneficial and improve the value of the employee in the eyes of the market. We also intend to conduct linguistic analysis to check and correct for errors (spelling and grammar), determine sentiment and tonality and calculate the reading level required to read the resume. Once the resume analysis is complete, users will receive feedback on how to improve their CV and they will be presented with the most applicable jobs (Jobs which ask for skills and qualities that the user mentions in their resume)
 
 ### Background
 
-> Where did the ideas come from?
+This project idea was inspired by several real-world problems that we were facing as students and job seekers. With our time in college drawing to a close we have both got a first hand experience of the job market and how confusing and and time-consuming it can be to identify the skills companies want by reading through dozens of resumes. We also found evalulating our own resumes challenging as it wasn't clear how they could be improved.
 
-We knew we wanted to make something which would solve a real problem we were facing in our lives, and with our time in college drawing to a close we have both got a first hand experience of the job market and how confusing and difficult it can be to identify what companies want and how time consuming it can be to sift through hundreds to job listings.
-With this we hope to address this issue by making relevant jobs easy to find and make ourselves (and our users) more interesting candidates to potential employers by identifying in demand skills and having a very solid resume.
+By developing this project, we hope to make it much easier and simpler to identify the most valuable skills required for software engineers today and improve our resumes. 
 
 ### Achievements
-
-> What functions will the project provide? Who will the users be?
 
 We really want to make this tool as broadly useful to both first time applicants starting out on their career path as well as established professionals looking to make the next step. We aim to do this by having features which we feel will be universally beneficial to both these sets of users.
 
@@ -64,86 +46,111 @@ Features:
 - Classify jobs based on relation to a field
 - Search job listings
 - Current state (What's popular now)
-- Market trends (What’s up and coming and will be popular in the future)
+- Market trends (past and future changes in demand for skills)
+- Display these insights with intuitive and insight data visualizations
 
 2. **Resume helper:**
 
-- Identify skills and keywords from resume
 - Error correction for spelling and grammar
+
+- Identify skills and keywords from resume
 - Tone and sentiment classification
 - Readability level
+- Suggest skills that should be added to increase employability
+- Evaluate the overall quality of the resume with a score
+
+3. **Other ideas:**
+
 - Career Progression Tree
 
 ### Justification
 
-> Why/when/where/how will it be useful?
+We believe that this tool will serve as a great resource for those looking to start or advance their career. It will help people choose and prioritise learning the skills that are most valuable in the software industry today and get an idea of how prepared they are to start or grow their careers.
 
-We believe that this tool will serve as a great guide for all those looking to start or advance their career. It will help people prioritise skills and learning to be most applicable to the wants and needs of employers and will help cut down on time wasted searching and applying for jobs a user is not qualified for.
-We think it will be particularly useful for graduate students looking to start their careers because as people in that position it is often unclear exactly what the correct next step is and a tool which could offer help and guidance throughout your career progression would be very useful.
+We think these tools will be most useful for graduates looking to start their careers as they usually have less industry experience and thus have less of an idea of what skills are required in industry.
 
 ### Programming language(s)
 
-> List the proposed language(s) to be used.
+Our project will be implemented as a web application composed of a frontend application for processing UI events and displaying information and a backend service that will handle requests and perform the data analysis required to gather insights and evalulate resumes. 
 
-As mentioned previously we plan to make a web application with a lot of machine learning components in the backend. For this we have decided to use a React based frontend as we both have previous experience with that language and both enjoy it and want to progress our knowledge further. Then for the backend we would ideally use Python as it has lots of support for machine learning and data science which we know will be a critical part of the project.
+We have decided create our frontend using ReactJS as we both have previous experience with the popular Javascript library. Since ReactJS is commonly used in industry, we also believe using it in our project will be a valuable learning experience.
+
+Since our backend service will need to perform machine learning and other forms of data analysis, we've decided to write it in Python as the language has a large collection of useful libraries for these tasks and is generally considered to be the industry-standard language for this area. Another advantage if using Python is that we both have a large amount of experience using the language in university and therefore expect to be highly productive using it.
 
 ### Programming tools / Tech stack
 
-> Describe the compiler, database, web server, etc., and any other software tools you plan to use.
+**ReactJS**
 
-**React**
-
-React is a library for JavaScript developed by Facebook and allows for a component based approach to web design as well as easy management of complex state and DOM updates.
+ReactJS is a popular JavaScript library that was created by Facebook. It seamlessly combines HTML, Javascript and CSS and allows a component-based approach to user interface implementation as well as easy management of complex state and DOM updates.
 
 **NodeJS**
 
-Node is a server side JS runtime environment which will enable us to deploy and run our react web app on a server so it can be accessed externally.
+NodeJS is a server-side Javascript runtime environment which will enable us to deploy and run our React web app on a server so it can be accessed externally.
 
 **Django / Flask / Fast API**
 
-Python library for developing restful web APIs which will be needed for communication between our React application and our server.
+Python libraries for developing RESTful web APIs which will be used to create our server which will communicate with the React application by processing requests from users and sending back information to fulfill these requests.
 
 **Jest**
 
-React testing framework which will allow use to make write unit tests for our frontend React app.
+React testing framework which will allow use to write unit tests for our frontend React app.
 
 **PostgreSQL**
 
-PostgreSQL is a SQL based database management system which is what we plan to use for storing our data for our application
+PostgreSQL is an SQL-based database management system which we plan to use for storing our data for our application.
 
 ### Hardware
 
-> Describe any non-standard hardware components which will be required.
+There should be no need for any non-standard hardware for the development or deployment of the application. 
 
-There should be no need for any non-standard hardware for the development or deployment of the application. That being said we will make use or a cloud hosting provider such as Amazon EC2 to deploy the application for use.
+With the advent of cloud hosting and storage, it is no longer necessary to have onsite server hardware. We plan to make use of a cloud hosting provider such as Amazon EC2 to deploy the application for use.
 
 ### Learning Challenges
 
-> List the main new things (technologies, languages, tools, etc) that you will have to learn.
+There are lots of new skills that will need to be learned for this project and some old skills which will need to be refined and improved to achieve our goals.
 
-There are lots of new skills that will need to be learned for this project and some old skills which will need to be refined and improved should we hope to achieve our goal.
-In terms of new skills, we will need to learn how to develop and employ machine learning models for features such as parsing for keywords, sentiment analysis, error correction and for many other areas of the project. We will also need to learn effective data storage and data management techniques as we have never dealt with the volumes of data which will be needed to both train machine learning models and storage of market data for analysis and display. We will also need to learn how to develop effective search algorithms for retrieving job listings from our data store. Lastly we will need to learn data mining techniques for gathering data from multiple sources. This will most likely involve a mixture of API usage and web scraping to build data sets which we can use.
-Now for skills which will need to be improved, React is a big one as it will make up the front end of our application and we hope to deliver a solid and reliable application built with best practices. We also need to improve our knowledge of web APIs both developing and using them. We have some experience with web APIs from past projects and INTRA but they were in Java with Spring so learning how to do it in Python will be a new challenge.
+In terms of new skills, we will need to learn ways of sourcing the data our application needs such as web scraping and API usage. We will need to learn effective data storage techniques to handle the large volumes of data which will be needed for later data analysis and to enable the efficient retrieval of relevant information from our data store. We will need to learn machine learning and data analysis approaches for extracting meaningful and valuable information from the data we collect and to implement features such as the parsing of keywords, sentiment analysis, error correction and many others. We will also need to learn how to develop effective search algorithms for retrieving job listings from our data store.
+
+Existing skills that will need to be improved include React, API development for our server and skills related to Python. React is a big one as it will make up the front end of our application and we hope to deliver a solid and reliable application built with best practices. We also need to improve our knowledge of web APIs - both developing and using them. We have some experience with web APIs from past projects and INTRA but they were in Java with Spring so learning how to do it in Python will be a new challenge. Finally, although we both have extensive experience using Python, our experience using the language in the context of machine learning and data analysis is limited so we will need to learn how the language is used for those tasks.
 
 ### Breakdown of work
 
-> Clearly identify who will undertake which parts of the project.
->
-> It must be clear from the explanation of this breakdown of work both that each student is responsible for
-> separate, clearly-defined tasks, and that those responsibilities substantially cover all of the work required
-> for the project.
+We have chosen not to do a simple frontend backend split for the division of work as for this project a lot of the learning and technical challenge will take place in the backend and we both want to get the experience and knowledge that comes from tackling the harder problems. 
 
-We have chosen not to do a simple frontend backend split for the division of work as for this project a lot of the learning and technical challenge will take place in the backend and we both want to get the experience and knowledge which comes from tackling the harder problems. 
-As such we found on our last project that splitting work by feature rather than by layer enables a more agile development workflow enabling us to be more responsive to new ideas. This approach does rely heavily on using proper agile software tracking tools such as Trello or Jira to track work balance and to monitor progress.
+As such, we found in our last project that instead splitting work by feature gave both of us the opportunity to learn a variety of different technologies while still giving us the opportunity to work separately which simplified version control and increased productivity by allowing us to focus on one thing at a time. 
+
+To manage tasks and track progress, we expect to use git version control, Trello and the Jira project management software which are both widely used in industry.
+
+As requirements and plans change, it's not possible to know exactly how work will be divided. Nevertheless, we have an idea of the overall high-level features each of us would like to focus on. Below is an approximate division of features and responsibilities between each student. Note that although the features listed below indicate the areas where a student will be a primary contributor, due to the collaborative nature of the project it is unlikely that a given feature will be worked on exclusely by one student. Thus, more granular approaches to work-sharing such as Jira will be necessary.
+
+
+
+**(Note: this is a draft list. These decisions need to be discussed and updated.)**
 
 #### Darragh McGonigle
 
-> *Student 1 should complete this section.*
+- Gather job posts from Indeed
+- Design and create the database needed to store important data
+- Resume UI: create the user interface needed to upload resumes and to display evaluation metrics after a resume has been evaluated.
+- Resume analysis: analyze resumes, evaluate their quality and evaluate them by comparing the skills found in each resume with industry trends.
 
 #### Stephen McAleese
 
-> *Student 2 should complete this section.*
+- Gather job posts from LinkedIn
+- Job insights UI: create the user interface needed for users to visualize and understand insights related to industry skill trends.
+- Job insights analysis: extract useful insights on skills and industry trends from large numbers of job posts.
 
-As stated above we will be using a feature based division so I will be responsible for the linguistic analysis features such as error correction, sentiment analysis and readability analysis.
- I will also take part in data sourcing by writing code to utilise APIs or scrape certain websites such as Indeed.com and Stackoverflow for data for analysis. I will also be responsible for generating the dataset needed to train models for the linguistic features above.
-I will also be developing the front end CV upload and results display for the features listed above. As Well as developing the testing for the features as well
+
+
+#### Temporary Task List (delete later)
+
+1. Job post insight gathering:
+   - scrape job postings from Indeed and LinkedIn
+   - put the job posts in a database
+   - analyze and extract insights from the job post data using machine learning and other data analysis methods
+   - create the frontend needed to display these insights to the user
+
+2. Resume evaluation:
+   - create the frontend needed to upload the resumes
+   - create the software needed to analyze the resumes. This software will process resumes and use the insights from the job posts to analyze them.
+   - when the resume has been evalulated, its evaluation should be displayed in an intuitive and appealing UI to the user

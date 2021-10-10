@@ -125,32 +125,16 @@ As requirements and plans change, it's not possible to know exactly how work wil
 
 
 
-**(Note: this is a draft list. These decisions need to be discussed and updated.)**
-
 #### Darragh McGonigle
 
-- Gather job posts from Indeed
+- Gather job posts from Indeed and other sources
 - Design and create the database needed to store important data
 - Resume UI: create the user interface needed to upload resumes and to display evaluation metrics after a resume has been evaluated.
 - Resume analysis: analyze resumes, evaluate their quality and evaluate them by comparing the skills found in each resume with industry trends.
 
 #### Stephen McAleese
 
-- Gather job posts from LinkedIn
+- Gather job posts from LinkedIn and other sources
 - Job insights UI: create the user interface needed for users to visualize and understand insights related to industry skill trends.
 - Job insights analysis: extract useful insights on skills and industry trends from large numbers of job posts.
 
-
-
-#### Temporary Task List (delete later)
-
-1. Job post insight gathering:
-   - scrape job postings from Indeed and LinkedIn
-   - put the job posts in a database
-   - analyze and extract insights from the job post data using machine learning and other data analysis methods
-   - create the frontend needed to display these insights to the user
-
-2. Resume evaluation:
-   - create the frontend needed to upload the resumes
-   - create the software needed to analyze the resumes. This software will process resumes and use the insights from the job posts to analyze them.
-   - when the resume has been evalulated, its evaluation should be displayed in an intuitive and appealing UI to the user

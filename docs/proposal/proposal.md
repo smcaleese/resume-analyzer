@@ -30,7 +30,7 @@ The second feature is to give the user the ability to upload their resume for an
 
 ### Background
 
-This project idea was inspired by several real-world problems that we were facing as students and job seekers. With our time in college drawing to a close we have both got a first hand experience of the job market and how confusing and and time-consuming it can be to identify the skills companies want by reading through dozens of resumes. We also found evalulating our own resumes challenging as it wasn't clear how they could be improved.
+This project idea was inspired by several real-world problems that we were facing as students and job seekers. With our time in college drawing to a close we have both got a first-hand experience of the job market and how confusing and time-consuming it can be to identify the skills companies want by reading through dozens of resumes. We also found evaluating our own resumes challenging as it wasn't clear how they could be improved.
 
 By developing this project, we hope to make it much easier and simpler to identify the most valuable skills required for software engineers today and improve our resumes. 
 
@@ -71,9 +71,9 @@ We think these tools will be most useful for graduates looking to start their ca
 
 ### Programming language(s)
 
-Our project will be implemented as a web application composed of a frontend application for processing UI events and displaying information and a backend service that will handle requests and perform the data analysis required to gather insights and evalulate resumes. 
+Our project will be implemented as a web application composed of a frontend application for processing UI events and displaying information and a backend service that will handle requests and perform the data analysis required to gather insights and evaluate resumes. 
 
-We have decided create our frontend using ReactJS as we both have previous experience with the popular Javascript library. Since ReactJS is commonly used in industry, we also believe using it in our project will give us the opportunity to practice this valuablel skill.
+We have decided create our frontend using ReactJS as we both have previous experience with the popular Javascript library. Since ReactJS is commonly used in industry, we also believe using it in our project will give us the opportunity to practice this valuable skill.
 
 Since our backend service will need to perform machine learning and other forms of data analysis, we've decided to write it in Python as the language has a large collection of useful libraries for these tasks and is generally considered to be the industry-standard language for this area. Another advantage of using Python is that we both have a large amount of experience using the language in university and therefore expect to be highly productive using it.
 
@@ -89,11 +89,11 @@ NodeJS is a server-side Javascript runtime environment which will enable us to d
 
 **Django / Flask / Fast API**
 
-Python libraries for developing RESTful web APIs which will be used to create our server which will communicate with the React application by processing requests from users and sending back information to fulfill these requests.
+Python libraries for developing RESTful web APIs which will be used to create our server which will communicate with the React application by processing requests from users and sending back information to fulfil these requests.
 
 **Jest**
 
-React testing framework which will allow use to write unit tests for our frontend React app.
+React testing framework which will allow us to write unit tests for our frontend React app.
 
 **PostgreSQL**
 
@@ -121,7 +121,7 @@ As such, we found in our last project that instead splitting work by feature gav
 
 To manage tasks and track progress, we expect to use git version control, Trello and the Jira project management software which are both widely used in industry.
 
-As requirements and plans change, it's not possible to know exactly how work will be divided. Nevertheless, we have an idea of the overall high-level features each of us would like to focus on. Below is an approximate division of features and responsibilities between each student. Note that although the features listed below indicate the areas where a student will be a primary contributor, due to the collaborative nature of the project it is unlikely that a given feature will be worked on exclusely by one student. Thus, more granular approaches to work-sharing such as Jira will be necessary.
+As requirements and plans change, it's not possible to know exactly how work will be divided. Nevertheless, we have an idea of the overall high-level features each of us would like to focus on. Below is an approximate division of features and responsibilities between each student. Note that although the features listed below indicate the areas where a student will be a primary contributor, due to the collaborative nature of the project it is unlikely that a given feature will be worked on exclusively by one student. Thus, more granular approaches to work-sharing such as Jira will be necessary.
 
 #### Darragh McGonigle
 

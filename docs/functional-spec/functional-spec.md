@@ -1,39 +1,36 @@
 # <center> 4th Year Project <br> Functional Specification </center>
 # <center>Project Name: Job Posting and Resume Analyzer </center>
 
-## <center> Authors: Darragh McGonigle, Stephen McAleese </center>
+## <center> Authors: Darragh McGonigle, Stephen McAleese (18921756) </center>
 ## <center> Supervisor: Michael Scriney </center> 
 
-
-
-\
 \
 \
 <br>
 
 # **0. Table Of Contents**
 
-### [**Introduction**](#Appendices)
+### [**1. Introduction**](#Appendices)
     1.1 Overview
-    1.2 Glossary
+    1.2 Business context
+    1.3 Glossary
 
-### [**General Description**](#2.1-product-description)
+### [**2. General Description**](#2.1-product-description)
     2.1 Product Functions
     2.2 User Characteristics and Objectives
     2.3 Operational Scenarios
+    2.4 Constraints
 
-### [**Functional Requirements**](#3.1-user-login)
+### [**3. Functional Requirements**](#3.1-user-login)
 
+### [**4. System Architecture**](#4.1-overview)
 
-### [**System Architecture**](#4.1-overview)
+### [**5. High-Level Design**](#5.1-user-interfaces)
 
-### [**High-Level Design**](#5.1-user-interfaces)
+### [**6. Preliminary Schedule**](#9.1-gantt-chart)
 
-### [**Preliminary Schedule**](#9.1-gantt-chart)
+### [**7. Appendices**](#amazon-web-services)
 
-### [**Appendices**](#amazon-web-services)
-
-\
 \
 \
 <br>
@@ -171,11 +168,17 @@ Development of this system will have to abide by the following constraints.
 
 # **4. System Architecture**
 
+The system is composed of two primary high-level components: a user-facing front end web application that provides the UI of the application and a back end web server that will act as an API. User input supplied to the front end UI will be passed to the back end service via JSON. The backend service will then perform data analysis depending on the input to calculate a result that will be sent back to the UI as output.
+
+![Architecture diagram](./res/system-architecture-diagram.png)
+
 \
 \
 <br>
 
 # **5. High-Level Design**
+
+
 
 \
 \

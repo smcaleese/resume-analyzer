@@ -65,8 +65,53 @@ From a user's perspective, using the system should be as straightforward as navi
 <br>
 
 ## 2.3 Operational Scenarios
+<br>
+
+### **User Accesses the Site**
+
+![Use Case Diagram Showing User Visiting Site](./res/UC-Diagram-User-Visits-Page.png)
+
+**Description**
+
+A user will open their web browser of choice. Then they will type in the URL of the web application. Once complete the web browser will send a request to the web server which will respond with the home page of the application 
+
+**Goal**
+
+A user can access the website homepage using a web browser and an internet connection
+
+**Step-by-Step Interaction**
+
+1. The user opens their web browser of choice
+    *  This can be any modern web browser. Edge, Chrome, Firefox, Safari, etc.
+2. The user enters the web appliocations URL into the search/navigation bar.
+3. The web applications home page will be displayed to the user in the browser.
+    *   If the user is using a browser which does not support Javascript an error message will be displayed
+    *   If the browser fails to access the web application then it will display the appropriate error message
 
 <br>
+
+### **User Uploads a CV**
+
+![Use Case Diagram Showing User Uploading CV](./res/UC-Diagram-User-Uploads-CV.png)
+
+**Description**
+
+The user will be able to upload a CV in the form of a file on their computer. They will then press a  button to submit this file and it will be uploaded to the server. After a brief processing time the user will be presented with results from the processing. 
+
+**Goal**
+
+A user can upload a file, this file can be sent to the server and the user can view the results.
+
+**Step-by-Step Interaction**
+
+1. The user uploads the CV document file.
+    *   This can either be done by dragging the file over the upload section on the website or by clicking a button which will open the users file explorer where they can then select the file for upload
+2. User presses the "Submit" button.
+3. The user waits as the page displays a loading icon while the docment is processed.'
+4. The user shown a screen with the results of the processing.
+
+<br>
+
 
 ## 2.4 Constraints
 Development of this system will have to abide by the following constraints.
@@ -81,6 +126,44 @@ Development of this system will have to abide by the following constraints.
 <br>
 
 # **3. Functional Requirements**
+## 3.1 User Upload of CV 
+**Description**
+* A user of the system must be able to uplaod a CV/Resume to the system and submit it for processing. The file must be encrytped during transport as it will contain user sensitive data and thus must be transmitted safely.
+
+**Criticality**
+* This feature is vital to the system as it is the main interaction and data source between the user and system. Without this feature we cannot get critical data needed for analysis such as skills, employment history and technical knowledge.
+
+**Technical Issues**
+* Their are two main technical challenges for this feature, this first is decoding a users file from its respectivve file type into a standardised file type which can be sent to the server. The second challenge is secruity as the file will almost definelty contain senstive information which must be kept secure during the upload process.
+
+**Dependencies**
+* This feature will have a dependency on the user being able to access and view the web application.
+
+## 3.2 Parsing a User Submitted CV
+**Description**
+* The system must be able to parse a user submitted CV and indentify and extract key data such as skills, technical knowledge, past employment, cerifications, education and characteristics. This will be carried out using machine learning based natural language processing.
+
+**Criticality**
+* This feature is required as this will be the main way that the system is able to gather data about a user and this data will be vital as it is what will be used for the analysis and review process which is the main functionality of the product. 
+
+**Technical Issues**
+* The main technical issue faced with this feature will bbe the natural language processing as it is quite difficult for a machine to automatically to extract and categorise data from plain english into usable data is a fast an reliable manner.
+
+**Dependencies**
+* This feature is dependent on the CV upload feature as with out the user having the ability to upload and submit a CV to the system their would be no way for the system to get the CV to parse in the first place.
+
+## 3.3 Gathering Job Market Data
+**Description**
+* The system needs to be able to automatically scrape and update its data in regards to to the current job market so that the data it gives abck to the user is up to date and relevent with the current state of the job market.
+
+**Criticality**
+* This feature is very important as it will be the how the system gets information in about the job market that it will use to make evaluations and predictions to give helpful and useable data back to the user. 
+
+**Technical Issues**
+* The main technical challenge is finding and working with multiple data sources espcially those which do not have easily accessible APIs for out system to work with. On top of this storing and managng this data in a reliable and consitant way will also be a crucial technical challenge for this feature.
+
+**Dependencies**
+* This feature does not have any dependcies on any other features with in the system and will serve as a standalone piece which works in the background to gather and feed data into the system.
 
 \
 \

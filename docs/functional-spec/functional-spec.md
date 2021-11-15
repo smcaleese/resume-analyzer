@@ -80,7 +80,7 @@ A user can access the website homepage using a web browser and an internet conne
 
 1. The user opens their web browser of choice
     *  This can be any modern web browser. Edge, Chrome, Firefox, Safari, etc.
-2. The user enters the web appliocations URL into the search/navigation bar.
+2. The user enters the web applications URL into the search/navigation bar.
 3. The web applications home page will be displayed to the user in the browser.
     *   If the user is using a browser which does not support Javascript an error message will be displayed
     *   If the browser fails to access the web application then it will display the appropriate error message
@@ -104,15 +104,15 @@ A user can upload a file, this file can be sent to the server and the user can v
 1. The user uploads the CV document file.
     *   This can either be done by dragging the file over the upload section on the website or by clicking a button which will open the users file explorer where they can then select the file for upload
 2. User presses the "Submit" button.
-3. The user waits as the page displays a loading icon while the docment is processed.'
-4. The user shown a screen with the results of the processing.
+3. The user waits as the page displays a loading icon while the document is processed.
+4. The user is shown a screen with the results of the processing.
 
 <br>
 
 
 ## 2.4 Constraints
 Development of this system will have to abide by the following constraints.
-* **Time constraints:** Developement and deployment of the project must be complete before April 2022.
+* **Time constraints:** Development and deployment of the project must be complete before April 2022.
 * **Financial constraints:** The project will have little to no budget and thus will not be able to make use of any expensive services such as hosting or paid for development tools/subscriptions.
 * **Processing constraints:** Due to the aforementioned budget constraint the computing and storage capability of the host system will be severely limited and may lead to poor user experience.
 * **Legal constraints:** THe product will be taking in user data and thus the product must be in accordance with European and International regulations for data management, data storage and data protections.
@@ -125,42 +125,55 @@ Development of this system will have to abide by the following constraints.
 # **3. Functional Requirements**
 ## 3.1 User Upload of CV 
 **Description**
-* A user of the system must be able to uplaod a CV/Resume to the system and submit it for processing. The file must be encrytped during transport as it will contain user sensitive data and thus must be transmitted safely.
+* A user of the system must be able to upload a CV/Resume to the system and submit it for processing. The file must be encrypted during transport as it will contain user sensitive data and thus must be transmitted safely.
 
 **Criticality**
 * This feature is vital to the system as it is the main interaction and data source between the user and system. Without this feature we cannot get critical data needed for analysis such as skills, employment history and technical knowledge.
 
 **Technical Issues**
-* Their are two main technical challenges for this feature, this first is decoding a users file from its respectivve file type into a standardised file type which can be sent to the server. The second challenge is secruity as the file will almost definelty contain senstive information which must be kept secure during the upload process.
+* There are two main technical challenges for this feature, the first is decoding a users file from its respective file type into a standardised file type which can be sent to the server. The second challenge is security as the file will almost definitely contain sensitive information which must be kept secure during the upload process.
 
 **Dependencies**
 * This feature will have a dependency on the user being able to access and view the web application.
 
 ## 3.2 Parsing a User Submitted CV
 **Description**
-* The system must be able to parse a user submitted CV and indentify and extract key data such as skills, technical knowledge, past employment, cerifications, education and characteristics. This will be carried out using machine learning based natural language processing.
+* The system must be able to parse a user submitted CV and identify and extract key data such as skills, technical knowledge, past employment, certifications, education and characteristics. This will be carried out using machine learning based natural language processing.
 
 **Criticality**
 * This feature is required as this will be the main way that the system is able to gather data about a user and this data will be vital as it is what will be used for the analysis and review process which is the main functionality of the product. 
 
 **Technical Issues**
-* The main technical issue faced with this feature will bbe the natural language processing as it is quite difficult for a machine to automatically to extract and categorise data from plain english into usable data is a fast an reliable manner.
+* The main technical issue faced with this feature will be the natural language processing as it is quite difficult for a machine to automatically to extract and categorise data from plain english into usable data is a fast an reliable manner.
 
 **Dependencies**
 * This feature is dependent on the CV upload feature as with out the user having the ability to upload and submit a CV to the system their would be no way for the system to get the CV to parse in the first place.
 
 ## 3.3 Gathering Job Market Data
 **Description**
-* The system needs to be able to automatically scrape and update its data in regards to to the current job market so that the data it gives abck to the user is up to date and relevent with the current state of the job market.
+* The system needs to be able to automatically scrape and update its data in regards to the current job market so that the data it gives back to the user is up to date and relevant with the current state of the job market.
 
 **Criticality**
-* This feature is very important as it will be the how the system gets information in about the job market that it will use to make evaluations and predictions to give helpful and useable data back to the user. 
+* This feature is very important as it will be how the system gets information about the job market that it will use to make evaluations and predictions to give helpful and usable data back to the user. 
 
 **Technical Issues**
-* The main technical challenge is finding and working with multiple data sources espcially those which do not have easily accessible APIs for out system to work with. On top of this storing and managng this data in a reliable and consitant way will also be a crucial technical challenge for this feature.
+* The main technical challenge is finding and working with multiple data sources especially those which do not have easily accessible APIs for our system to work with. On top of this, storing and managing this data in a reliable and consistent way will also be a crucial technical challenge for this feature.
 
 **Dependencies**
-* This feature does not have any dependcies on any other features with in the system and will serve as a standalone piece which works in the background to gather and feed data into the system.
+* This feature does not have any dependencies on any other features within the system and will serve as a standalone piece which works in the background to gather and feed data into the system.
+
+## 3.4 Performing Data Analysis
+**Description**
+* The system should use the data gathered from job market sources as well as the data extracted from the user's uploaded resume to perform meaningful and beneficial data analysis to provide helpful insights to the user.
+
+**Criticality**
+* This feature is vital to the functionality of the application as without this there would be no way for the user to get any functional purpose or use out of the system.
+
+**Technical Issues**
+* The main technical challenge is developing the various models and algorithms needed for combining and interpreting the data to make meaningful responses for the user.
+
+**Dependencies**
+* This feature is dependent on both the CV submission feature and the job market data gathering feature as these features will provide the necessary data for the analysis to take place.
 
 \
 \
@@ -180,17 +193,20 @@ The system is composed of two primary high-level components: a user-facing front
 
 ![Data Flow Diagram](./res/data-flow-diagram.png)
 
-The data flow diagram above shows the major components of the system how they interact with each other and the kind of inputs and outputs each component receives or sends. The top of the diagram, shows the user who interacts with the web application which is composed of two major features: the resume upload and insights page and the job postings insights page.
+The data flow diagram above shows the major components of the system how they interact with each other and the kind of inputs and outputs each component receives or sends. The top of the diagram shows the user who interacts with the web application which is composed of two major features: the resume upload and insights page and the job postings insights page.
 
 Users who choose to use the resume upload feature can upload their resumes for analysis. When a resume is uploaded, it is sent to the resume analyzer for processing. To analyze resumes, the resume analyzer will read job postings or precalculated insights from the database and use them to extract useful insights from resumes. These insights are then sent back to the user and displayed by the user interface in an intuitive and useful report that makes use of a combination of text and visualisations.
 
-The job posting analysis service is the other major component of the system. Users can use this service by clicking buttons representing popular search queries or the may do their own searches. The resume analyzer is designed to process two types of queries: searches for information or searches for questions. In the former case, standard information retrieval techniques can be used to retrieve relevant documents. To answer questions, we plan on using AI to recognize the type of question asked. For example, "best rated companies" and "best paying companies" are similar in that they involve the evaluation of companies and may require the generation of a ranked list. Once the type of question has been identified, the contents of the search query can be used to infer the specific question that was asked. The AIs guess of the purpose of the question can be displayed to the user who can accept the question or try again.
+The job posting analysis service is the other major component of the system. Users can use this service by clicking buttons representing popular search queries or they may do their own searches. The resume analyzer is designed to process two types of queries: searches for information or searches for questions. In the former case, standard information retrieval techniques can be used to retrieve relevant documents. To answer questions, we plan on using AI to recognize the type of question asked. For example, "best rated companies" and "best paying companies" are similar in that they involve the evaluation of companies and may require the generation of a ranked list. Once the type of question has been identified, the contents of the search query can be used to infer the specific question that was asked. The AIs guess of the purpose of the question can be displayed to the user who can accept the question or try again.
 
 \
 \
 <br>
 
 # **6. Preliminary Schedule**
+![Preliminary Gantt Chart](./res/Gantt.jpg)
+
+The initial development plan for the project is as follows. We will begin by setting up the skeletons for the front and backend of the system. In this step we will generate any boiler plate code for technologies that we will be using such as React and Django. We are aiming to complete this first step by late November which will give us time to briefly start development before the DCU exam period. Starting in late November we will begin development by first building the various scrapers and API interfaces which will be used to gather and aggregate data about the job market from sources like Linkedin and Indeed. We will aim to get this data gathering step done before the exams but expect that there might be the risk of some overrun as exams draw near. Following the DCU exams in December we hope to get our database setup so that the data gathering system can store the data for use by later systems. Also starting in mid December will be the development and training work for the natural language processing engine which will be used to parse user's CVs, development on this feature is expected to run though to the start of January. With the completion of the NLP parser and the data gathering feature we should have all the data  we need to begin work on the analysis engine which would take us up until mid January. With this complete all that is left for the backend of the system will be the setting up the API endpoints so these features can be accessed from our frontend web app. Then  up until early February we plan to develop the frontend of the application focusing more on functionality and design rather than aesthetics. With both a preliminary front and backend complete we will spend the beginning to february carrying out end to end testing on the system to identify any bugs. Once the first round of testing is complete we will spend 2 weeks finalising and cleaning up the product. This will be followed by a final round of testing and debugging which will conclude in late February. With development wrapped up we will carry out the necessary automated and user testing to ensure the system is sound. And then we will spend the last 2 weeks focusing on the documentation for the system. This plan should have us finished a few days before the deadline on April 15th.
 
 \
 \

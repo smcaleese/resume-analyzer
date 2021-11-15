@@ -1,7 +1,7 @@
 # <center> 4th Year Project <br> Functional Specification </center>
 # <center>Project Name: Job Posting and Resume Analyzer </center>
 
-## <center> Authors: Darragh McGonigle, Stephen McAleese (18921756) </center>
+## <center> Authors: Darragh McGonigle (18316121), Stephen McAleese (18921756) </center>
 ## <center> Supervisor: Michael Scriney </center> 
 
 \
@@ -10,26 +10,28 @@
 
 # **0. Table Of Contents**
 
-### [**1. Introduction**](#Appendices)
+### **1. Introduction**
     1.1 Overview
-    1.2 Business context
-    1.3 Glossary
+    1.2 Glossary
 
-### [**2. General Description**](#2.1-product-description)
+### **2. General Description**
     2.1 Product Functions
     2.2 User Characteristics and Objectives
     2.3 Operational Scenarios
     2.4 Constraints
 
-### [**3. Functional Requirements**](#3.1-user-login)
+### **3. Functional Requirements**
+    3.1 User Upload of CV
+    3.2 Parsing a User Submitted CV
+    3.3 Gathering Job Market Data
+    3.4 Performing Data Analysis
+### **4. System Architecture**
 
-### [**4. System Architecture**](#4.1-overview)
+### **5. High-Level Design**
 
-### [**5. High-Level Design**](#5.1-user-interfaces)
+### **6. Preliminary Schedule**
 
-### [**6. Preliminary Schedule**](#9.1-gantt-chart)
-
-### [**7. Appendices**](#amazon-web-services)
+### **7. Appendices**
 
 \
 \
@@ -49,7 +51,10 @@ We also plan to offer users the ability to find and view job market trends direc
 The following table contains technical terms which will be used throughout the document. The definitions of these terms are in the context of this project.
 | **Term**     | **Definition** |
 |--------------|----------------|
-| Test         |  Blank         |
+| NLP          |  Natural Language Processing is a the process for applying various computing techniques in order to work with and process data which is written in plain language.         |
+|API           |  Application Programming Interface is allows for communication between a system and another external system.             |
+| React        | React is a modern Javascript library developed by Facebook |
+| Django       | Django is a Python library designed for developing APIs|
 
 \
 \
@@ -224,3 +229,14 @@ The initial development plan for the project is as follows. We will begin by set
 
 # **7. Appendices**
 
+Natural Language Processing: https://www.ibm.com/cloud/learn/natural-language-processing
+
+Web Scraping: https://en.wikipedia.org/wiki/Web_scraping
+
+React Official Website: https://reactjs.org/
+
+Django Official Website: https://www.djangoproject.com/
+
+Indeed job listing website: https://ie.indeed.com/?r=us
+
+LinkedIn: https://ie.linkedin.com/

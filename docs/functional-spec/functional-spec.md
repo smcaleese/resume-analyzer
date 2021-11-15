@@ -39,11 +39,13 @@
 
 # **1. Introduction**
 ## 1.1 Overview
-Our 4th year project is a web application that will use natural language processing on CVs and job posts to provide useful services for job-seeking software engineers. The two primary services we intend to offer are the ability to analyze and evaluate CVs and suggest improvements to them and a tool for finding useful insights about the job market for software engineers. The system will use large numbers of job posts as input data for both services.
+Our 4th year project is a web application that will use natural language processing on CVs and job posts to provide useful services for job-seeking software engineers. The two primary services we intend to offer are the ability to analyze and evaluate CVs and suggest improvements to them and a tool for finding useful insights about the job market for software engineers. The system will use large numbers of job posts as input data sources for both services.
 
-The resume analysis feature will allow users to upload their CVs to a resume analyzer which will evaluate the quality of the resume and suggest improvements based on trends in the current job market. The system will carry out a suite of natural language processing (NLP) on the resume extracting key information such as skills, technologies, certifications and prior employment. This information will then be processed and compared to data about job market trends to produce helpful information such as recommended skills that would make the user more attractive to potential employers. With this information we hope to help the user make informed choices when navigating their career decisions.
+The CV analysis feature will allow users to upload their CVs to a CV analyzer which will evaluate the quality of the CV and suggest improvements based on trends in the current job market which can be inferred from current job posts. The system will carry out a suite of natural language processing (NLP) on each CV extracting key information such as skills, technologies, certifications and prior employment. This information will then be processed and compared to information about job market trends. The system could then compare the skills found on the resume with the most popular current technologies to suggest which skills the owner of the resume might want to learn to maximize their employability. In addition to skill and experience evaluations, we plan on evaluating the overall writing quality of the CVs.
 
-We also plan to offer users the ability to find and view job market trends directly. This feature would use user input along with large numbers of job posts to generate useful insights such as the skills that are most in demand, the highest-rated companies or the number of job postings for certain subskills or job categories.
+We also plan to offer users the ability to find and view job market trends directly. This feature will use user input along with large numbers of job posts to generate useful insights such as the skills that are most in demand, the highest-rated companies or the number of job postings for certain subskills or job categories. The goal is to synthesize insightful, valuable up-to-date reports from the data gathered in the job posts in advance and on-demand using user input.
+
+The overall goal of our project is to create a web application that would inform users on current job market trends and provide a free service for evaluating and improving the CVs of users.
 
 <br>
 
@@ -51,10 +53,10 @@ We also plan to offer users the ability to find and view job market trends direc
 The following table contains technical terms which will be used throughout the document. The definitions of these terms are in the context of this project.
 | **Term**     | **Definition** |
 |--------------|----------------|
-| NLP          |  Natural Language Processing is a the process for applying various computing techniques in order to work with and process data which is written in plain language.         |
-|API           |  Application Programming Interface is allows for communication between a system and another external system.             |
-| React        | React is a modern Javascript library developed by Facebook |
-| Django       | Django is a Python library designed for developing APIs|
+| NLP          |  Natural Language Processing is a the process for applying various computing techniques in order to work with and process unstructured text. |
+|API           |  Application Programming Interfaces enable communication between a system and another external system.             |
+| React        | React is a modern Javascript library developed by Facebook. |
+| Django       | Django is a Python library designed for developing APIs. |
 
 \
 \
@@ -64,16 +66,16 @@ The following table contains technical terms which will be used throughout the d
 ## 2.1 Product Functions
 The product will be a web application which a user will offer a resume upload page for resume analysis and a data analytics tool for viewing job market trends.
 
-The CV upload tool will consist of a page where user can upload their CVs. CVs will be sent to the systems backend where first it will be processed using machine learning and NLP to extract key terms and information about the user, this information will include (but may not be limited to) certifications, skills, characteristics, technologies and employment history. This data will then be analysed by the system which will make use of its collection of aggregate job market data (job listings, linkedin profiles, etc.) to analyse the users provided information to evaluate how well their CV will fare in the current job market. It will then return helpful information to the user like what skills or certifications will be most beneficial in progressing their career, what are some potential career paths they can pursue (and what steps are needed) and other useful information to help the user improve their CV and progress their career. This information  will then be displayed to the user as well as allowing the user to see jobs that they are most suited for with their current skill set and apply to any which take their interest.
+The CV upload tool will consist of a page where user can upload their CVs. After uploading, CVs will be sent to the system's back end service where they will be processed using machine learning and NLP to extract key terms and information about the user. This information will include certifications, skills, characteristics, technologies and employment history and other useful information. This data will then be analysed by the system which will make use of its collection of aggregate job market data (job listings, linkedin profiles, etc.) to analyse the user's provided information and evaluate how well their CV will fare in the current job market. It will then return helpful information to the user such as the skills or certifications that will be most beneficial in progressing their career, potential career paths they could pursue (and what steps are needed) and other useful information to help the user improve their CV and make progress in their career. This information will then be displayed to the user as well as allowing the user to see jobs that they are most suited for with their current skill set and apply to any which take their interest.
 
-The job market insights tool will have buttons that allow users to select common queries about the job market such as "most popular skills". These buttons would take the user to a report with information relevant to the question such as descriptions or visualuations. These reports could be partially or completely precomputed for performance reasons. Novel queries which could be entered into a search bar would invoke data analysis to acquire the information desired and generate a report. As there is a trade off between depth of analysis and detail, we plan on finding a good balance between these two goals.
+The second major feature of our product is the job market insight tool which will use data mining and NLP techniques to extract information from job posts and display it to users in the form of reports. The goal is to give users the ability to type natural language questions into the system to generate reports on important topics such as company reviews, technologies and industry trends and information on salary trends. These reports could contain text extracts, tables or visualisations that show important and valuable information on a particular industry trend. Reports can be regularly updated automatically so that they are always up-to-date. As we expect many popular questions to be repeated, for performance reasons, reports can be stored in a database and retrieved instead of being re-generated every time a new search query is asked. When a search query is entered into the system, the system will then offer existing reports which can be opened instantly by clicking on them or the option of creating a new report which would take longer but give the user the opportunity to do novel data analysis. For reports that need to be generated, as there is a trade off between speed and the depth of analysis, we plan on finding a good balance between these two goals.
 
 <br>
 
 ## 2.2 User Characteristics and Objectives
-This product is mainly intended for software engineers who are beginning their career path such as new graduates, young people aged 18 - 30 and engineers who are looking to make a career change. This user base will have a wide range of technical abilities and experience and as such the system will need to be accomodating to people of all levels of technical expertise. However we do expect our users to have a basic functional understanding of web applications and how to use them. We will also be exclusively targeting English speakers as the product will only be able to handle English language CVs and thus we will only have the application available in English. We also plan on focusing the analysis on the Irish job market.
+This product is mainly intended for software engineers who are beginning their career path such as new graduates, young people aged 18 - 30 and engineers who are looking to make a career change. This user base will have a wide range of technical abilities and experience and as such the system will need to be accommodating to people of all levels of technical expertise. However we do expect our users to have a basic functional understanding of web applications and how to use them. We will also be exclusively targeting English speakers as the product will only be able to handle English language CVs and thus we will only have the application available in English. We also plan on focusing the analysis on the Irish job market.
 
-From a user's perspective, using the system should be as straightforward as navigating to the URL using a modern web browser of their choice before uploading a CV, selecting or typing a search query. Unless the answer to the query has been precomputed, we expect that there  will be a short delay (No more than 30-40 seconds) as processing takes place before the screen changes to display the output information to the user. From here the user is free to navigate and explore the displayed information and interact with any interactive information displayed like navigating to job listing of jobs that were deemed the most suitable for them.
+From a user's perspective, accessing and using the system should be as straightforward as navigating to the URL using a modern web browser of their choice before uploading a CV, selecting or typing a search query. Unless the answer to the query has been precomputed, we expect that there  will be a short delay (No more than 30-40 seconds) as processing takes place before the screen changes to display the output information to the user. From here the user is free to navigate and explore the displayed information and interact with any interactive information displayed like navigating to job listing of jobs that were deemed the most suitable for them.
 <br>
 
 ## 2.3 Operational Scenarios
@@ -108,11 +110,11 @@ A user can access the website homepage using a web browser and an internet conne
 
 **Description**
 
-The user will be able to upload a CV that is stored on their computer in a PDF format. They will then press a button to submit this file and it will be uploaded to the server. After a brief processing time for the analysis the user will be presented with the results of the analysis. 
+The user will be able to upload a CV that is stored on their computer in a PDF format. They will then press a button to submit this file and it will be uploaded to the server. After a brief processing time for the analysis, the user will be presented with the results of the analysis. 
 
 **Goal**
 
-A user can upload a file, this file can be sent to the server and the user can view the results.
+A user can upload their CV as a file before it is sent to the server.
 
 **Step-by-Step Interaction**
 
@@ -120,7 +122,7 @@ A user can upload a file, this file can be sent to the server and the user can v
     *   This can either be done by dragging the file over the upload section on the website or by clicking a button which will open the user's file explorer where they can then select the file for upload
 2. User presses the "Submit" button.
 3. The user waits as the page displays a loading icon while the document is processed and analyzed.
-4. The user is shown an screen displaying the results of analysis the CV.
+4. The user is shown a screen displaying the results of analysis the CV.
 
 <br>
 
@@ -139,7 +141,7 @@ A user can select a common search query and see the report associated with it.
 **Step-by-Step Interaction**
 
 1. The user clicks on the button containing the search query.
-2. A new page containing a report related to the query is displayed. The page contains text and visualiations which are informative to the user.
+2. A new page containing a report related to the query is displayed. The page contains text and visualisations which are informative to the user.
 3. The user closes the page.
 
 <br>
@@ -181,7 +183,7 @@ Development of this system will have to abide by the following constraints.
 # **3. Functional Requirements**
 ## 3.1 User Upload of CVs
 **Description**
-* A user of the system must be able to upload a CV or resume to the system and submit it for processing. The file must be encrypted during transport and sent over a secure connection as it will contain user personal information such as names and email addresses.
+* A user of the system must be able to upload a CV or resume to the system and submit it for processing. The file must be encrypted during transport and sent over a secure connection as it will contain users' personal information such as names and email addresses.
 
 **Criticality**
 * This feature is vital to the system as it is the system's only significant source of information about the user. Without this feature we cannot get critical data needed for analysis such as skills, employment history and technical knowledge.
@@ -192,12 +194,12 @@ Development of this system will have to abide by the following constraints.
 **Dependencies**
 * This feature is dependent on the user having access to a web browser and an internet connection.
 
-## 3.2 Parsing User Submitted CVs
+## 3.2 Parsing User-Submitted CVs
 **Description**
-* The system must be able to parse a user submitted CV and identify and extract key data such as skills, technical knowledge, past employment, certifications, education and other important information. This will be carried out using machine learning based natural language processing.
+* The system must be able to parse a user-submitted CV and identify and extract key data such as skills, technical knowledge, past employment, certifications, education and other important information. This will be carried out using machine learning-based natural language processing.
 
 **Criticality**
-* This feature is necessary as this will be the main way that the system is able to gather data about users and this data will be essential for the analysis and review process which is the main functionality of the product.
+* This feature is necessary as CVs will be the primary source of information about users and the data extracted from CVs will be essential for the analysis and evaluation of CVs.
 
 **Technical Issues**
 * The main technical issue faced with this feature will be related to natural language processing as it is quite difficult for a machine to automatically extract information from unstructured text and categorise it.
@@ -210,26 +212,26 @@ Development of this system will have to abide by the following constraints.
 The system must be able to automatically scrape job posts from websites such as Indeed and LinkedIn and store them in a performant and well-structured database. It should be possible to do this relatively quickly as the job market changes over time and information can quickly become outdated.
 
 **Criticality**
-* This feature is very important as job posts will be the system's primary source of information about the job market which the system will use to make evaluations and predictions and provide valuable insights for users.
+* This feature is very important as job posts will be the system's primary source of information about the job market which it will use to analyse the job market and provide valuable insights for users.
 
 **Technical Issues**
-* The main technical challenge is scraping information quickly and reliably from a wide variety of sources which is necessary as many data sources do not have APIs for accessing them. On top of this, storing and managing this data in a reliable and consistent way in databases will also be a crucial technical challenge for this feature.
+* The main technical challenge is scraping information quickly and reliably from a wide variety of sources which is necessary as many data sources do not have APIs for accessing them. On top of this, storing and managing this data in a reliable and consistent way in databases will also be a significant technical challenge for this feature.
 
 **Dependencies**
-* This feature does not have any dependencies on any other features within the system and will serve as a standalone tool which will in the background to gather and feed data into the system.
+* This feature is not dependent on any other features within the system and will serve as a standalone tool which will in the background to gather and feed data into the rest of the system.
 
 ## 3.4 Data Analysis of Job Posts and CVs
 **Description**
-* The system should gather job posts and other sources of information about the job market as well as the data extracted from the user's uploaded resume for data analysis to provide meaningful and useful insights to the user.
+* The system should gather job posts and other sources of information about the job market as well as data extracted from the users' uploaded resume for data analysis to provide meaningful and useful insights to the user.
 
 **Criticality**
-* This feature is vital to the functionality of the application as without it the system would not be able to carry out any evaluations or extract information from data.
+* This feature is vital to the functionality of the application as without it the system would not be able to carry out any evaluations or extract valuable insights from data.
 
 **Technical Issues**
-* The main technical challenge is developing the various models and algorithms needed for combining and interpreting the data to make meaningful responses for the user.
+* The main technical challenge is developing the various models and algorithms needed for combining and interpreting the data to create meaningful and understandable information for the user.
 
 **Dependencies**
-* This feature is dependent on both the CV submission feature and the job market data gathering feature as these features will provide the necessary data for the analysis to take place.
+* This feature is dependent on both the CV submission feature and the job post data gathering feature as these features will provide the necessary data for the analysis to take place.
 
 ## 3.5 Report Search and Generation
 **Description**
@@ -268,7 +270,7 @@ As job market trends and job posting patterns change over time, it is important 
 
 ![Data Flow Diagram](./res/data-flow-diagram.png)
 
-The data flow diagram above shows the major components of the system how they interact with each other and the kind of inputs and outputs each component receives or sends. The top of the diagram shows the user who interacts with the web application which is composed of two major features: the resume upload and insights page and the job postings insights page.
+The data flow diagram above shows the major components of the system how they interact with each other and the kind of inputs and outputs each component sends or receives. The top of the diagram shows the user who interacts with the web application which is composed of two major features: the resume upload and insights page and the job postings insights page.
 
 Users who choose to use the resume upload feature can upload their resumes for analysis. When a resume is uploaded, it is sent to the resume analyzer for processing. To analyze resumes, the resume analyzer will read job postings or precomputed insights from the database and use them to extract useful insights from resumes. These insights are then sent back to the user and displayed by the user interface in an intuitive and useful report that makes use of a combination of text and visualisations.
 
@@ -281,7 +283,15 @@ The job posting analysis service is the other major component of the system. Use
 # **6. Preliminary Schedule**
 ![Preliminary Gantt Chart](./res/Gantt.JPG)
 
-The initial development plan for the project is as follows. We will begin by setting up the skeletons for the front and backend of the system. In this step we will generate any boiler plate code for technologies that we will be using such as React and Django. We are aiming to complete this first step by late November which will give us time to briefly start development before the DCU exam period. Starting in late November we will begin development by first building the various scrapers and API interfaces which will be used to gather and aggregate data about the job market from sources like Linkedin and Indeed. We will aim to get this data gathering step done before the exams but expect that there might be the risk of some overrun as exams draw near. Following the DCU exams in December we hope to get our database setup so that the data gathering system can store the data for use by later systems. Also starting in mid December will be the development and training work for the natural language processing engine which will be used to parse user's CVs, development on this feature is expected to run though to the start of January. With the completion of the NLP parser and the data gathering feature we should have all the data  we need to begin work on the analysis engine which would take us up until mid January. With this complete all that is left for the backend of the system will be the setting up the API endpoints so these features can be accessed from our frontend web app. Then  up until early February we plan to develop the frontend of the application focusing more on functionality and design rather than aesthetics. With both a preliminary front and backend complete we will spend the beginning to february carrying out end to end testing on the system to identify any bugs. Once the first round of testing is complete we will spend 2 weeks finalising and cleaning up the product. This will be followed by a final round of testing and debugging which will conclude in late February. With development wrapped up we will carry out the necessary automated and user testing to ensure the system is sound. And then we will spend the last 2 weeks focusing on the documentation for the system. This plan should have us finished a few days before the deadline on April 15th.
+The initial development plan for the project is as follows. We will begin by setting up the skeletons for the front and back end of the system. In this step we will generate any boiler plate code for technologies that we will be using such as React and Django. We are aiming to complete this first step by late November which will give us time to briefly start development before the DCU exam period.
+
+Starting in late November we will begin development by first building the various scrapers and API interfaces which will be used to gather and aggregate data about the job market from sources like Linkedin and Indeed. We will aim to get this data gathering step done before the exams but expect that there might be the risk of some overrun as exams draw near. 
+
+Following the DCU exams in December we hope to get our database set up so that the data gathering system can store the data for use by later systems. Also starting in mid December will be the development and training work for the natural language processing engine which will be used to parse users' CVs and development on this feature is expected to run though to the start of January. With the completion of the NLP parser and the data gathering feature we should have all the data  we need to begin work on the analysis engine which would take us up until mid January.
+
+With this complete all that is left for the backend of the system will be the setting up the API endpoints so these features can be accessed from our frontend web app. Then up until early February we plan to develop the frontend of the application focusing more on functionality and design rather than aesthetics. With both a preliminary front and backend complete we will spend the beginning of February carrying out end to end testing on the system to identify any bugs. Once the first round of testing is complete we will spend 2 weeks finalising and cleaning up the product. This will be followed by a final round of testing and debugging which will conclude in late February.
+
+With development wrapped up we will carry out the necessary automated and user testing to ensure the system is sound. And then we will spend the last 2 weeks focusing on the documentation for the system. This plan should have us finished a few days before the deadline on April 15th.
 
 \
 \

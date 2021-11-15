@@ -85,11 +85,11 @@ From a user's perspective, using the system should be as straightforward as navi
 
 **Description**
 
-A user will open their web browser of choice. Then they will type in the URL of the web application. Once complete the web browser will send a request to the web server which will respond with the home page of the application 
+A user will open their web browser of choice. Then they will type in the URL of the web application. Once complete the web browser will send a request to the web server which will respond with the home page of the application.
 
 **Goal**
 
-A user can access the website homepage using a web browser and an internet connection
+A user can access the website homepage using a web browser and an internet connection.
 
 **Step-by-Step Interaction**
 
@@ -108,7 +108,7 @@ A user can access the website homepage using a web browser and an internet conne
 
 **Description**
 
-The user will be able to upload a CV in the form of a file on their computer. They will then press a  button to submit this file and it will be uploaded to the server. After a brief processing time the user will be presented with results from the processing. 
+The user will be able to upload a CV that is stored on their computer in a PDF format. They will then press a button to submit this file and it will be uploaded to the server. After a brief processing time for the analysis the user will be presented with the results of the analysis. 
 
 **Goal**
 
@@ -117,13 +117,54 @@ A user can upload a file, this file can be sent to the server and the user can v
 **Step-by-Step Interaction**
 
 1. The user uploads the CV document file.
-    *   This can either be done by dragging the file over the upload section on the website or by clicking a button which will open the users file explorer where they can then select the file for upload
+    *   This can either be done by dragging the file over the upload section on the website or by clicking a button which will open the user's file explorer where they can then select the file for upload
 2. User presses the "Submit" button.
-3. The user waits as the page displays a loading icon while the document is processed.
-4. The user is shown a screen with the results of the processing.
+3. The user waits as the page displays a loading icon while the document is processed and analyzed.
+4. The user is shown an screen displaying the results of analysis the CV.
 
 <br>
 
+### **User Selects a Common Search Query**
+
+![Use Case Diagram Showing User Selecting Common Query](./res/UC-Diagram-User-Selects-Common-Query.png)
+
+**Description**
+
+A common precomputed search query is shown in a button. For example, a button could contain the text "Most popular programming languages in Ireland". Clicking the button causes a report for the query to be displayed.
+
+**Goal**
+
+A user can select a common search query and see the report associated with it.
+
+**Step-by-Step Interaction**
+
+1. The user clicks on the button containing the search query.
+2. A new page containing a report related to the query is displayed. The page contains text and visualiations which are informative to the user.
+3. The user closes the page.
+
+<br>
+
+### **User Searches for a Query**
+
+![Use Case Diagram Showing User Selecting Common Query](./res/UC-Diagram-User-Searches-For-Query.png)
+
+**Description**
+
+The user types in a search query with a question related to the current job market for software engineers in Ireland. A report that answers the query is generated or found and the user reads the report. The report contains descriptions and visualisations that answer the user's query or inform them on a topic.
+
+**Goal**
+
+To allow users to search for queries about the current job market for software engineers and gather useful information related to the query.
+
+**Step-by-Step Interaction**
+
+1. The user types in a search query such as "Top programming languages in Ireland"
+2. The system interprets the meaning of the query and the type of information that should be retrieved.
+3. The system returns precomputed reports which are similar to the query or generates new reports that answer the query. In this example, the report "Most popular programming languages in Ireland" is similar to the question "Top programming languages in Ireland."
+4. The user selects the report they would like to view and opens it.
+5. The user closes the report after viewing it and returns to the home screen.
+
+<br>
 
 ## 2.4 Constraints
 Development of this system will have to abide by the following constraints.

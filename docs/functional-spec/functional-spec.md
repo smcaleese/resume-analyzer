@@ -178,7 +178,13 @@ The system is composed of two primary high-level components: a user-facing front
 
 # **5. High-Level Design**
 
+![Data Flow Diagram](./res/data-flow-diagram.png)
 
+The data flow diagram above shows the major components of the system how they interact with each other and the kind of inputs and outputs each component receives or sends. The top of the diagram, shows the user who interacts with the web application which is composed of two major features: the resume upload and insights page and the job postings insights page.
+
+Users who choose to use the resume upload feature can upload their resumes for analysis. When a resume is uploaded, it is sent to the resume analyzer for processing. To analyze resumes, the resume analyzer will read job postings or precalculated insights from the database and use them to extract useful insights from resumes. These insights are then sent back to the user and displayed by the user interface in an intuitive and useful report that makes use of a combination of text and visualisations.
+
+The job posting analysis service is the other major component of the system. Users can use this service by clicking buttons representing popular search queries or the may do their own searches. The resume analyzer is designed to process two types of queries: searches for information or searches for questions. In the former case, standard information retrieval techniques can be used to retrieve relevant documents. To answer questions, we plan on using AI to recognize the type of question asked. For example, "best rated companies" and "best paying companies" are similar in that they involve the evaluation of companies and may require the generation of a ranked list. Once the type of question has been identified, the contents of the search query can be used to infer the specific question that was asked. The AIs guess of the purpose of the question can be displayed to the user who can accept the question or try again.
 
 \
 \

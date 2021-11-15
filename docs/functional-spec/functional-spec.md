@@ -37,14 +37,19 @@
 
 # **1. Introduction**
 ## 1.1 Overview
-The product we are developing is a web application which will allow a user to upload a CV/resume. The system will carry out a suite of natural language processing (NLP) and sentiment analysis analytics on the resume extracting key information such as skills, technologies, certifications and prior employment. This information will then be processed alongside aggregate job market data to produce helpful information such as recommended skills which will make the user more attractive to potential employers and also potential career paths. With this information we hope to help the user make informed choices when navigating their career decisions.
+Our 4th year project is a web application that will use natural language processing on CVs and job posts to provide useful services for job-seeking software engineers. The two primary services we intend to offer are the ability to analyze and evaluate CVs and suggest improvements to them and a tool for finding useful insights about the job market for software engineers. The system will use large numbers of job posts as input data for both services.
+
+The resume analysis feature will allow users to upload their CVs to a resume analyzer which will evaluate the quality of the resume and suggest improvements based on trends in the current job market. The system will carry out a suite of natural language processing (NLP) on the resume extracting key information such as skills, technologies, certifications and prior employment. This information will then be processed and compared to data about job market trends to produce helpful information such as recommended skills that would make the user more attractive to potential employers. With this information we hope to help the user make informed choices when navigating their career decisions.
+
+We also plan to offer users the ability to find and view job market trends directly. This feature would use user input along with large numbers of job posts to generate useful insights such as the skills that are most in demand, the highest-rated companies or the number of job postings for certain subskills or job categories.
+
 <br>
 
 ## 1.2 Glossary
 The following table contains technical terms which will be used throughout the document. The definitions of these terms are in the context of this project.
 | **Term**     | **Definition** |
 |--------------|----------------|
-| Test         |  Blank              |
+| Test         |  Blank         |
 
 \
 \
@@ -52,13 +57,18 @@ The following table contains technical terms which will be used throughout the d
 
 # **2. General Description**
 ## 2.1 Product Functions
-The product will be a web application which a user will be able to upload a CV to. This CV will be sent to the systems backend where first it will be processed using machine learning and NLP to extract key terms and information about the user, this information will include (but may not be limited to) certifications, skills, characteristics, technologies and employment history. This data will then be analysed by the system which will make use of its collection of aggregate job market data (job listings, linkedin profiles, etc.) to analyse the users provided information to evaluate how well their CV will fare in the current job market. It will then return helpful information to the user like what skills or certifications will be most beneficial in progressing their career, what are some potential career paths they can pursue (and what steps are needed) and other useful information to help the user improve their CV and progress their career. This information  will then be displayed to the user as well as allowing the user to see jobs that they are most suited for with their current skill set and apply to any which take their interest.
+The product will be a web application which a user will offer a resume upload page for resume analysis and a data analytics tool for viewing job market trends.
+
+The CV upload tool will consist of a page where user can upload their CVs. CVs will be sent to the systems backend where first it will be processed using machine learning and NLP to extract key terms and information about the user, this information will include (but may not be limited to) certifications, skills, characteristics, technologies and employment history. This data will then be analysed by the system which will make use of its collection of aggregate job market data (job listings, linkedin profiles, etc.) to analyse the users provided information to evaluate how well their CV will fare in the current job market. It will then return helpful information to the user like what skills or certifications will be most beneficial in progressing their career, what are some potential career paths they can pursue (and what steps are needed) and other useful information to help the user improve their CV and progress their career. This information  will then be displayed to the user as well as allowing the user to see jobs that they are most suited for with their current skill set and apply to any which take their interest.
+
+The job market insights tool will have buttons that allow users to select common queries about the job market such as "most popular skills". These buttons would take the user to a report with information relevant to the question such as descriptions or visualuations. These reports could be partially or completely precomputed for performance reasons. Novel queries which could be entered into a search bar would invoke data analysis to acquire the information desired and generate a report. As there is a trade off between depth of analysis and detail, we plan on finding a good balance between these two goals.
+
 <br>
 
 ## 2.2 User Characteristics and Objectives
-This product will be targeted towards people who are beginning their career path such as new graduates, young people aged 18 - 30 and people who are looking to make a career change. This user base will have a wide range of technical abilities and experience and as such the system will need to be accomodating to people of all levels of technical expertise. However we do expect our users to have a basic functional understanding of using and interacting with web applications. We will also be exclusively targeting English speakers as the product will only be able to handle English language CVs and thus we will only have the application available in English.
+This product is mainly intended for software engineers who are beginning their career path such as new graduates, young people aged 18 - 30 and engineers who are looking to make a career change. This user base will have a wide range of technical abilities and experience and as such the system will need to be accomodating to people of all levels of technical expertise. However we do expect our users to have a basic functional understanding of web applications and how to use them. We will also be exclusively targeting English speakers as the product will only be able to handle English language CVs and thus we will only have the application available in English. We also plan on focusing the analysis on the Irish job market.
 
-From a user's perspective, using the system should be as straightforward as navigating to the URL using a modern web browser of their choice. Uploading a CV through a clearly marked upload section and clicking a button to being the processing. There will be a short delay (No more than 30-40 seconds) as processing takes place and then the screen will change to display the output information to the user. From here the user is free to navigate and explore the displayed information and interact with any interactive information displayed like navigating to job listing of jobs that were deemed the most suitable for them.
+From a user's perspective, using the system should be as straightforward as navigating to the URL using a modern web browser of their choice before uploading a CV, selecting or typing a search query. Unless the answer to the query has been precomputed, we expect that there  will be a short delay (No more than 30-40 seconds) as processing takes place before the screen changes to display the output information to the user. From here the user is free to navigate and explore the displayed information and interact with any interactive information displayed like navigating to job listing of jobs that were deemed the most suitable for them.
 <br>
 
 ## 2.3 Operational Scenarios

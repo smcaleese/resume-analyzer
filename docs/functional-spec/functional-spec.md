@@ -168,62 +168,62 @@ To allow users to search for queries about the current job market for software e
 
 ## 2.4 Constraints
 Development of this system will have to abide by the following constraints.
-* **Time constraints:** Development and deployment of the project must be complete before April 2022.
-* **Financial constraints:** The project will have little to no budget and thus will not be able to make use of any expensive services such as hosting or paid for development tools/subscriptions.
-* **Processing constraints:** Due to the aforementioned budget constraint the computing and storage capability of the host system will be severely limited and may lead to poor user experience.
-* **Legal constraints:** THe product will be taking in user data and thus the product must be in accordance with European and International regulations for data management, data storage and data protections.
-* **Platform constraints:** The product is a web application and as such must be developed with modern browser capabilities in mind. These browsers will have different features and capabilities which the product must be able to adapt to for a constant user experience. 
-* **Traffic constraints:** Due to budget and processing limitations the system will not be able to handle large amounts of users accessing the product at once.
+* **Time constraints:** development and deployment of the project must be complete before April 2022.
+* **Financial constraints:** the project will have little to no budget and thus will not be able to make use of any expensive services such as hosting or non-free development tools or subscriptions.
+* **Processing constraints:** due to the aforementioned budget constraint the computing and storage capability of the server hardware will be limited.
+* **Legal constraints:** the product will be taking in user data and thus the product must be in accordance with European and International regulations for data management, data storage and data protections.
+* **Platform constraints:** the product is a web application and as such must be developed with modern browser capabilities in mind. These browsers will have different features and capabilities which the product must be able to adapt to for a consistent user experience. 
+* **Traffic constraints:** due to budget and processing limitations the system will not be able to handle large amounts of users accessing the product at once.
 \
 \
 <br>
 
 # **3. Functional Requirements**
-## 3.1 User Upload of CV 
+## 3.1 User Upload of CVs
 **Description**
-* A user of the system must be able to upload a CV/Resume to the system and submit it for processing. The file must be encrypted during transport as it will contain user sensitive data and thus must be transmitted safely.
+* A user of the system must be able to upload a CV or resume to the system and submit it for processing. The file must be encrypted during transport and sent over a secure connection as it will contain user personal information such as names and email addresses.
 
 **Criticality**
-* This feature is vital to the system as it is the main interaction and data source between the user and system. Without this feature we cannot get critical data needed for analysis such as skills, employment history and technical knowledge.
+* This feature is vital to the system as it is the system's only significant source of information about the user. Without this feature we cannot get critical data needed for analysis such as skills, employment history and technical knowledge.
 
 **Technical Issues**
-* There are two main technical challenges for this feature, the first is decoding a users file from its respective file type into a standardised file type which can be sent to the server. The second challenge is security as the file will almost definitely contain sensitive information which must be kept secure during the upload process.
+* There are two main technical challenges for this feature, the first is decoding a user's file from its initial file type (eg. PDF) into a standardised file format which can be sent to the server. The second challenge is to ensure that the information in the CV is kept secure when it is uploaded and transmitted to the server.
 
 **Dependencies**
-* This feature will have a dependency on the user being able to access and view the web application.
+* This feature is dependent on the user having access to a web browser and an internet connection.
 
-## 3.2 Parsing a User Submitted CV
+## 3.2 Parsing User Submitted CVs
 **Description**
-* The system must be able to parse a user submitted CV and identify and extract key data such as skills, technical knowledge, past employment, certifications, education and characteristics. This will be carried out using machine learning based natural language processing.
+* The system must be able to parse a user submitted CV and identify and extract key data such as skills, technical knowledge, past employment, certifications, education and other important information. This will be carried out using machine learning based natural language processing.
 
 **Criticality**
-* This feature is required as this will be the main way that the system is able to gather data about a user and this data will be vital as it is what will be used for the analysis and review process which is the main functionality of the product. 
+* This feature is necessary as this will be the main way that the system is able to gather data about users and this data will be essential for the analysis and review process which is the main functionality of the product.
 
 **Technical Issues**
-* The main technical issue faced with this feature will be the natural language processing as it is quite difficult for a machine to automatically to extract and categorise data from plain english into usable data is a fast an reliable manner.
+* The main technical issue faced with this feature will be related to natural language processing as it is quite difficult for a machine to automatically extract information from unstructured text and categorise it.
 
 **Dependencies**
-* This feature is dependent on the CV upload feature as with out the user having the ability to upload and submit a CV to the system their would be no way for the system to get the CV to parse in the first place.
+* This feature is dependent on the CV upload feature as it must be possible to first upload a CV before it can be parsed.
 
-## 3.3 Gathering Job Market Data
+## 3.3 Gathering Job Posts
 **Description**
-* The system needs to be able to automatically scrape and update its data in regards to the current job market so that the data it gives back to the user is up to date and relevant with the current state of the job market.
+The system must be able to automatically scrape job posts from websites such as Indeed and LinkedIn and store them in a performant and well-structured database. It should be possible to do this relatively quickly as the job market changes over time and information can quickly become outdated.
 
 **Criticality**
-* This feature is very important as it will be how the system gets information about the job market that it will use to make evaluations and predictions to give helpful and usable data back to the user. 
+* This feature is very important as job posts will be the system's primary source of information about the job market which the system will use to make evaluations and predictions and provide valuable insights for users.
 
 **Technical Issues**
-* The main technical challenge is finding and working with multiple data sources especially those which do not have easily accessible APIs for our system to work with. On top of this, storing and managing this data in a reliable and consistent way will also be a crucial technical challenge for this feature.
+* The main technical challenge is scraping information quickly and reliably from a wide variety of sources which is necessary as many data sources do not have APIs for accessing them. On top of this, storing and managing this data in a reliable and consistent way in databases will also be a crucial technical challenge for this feature.
 
 **Dependencies**
-* This feature does not have any dependencies on any other features within the system and will serve as a standalone piece which works in the background to gather and feed data into the system.
+* This feature does not have any dependencies on any other features within the system and will serve as a standalone tool which will in the background to gather and feed data into the system.
 
-## 3.4 Performing Data Analysis
+## 3.4 Data Analysis of Job Posts
 **Description**
-* The system should use the data gathered from job market sources as well as the data extracted from the user's uploaded resume to perform meaningful and beneficial data analysis to provide helpful insights to the user.
+* The system should job posts and other sources of information about the job market as well as the data extracted from the user's uploaded resume to perform meaningful and beneficial data analysis to provide helpful insights to the user.
 
 **Criticality**
-* This feature is vital to the functionality of the application as without this there would be no way for the user to get any functional purpose or use out of the system.
+* This feature is vital to the functionality of the application as without it the system would not be able to carry out any evaluations or extract information from data.
 
 **Technical Issues**
 * The main technical challenge is developing the various models and algorithms needed for combining and interpreting the data to make meaningful responses for the user.

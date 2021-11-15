@@ -218,9 +218,9 @@ The system must be able to automatically scrape job posts from websites such as 
 **Dependencies**
 * This feature does not have any dependencies on any other features within the system and will serve as a standalone tool which will in the background to gather and feed data into the system.
 
-## 3.4 Data Analysis of Job Posts
+## 3.4 Data Analysis of Job Posts and CVs
 **Description**
-* The system should job posts and other sources of information about the job market as well as the data extracted from the user's uploaded resume to perform meaningful and beneficial data analysis to provide helpful insights to the user.
+* The system should gather job posts and other sources of information about the job market as well as the data extracted from the user's uploaded resume for data analysis to provide meaningful and useful insights to the user.
 
 **Criticality**
 * This feature is vital to the functionality of the application as without it the system would not be able to carry out any evaluations or extract information from data.
@@ -231,13 +231,32 @@ The system must be able to automatically scrape job posts from websites such as 
 **Dependencies**
 * This feature is dependent on both the CV submission feature and the job market data gathering feature as these features will provide the necessary data for the analysis to take place.
 
+## 3.5 Report Search and Generation
+**Description**
+The system should give users the ability to search for existing pre-generated reports which contain useful information about the job market and also to generate new data analysis reports based on user's search queries.
+
+**Criticality**
+This feature is necessary to make the insights gathered from job posts directly available to the user in the form of reports. The ability of users to supply input to the data analysis system is valuable as these inputs will guide the data analysis process and also inform the system on what kinds of information are most popular.
+
+**Technical Issues**
+The main technical challenge for this feature would be to extract the meaning of the user's query and find or generate reports relevant to it that contain information in a usable and readable format.
+
+**Dependencies**
+This feature is dependent on the job post gathering and data analysis phases as both of these features are required to generate analysis reports.
+
 \
 \
 <br>
 
 # **4. System Architecture**
 
-The system is composed of two primary high-level components: a user-facing front end web application that provides the UI of the application and a back end web server that will act as an API. User input supplied to the front end UI will be passed to the back end service via JSON. The backend service will then perform data analysis depending on the input to calculate a result that will be sent back to the UI as output.
+The system is composed of three primary high-level components: a user-facing front end web application that provides the user interface of the application, a back end web server that will perform data analysis on CVs, user input and job posts stored in the database and a data gathering application that gathers job posts using APIs and scraping scripts.
+
+User input in the form of a CV upload or text input can be passed to the back end server as JSON. The back end service will then perform data analysis on these inputs and any other necessary information stored in the database before sending insights in the form of a JSON response to the front end application after a processing delay.
+
+As job market trends and job posting patterns change over time, it is important to regularly update the database. This can be done by the data source module consisting of APIs and scraping scripts which will update the database with fresh data at regular intervals.
+
+<br>
 
 ![Architecture diagram](./res/system-architecture-diagram.png)
 
@@ -251,7 +270,7 @@ The system is composed of two primary high-level components: a user-facing front
 
 The data flow diagram above shows the major components of the system how they interact with each other and the kind of inputs and outputs each component receives or sends. The top of the diagram shows the user who interacts with the web application which is composed of two major features: the resume upload and insights page and the job postings insights page.
 
-Users who choose to use the resume upload feature can upload their resumes for analysis. When a resume is uploaded, it is sent to the resume analyzer for processing. To analyze resumes, the resume analyzer will read job postings or precalculated insights from the database and use them to extract useful insights from resumes. These insights are then sent back to the user and displayed by the user interface in an intuitive and useful report that makes use of a combination of text and visualisations.
+Users who choose to use the resume upload feature can upload their resumes for analysis. When a resume is uploaded, it is sent to the resume analyzer for processing. To analyze resumes, the resume analyzer will read job postings or precomputed insights from the database and use them to extract useful insights from resumes. These insights are then sent back to the user and displayed by the user interface in an intuitive and useful report that makes use of a combination of text and visualisations.
 
 The job posting analysis service is the other major component of the system. Users can use this service by clicking buttons representing popular search queries or they may do their own searches. The resume analyzer is designed to process two types of queries: searches for information or searches for questions. In the former case, standard information retrieval techniques can be used to retrieve relevant documents. To answer questions, we plan on using AI to recognize the type of question asked. For example, "best rated companies" and "best paying companies" are similar in that they involve the evaluation of companies and may require the generation of a ranked list. Once the type of question has been identified, the contents of the search query can be used to infer the specific question that was asked. The AIs guess of the purpose of the question can be displayed to the user who can accept the question or try again.
 
@@ -260,7 +279,7 @@ The job posting analysis service is the other major component of the system. Use
 <br>
 
 # **6. Preliminary Schedule**
-![Preliminary Gantt Chart](./res/Gantt.jpg)
+![Preliminary Gantt Chart](./res/Gantt.JPG)
 
 The initial development plan for the project is as follows. We will begin by setting up the skeletons for the front and backend of the system. In this step we will generate any boiler plate code for technologies that we will be using such as React and Django. We are aiming to complete this first step by late November which will give us time to briefly start development before the DCU exam period. Starting in late November we will begin development by first building the various scrapers and API interfaces which will be used to gather and aggregate data about the job market from sources like Linkedin and Indeed. We will aim to get this data gathering step done before the exams but expect that there might be the risk of some overrun as exams draw near. Following the DCU exams in December we hope to get our database setup so that the data gathering system can store the data for use by later systems. Also starting in mid December will be the development and training work for the natural language processing engine which will be used to parse user's CVs, development on this feature is expected to run though to the start of January. With the completion of the NLP parser and the data gathering feature we should have all the data  we need to begin work on the analysis engine which would take us up until mid January. With this complete all that is left for the backend of the system will be the setting up the API endpoints so these features can be accessed from our frontend web app. Then  up until early February we plan to develop the frontend of the application focusing more on functionality and design rather than aesthetics. With both a preliminary front and backend complete we will spend the beginning to february carrying out end to end testing on the system to identify any bugs. Once the first round of testing is complete we will spend 2 weeks finalising and cleaning up the product. This will be followed by a final round of testing and debugging which will conclude in late February. With development wrapped up we will carry out the necessary automated and user testing to ensure the system is sound. And then we will spend the last 2 weeks focusing on the documentation for the system. This plan should have us finished a few days before the deadline on April 15th.
 

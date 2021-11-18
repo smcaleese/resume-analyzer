@@ -124,6 +124,8 @@ A user can create a new account on the website.
     * If the account already exists, the user is redirected to the login form.
 3. A message is shown to the user saying that they have successfully created a new account.
 
+<br>
+
 ### **User Logs In**
 
 ![Use Case Diagram Showing User Login](./res/UC-Diagram-User-Login.png)
@@ -140,6 +142,8 @@ A user can log in to their account on the website.
     * If the email does not exist, a message is displayed saying that the username has not been found.
     * If the email is found but the password is incorrect, an incorrect password message is shown.
 2. If there are no errors, the user is logged into their account and a success message is shown.
+
+<br>
 
 ### **User Uploads a CV**
 

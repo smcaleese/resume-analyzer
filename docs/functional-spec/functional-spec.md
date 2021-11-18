@@ -283,6 +283,18 @@ The main technical challenge for this feature would be to extract the meaning of
 **Dependencies**
 This feature is dependent on the job post gathering and data analysis phases as both of these features are required to generate analysis reports.
 
+## 3.6 User Registery and Login
+**Description**
+The system should allow users to register and create an account on the system. The user will provide email and desired password, these values will be stored encrypted in a database. The user should then be able to authenticate themselves with the system using these credentials and access user specific data such as past results.
+
+**Criticality**
+This feature is not vital as the system could be built in a way where it has no memory of users and require users to submit their CV each time they visit the web application. It is however a nice convenience feature which will allow users to track their progress as well.
+**Technical Issues**
+The main technical challenge will be creating and maintaining the database for user credentials as well as making sure that all data is kept secure in accordance with European and International data protection laws.
+
+**Dependencies**
+This feature has no dependencies  on any other feature with in the application
+
 \
 \
 <br>

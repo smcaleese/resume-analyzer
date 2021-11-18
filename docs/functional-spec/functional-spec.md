@@ -270,6 +270,12 @@ As job market trends and job posting patterns change over time, it is important 
 
 ![Data Flow Diagram](./res/data-flow-diagram.png)
 
+## CV Upload Sequence Diagram
+
+<br>
+
+![Sequence Diagram](./res/sequence-diagram.png)
+
 The data flow diagram above shows the major components of the system how they interact with each other and the kind of inputs and outputs each component sends or receives. The top of the diagram shows the user who interacts with the web application which is composed of two major features: the resume upload and insights page and the job postings insights page.
 
 Users who choose to use the resume upload feature can upload their resumes for analysis. When a resume is uploaded, it is sent to the resume analyzer for processing. To analyze resumes, the resume analyzer will read job postings or precomputed insights from the database and use them to extract useful insights from resumes. These insights are then sent back to the user and displayed by the user interface in an intuitive and useful report that makes use of a combination of text and visualisations.

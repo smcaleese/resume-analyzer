@@ -104,6 +104,43 @@ A user can access the website homepage using a web browser and an internet conne
 
 <br>
 
+### **User Signs Up**
+
+**Description**
+
+After opening the website, if the user does not yet have an account, they can enter their email and desired password to sign up and create a new account.
+
+![Use Case Diagram Showing User Signup](./res/UC-Diagram-User-Signup.png)
+
+**Goal**
+
+A user can create a new account on the website.
+
+**Step-by-Step Interaction**
+
+1. The user opens the website.
+2. The user types in their email and password and a password confirmation.
+    * If the passwords do not match, there is an error.
+    * If the account already exists, the user is redirected to the login form.
+3. A message is shown to the user saying that they have successfully created a new account.
+
+### **User Logs In**
+
+![Use Case Diagram Showing User Login](./res/UC-Diagram-User-Login.png)
+
+**Description**
+Once the user has an account, it should be possible for a user to log in to their account.
+
+**Goal**
+
+A user can log in to their account on the website.
+
+**Step-by-Step Interaction**
+1. The user types in their email and password.
+    * If the email does not exist, a message is displayed saying that the username has not been found.
+    * If the email is found but the password is incorrect, an incorrect password message is shown.
+2. If there are no errors, the user is logged into their account and a success message is shown.
+
 ### **User Uploads a CV**
 
 ![Use Case Diagram Showing User Uploading CV](./res/UC-Diagram-User-Uploads-CV.png)

@@ -1,0 +1,18 @@
+stages:
+  - build
+  - test
+
+build_project:
+  stage: build
+  before_script:
+  - cd src/backend
+  - apt-get -qq update && apt-get -qq install -y python
+  - apt-get -qq update
+  - apt-get -qq install -y python python-virtualenv python-pip
+  - virtualenv venv
+  - . venv/bin/activate
+  - python -V
+  - pip install -r requirement.txt
+  script:
+    - cd src/backend
+    - uvicorn server:app --reload

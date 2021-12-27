@@ -8,4 +8,6 @@ build_project:
   stage: build
   script:
     - cd src/backend
-    - uvicorn server:app --reload
+    - python -V
+    # Commented out temporarily
+    # - uvicorn server:app --reload

@@ -13,3 +13,14 @@ body {
     sans-serif;
   box-sizing: border-box;
 }
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+:root {
+  --button-blue: #004cff;
+}

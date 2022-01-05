@@ -1,2 +1,5 @@
 fastapi==0.70.1
-uvicorn==0.16.0
+pdfplumber==0.6.0
+pydantic==1.8.2
+spacy==3.2.1
+SQLAlchemy==1.4.29

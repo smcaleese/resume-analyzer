@@ -34,4 +34,8 @@ The `./backend/models/ner-model` is a Spacy model for using NLLP to identify pro
 
 Our model replaces the builtin named entity recognition (NER) part of the pipeline. The model was created by using a [dataset](https://www.kaggle.com/stackoverflow/stacksample) from stackoverflow. This data was then formatted so it could be accepted by Spacy's training tool. The data was divided into a 80:20 split for training and testing and then feed into the training cycle. It took about 5 hours for the model to train.
 
-To use the model with in the code we use a command 'nlp = spacy.load(Model_Name)' then 'doc = nlp(text)' and that will identify all programming skills within the inputted text. 
+To use the model with in the code we use a command 'nlp = spacy.load(Model_Name)' then 'doc = nlp(text)' and that will identify all programming skills within the inputted text.
+
+Tutorials and documentation used :
+[Intro to NLP with spaCy](https://www.youtube.com/watch?v=IqOJU1-_Fi0)
+[spaCy Training Docs](https://spacy.io/usage/training)

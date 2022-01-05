@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import pdfplumber
+import spacy
 
 app = FastAPI()
 
@@ -28,5 +29,11 @@ def handle_upload(file: UploadFile = File(...)):
         first_page_content = first_page.extract_text()
         print('printing PDF:', end='\n')
         print(first_page_content)
+    
+        nlp = spacy.load("./models/ner-model")
+
+        doc = nlp(first_page.extract_text())
+
+        print(doc.ents)
 
     return {'content': first_page_content}

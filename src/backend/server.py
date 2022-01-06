@@ -4,7 +4,11 @@ from pydantic import BaseModel
 from typing import Optional
 import pdfplumber
 import spacy
+from database import engine, Base, Session
+import models
+from crud import add_job_post, delete_all_job_posts, get_all_job_posts
 
+# Set up app
 app = FastAPI()
 
 app.add_middleware(
@@ -14,7 +18,6 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'],
 )
-
 
 @app.get('status')
 async def status():
@@ -31,9 +34,8 @@ def handle_upload(file: UploadFile = File(...)):
         print(first_page_content)
     
         nlp = spacy.load("./models/ner-model")
-
-        doc = nlp(first_page.extract_text())
-
-        print(doc.ents)
+        doc = nlp(first_page_content)
+        skills = doc.ents
+        print('skills:', skills)
 
     return {'content': first_page_content}

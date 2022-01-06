@@ -1,4 +1,5 @@
 import csv
+from sqlalchemy.sql.expression import desc
 from database import engine, Base, Session
 import models
 from crud import add_job_post, delete_all_job_posts
@@ -9,7 +10,12 @@ def add_to_db(db, filename):
         for row in csvreader:
             try:
                 id, company, job_title, location, description = row
+                # make sure only unique descriptions are added:
+                description_in_db = db.query(models.JobPost).filter(models.JobPost.id == hash(description)).first()
+                if description_in_db or len(description) == 0:
+                    continue
                 data = {
+                    'id': hash(description),
                     'company': company,
                     'title': job_title,
                     'location': location,

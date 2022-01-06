@@ -1,10 +1,10 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, BigInteger, String
 from sqlalchemy.schema import Identity
 from database import Base
 
 class JobPost(Base):
     __tablename__ = 'job_post'
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     company = Column(String, nullable=False)
     title = Column(String, nullable=False)
     location = Column(String, nullable=False)

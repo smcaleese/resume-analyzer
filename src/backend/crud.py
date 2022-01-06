@@ -10,7 +10,7 @@ def add_job_post(db: Session, new_job_post: schemas.JobPost):
 
 def get_all_job_posts(db: Session):
     print('getting all job posts', end='\n\n')
-    return db.query(models.JobPost).all()
+    return db.query(models.JobPost).distinct().all()
 
 def delete_all_job_posts(db: Session):
     print('Deleting all job posts', end='\n\n')

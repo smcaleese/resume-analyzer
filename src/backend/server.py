@@ -4,9 +4,11 @@ from pydantic import BaseModel
 from typing import Optional
 import pdfplumber
 import spacy
-from sqlalchemy import create_engine, Column, String, Integer
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
+from database import engine, Base, Session
+import models
+from crud import add_job_post, delete_all_job_posts, get_all_job_posts
+
+# Set up app
 app = FastAPI()
 
 app.add_middleware(
@@ -16,38 +18,6 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'],
 )
-
-# Set up database
-SQLALCHEMY_DATABASE_URL = 'postgresql://stephen:mcaleese@localhost:5432/db'
-engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
-Session = sessionmaker(bind=engine)
-db = Session()
-
-Base = declarative_base()
-
-class JobPost(Base):
-    __tablename__ = 'job_post'
-    id = Column(Integer, primary_key=True)
-    company = Column(String)
-    job_title = Column(String)
-    location = Column(String)
-    description = Column(String)
-
-    def __repr__(self):
-        return '<JobPost id={} company={} job_title={} location={} description={}>' \
-                .format(self.id, self.company, self.job_title, self.location, self.description)
-
-Base.metadata.create_all(engine)
-
-# Add information
-print('Adding info...')
-new_job_post = JobPost(id = '1', company = 'Google', job_title = 'Software Engineer', location = 'Dublin', description = 'NA')
-db.add(new_job_post)
-
-# Query the information
-print('Querying db...')
-all_job_posts = db.query(JobPost).all()
-print('all_job_posts:', all_job_posts)
 
 @app.get('status')
 async def status():

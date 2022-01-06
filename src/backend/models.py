@@ -1,14 +1,15 @@
-# from sqlalchemy import Column, Integer, String
-# from .database import Base
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.schema import Identity
+from database import Base
 
-# class JobPost(Base):
-#     __tablename__ = 'job_post'
-#     id = Column(String, primary_key=True)
-#     company = Column(String)
-#     job_title = Column(String)
-#     location = Column(String)
-#     description = Column(String)
+class JobPost(Base):
+    __tablename__ = 'job_post'
+    id = Column(Integer, primary_key=True)
+    company = Column(String, nullable=False)
+    title = Column(String, nullable=False)
+    location = Column(String, nullable=False)
+    description = Column(String(20000))
 
-#     def __repr__(self):
-#         return '<JobPost id={} company={} job_title={} location={} description={}>' \
-#                 .format(self.id, self.company, self.job_title, self.location, self.description)
+    def __repr__(self):
+        return '<JobPost id={} company={} title={} location={} description={}>' \
+                .format(self.id, self.company, self.title, self.location, self.description)

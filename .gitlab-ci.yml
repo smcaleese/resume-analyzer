@@ -11,6 +11,5 @@ build_project:
     - python -V
     - pip install -r requirements.txt
     - uvicorn server:app &
-    - ps aux
-    - ps aux | grep -i uvicorn
+    - ps aux | grep -i uvicorn | awk {'print $2'} | xargs kill
 

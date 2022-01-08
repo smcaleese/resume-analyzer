@@ -22,6 +22,7 @@ postman_tests:
     - cd src/backend
     - newman --version
     - python -V
+    - pip install --upgrade pip
     - pip install -r requirements.txt
     - uvicorn server:app &
     - cd ../tests/postman

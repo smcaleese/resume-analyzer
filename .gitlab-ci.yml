@@ -20,7 +20,7 @@ postman_tests:
     entrypoint: [""]
   script:
     - cd src/tests/postman
-    - newman --version'
+    - newman --version
     - newman run status.postman_collection.json --reports cli
 
 cleanup:

@@ -11,5 +11,20 @@ build_project:
     - python -V
     - pip install -r requirements.txt
     - uvicorn server:app &
+
+postman_tests:
+  stage: test
+  image: 
+    name: postman/newman_alpine33
+    entrypoint: [""]
+  script:
+    - cd src/tests/postman
+    - newman --version'
+    - newman run status.postman_collection.json --reports cli
+
+cleanup:
+  stage: cleanup
+  script:
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
+
 

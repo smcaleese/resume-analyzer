@@ -2,6 +2,8 @@ stages:
   - build
   - test
 
+image: tiangolo/uvicorn-gunicorn-fastapi:latest
+
 build_project:
   stage: build
   script:

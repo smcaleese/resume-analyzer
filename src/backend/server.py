@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-@app.get('status')
+@app.get('/status')
 async def status():
     return {'message': 'Server is running'}
 

@@ -16,7 +16,7 @@ build_project:
 postman_tests:
   stage: test
   image: 
-    name: postman/newman_alpine33
+    name: eranelion/newman-python
     entrypoint: [""]
   script:
     - cd src/tests/postman
@@ -24,8 +24,8 @@ postman_tests:
     - python -V
     - pip install -r requirements.txt
     - uvicorn server:app &
-    - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
     - ps aux
     - newman run status.postman_collection.json --reporters cli
+    - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
 
 

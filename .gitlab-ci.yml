@@ -21,7 +21,7 @@ postman_tests:
   script:
     - cd src/tests/postman
     - newman --version
-    - newman run status.postman_collection.json --reports cli
+    - newman run status.postman_collection.json --reporters cli
 
 cleanup:
   stage: cleanup

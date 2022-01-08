@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - cleanup
 
 image: tiangolo/uvicorn-gunicorn-fastapi:latest
 

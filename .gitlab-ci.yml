@@ -2,7 +2,7 @@ stages:
   - build
   - test
 
-image: tiangolo/uvicorn-gunicorn-fastapi:latest
+image: postman/newman_alpine33:latest
 
 build_project:
   stage: build

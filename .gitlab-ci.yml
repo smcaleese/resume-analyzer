@@ -9,6 +9,7 @@ build_project:
   script:
     - cd src/backend
     - python -V
+    - pip install -r requirements.txt
     - uvicorn server:app --reload
     - ps aux
     - ps aux | grep -i firefoxps aux | grep -i uvicorn

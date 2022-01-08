@@ -1,7 +1,6 @@
 stages:
   - build
   - test
-  - cleanup
 
 image: tiangolo/uvicorn-gunicorn-fastapi:latest
 
@@ -12,6 +11,7 @@ build_project:
     - python -V
     - pip install -r requirements.txt
     - uvicorn server:app &
+    - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
 
 postman_tests:
   stage: test
@@ -21,12 +21,11 @@ postman_tests:
   script:
     - cd src/tests/postman
     - newman --version
+    - python -V
+    - pip install -r requirements.txt
+    - uvicorn server:app &
+    - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
     - ps aux
     - newman run status.postman_collection.json --reporters cli
-
-cleanup:
-  stage: cleanup
-  script:
-    - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
 
 

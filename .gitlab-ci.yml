@@ -2,7 +2,7 @@ stages:
   - build
   - test
 
-image: postman/newman_alpine33:latest
+image: postman/newman:latest
 
 build_project:
   stage: build

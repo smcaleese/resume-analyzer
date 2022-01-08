@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-
+# TODO Create custom docker image with pythoin and newman
 image: tiangolo/uvicorn-gunicorn-fastapi:latest
 
 build_project:
@@ -19,11 +19,12 @@ postman_tests:
     name: eranelion/newman-python
     entrypoint: [""]
   script:
-    - cd src/tests/postman
+    - cd src/backend
     - newman --version
     - python -V
     - pip install -r requirements.txt
     - uvicorn server:app &
+    - cd ../tests/postman
     - ps aux
     - newman run status.postman_collection.json --reporters cli
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9

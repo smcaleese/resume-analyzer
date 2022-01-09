@@ -2,7 +2,7 @@ stages:
   - build
   - test
 
-image: darraghmcg/python-newman-alpine:latest
+image: tiangolo/uvicorn-gunicorn-fastapi:latest
 
 build_project:
   stage: build

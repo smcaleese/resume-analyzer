@@ -24,6 +24,7 @@ export default styled(Header)`
     position: fixed; 
     top: 0;
     width: 100%;
+    z-index: 1000;
 
     .navbar-item{
         img{

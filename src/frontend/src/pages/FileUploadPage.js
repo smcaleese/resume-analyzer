@@ -91,10 +91,8 @@ const FileUploadPage = ({ className }) => {
 }
 
 export default styled(FileUploadPage)`
-height: 100vh;
-  width: 100vw;
-  position:relative;
-
+    height: 100%;
+    width: 100%;
   .upload-form {
     width: 50rem;
     padding: 2rem;

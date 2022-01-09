@@ -38,6 +38,7 @@ const FileUploadPage = ({ className }) => {
     }
 
     const handleFileUpload = (e) => {
+        e.preventDefault()
         const file = e.target.files[0]
 
         if (checkFileValidity(file)) {
@@ -68,15 +69,22 @@ const FileUploadPage = ({ className }) => {
                 <h1 className='title'>Upload a resume</h1>
                 <div {...getRootProps()} className='drag-drop-box'>
                     <input {...getInputProps()} />
-                    <p className='drag-drop-box-text'>{file ? file.name : "Please Upload file"}</p>
                 </div>
-                <div className='upload-button'>
-                    <label htmlFor='file-upload' className='file-upload-label button is-primary'>
-                        File Upload (PDF)
-                    </label>
-                    <input type="file" id='file-upload' className='upload-input' onChange={handleFileUpload} />
-                </div>
-                <button type="submit" className='button submit-button' onClick={uploadResume}><strong>submit</strong></button>
+                <div className='drag-drop-box-content'>
+                        <p className='drag-drop-box-text'>{file ? file.name : "Drag and Drop a File"}</p>
+                        <p>{file ? "" : "or"}</p>
+                        <div className='upload-button'>
+                            <label htmlFor='file-upload' className='file-upload-label button is-primary'>
+                                File Upload (PDF)
+                            </label>
+                            <input type="file" id='file-upload' className='upload-input' onChange={handleFileUpload} />
+                        </div>
+                    </div>
+                {file ?
+                    <button type="submit" className='button submit-button' onClick={uploadResume}><strong>submit</strong></button>
+                    :
+                    null
+                }
             </form>
         </div>
     )
@@ -91,18 +99,6 @@ height: 100vh;
     width: 50rem;
     padding: 2rem;
     z-index: 100;
-
-    .upload-button {
-      .file-upload-label {
-        font-weight: bold;
-        margin: 1rem;
-        width: 10rem;
-      }
-
-      input[type='file'] {
-        display: none;
-      }
-    }
     
     button {
       width: 10rem;
@@ -116,11 +112,35 @@ height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    .drag-drop-box-content{
+        position:absolute;
+        width:100%;
+        p{
+            text-align: center
+          }
+
+        .drag-drop-box-text{
+            font-size:1.2rem;
+            font-weight:bold;
+          }
+        
+        .upload-button{
+            display: table;
+            margin: 0 auto;
+            .file-upload-label {
+                font-weight: bold;
+                width: 10rem;
+              }
+        
+              input[type='file'] {
+                display: none;
+              }
+          }
       
-      .drag-drop-box-text{
-        font-size:1.2rem;
-        font-weight:bold;
-      }
+
+
     }
 
     .submit-button {

@@ -65,7 +65,7 @@ const FileUploadPage = ({ className }) => {
 
     return (
         <div className={classnames(className, 'App', 'center')}>
-            <form className='box upload-form center'>
+            <form className='card upload-form center'>
                 <h1 className='title'>Upload a resume</h1>
                 <div {...getRootProps()} className='drag-drop-box'>
                     <input {...getInputProps()} />

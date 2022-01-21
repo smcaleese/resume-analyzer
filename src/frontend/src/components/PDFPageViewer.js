@@ -1,38 +1,61 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
+import { pdfjs, Document, Page } from 'react-pdf';
 
-const PDFPageViewer = ({ className, pages }) => {
-    const [pageNumber, setPageNumber] = useState(0)
+pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
+
+const PDFPageViewer = ({ className, file }) => {
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+
+    function onDocumentLoadSuccess({ numPages: nextNumPages }) {
+        setNumPages(nextNumPages);
+    }
 
     const handlePagination = (n) => {
-        if (n < 0)
-            setPageNumber(0)
-        else if (n >= pages.length)
-            setPageNumber(pages.length-1)
+        if (n < 1)
+            setPageNumber(1)
+        else if (n > numPages)
+            setPageNumber(numPages)
         else
             setPageNumber(n)
     }
 
-    let page = pages[pageNumber]
-
     return (
         <article className={classnames(className, 'panel is-link')}>
             <p className='panel-heading'> Resume </p>
-            <div className='text-container'>
-                {page.split("\n").map((str, index) => <p key={index}>{str}</p>)}
+            <div className='pdf-container'>
+                <Document
+                    file={file}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                    className='pdf-page'
+                >
+                    <Page
+                        pageNumber={pageNumber}
+                    />
+                </Document>
             </div>
-            <div className='pagination-container'>
-                <nav className="pagination is-centered" role="navigation" aria-label="pagination">
-                    <a className='pagination-previous' onClick={() => {handlePagination(pageNumber - 1)}}> &#10096; </a>
+            <div>
+                <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">
+                    <a class="pagination-previous" onClick={() => {handlePagination(pageNumber-1)}}>&#10096;</a>
+                    <a class="pagination-next" onClick={() => {handlePagination(pageNumber+1)}}>&#10097;</a>
                     <ul class="pagination-list">
-                        {pages.map((page,index) => 
-                            <li onClick={() => {handlePagination(index)}}>
-                                <a class={"pagination-link" + (pageNumber===index ? " is-current" : "")} aria-label={"Page " + (index+1)}  aria-current="page">{(index+1)}</a>
-                            </li>
-                        )}
+                        {
+                            Array.from(
+                                new Array(numPages),
+                                (el, index) => (
+                                    <li><a
+                                        class={"pagination-link" + (index + 1 === pageNumber ? " is-current" : "")}
+                                        key={index + 1}
+                                        aria-label={"Goto page " + index + 1}
+                                        onClick={() => {handlePagination(index+1)}}
+                                    >
+                                        {index + 1}</a></li>
+                                ),
+                            )
+                        }
                     </ul>
-                    <a className='pagination-next' onClick={() => {handlePagination(pageNumber + 1)}}> &#10097; </a>
                 </nav>
             </div>
         </article>
@@ -44,14 +67,21 @@ height: 100%;
 width: 100%;
 overflow: hidden;
 
-.text-container{
-    height:90%;
-    padding: 10px 10px 0px 10px;
-    overflow-y:auto;
-    overflow-x:hidden;
+.pdf-container{
+    height:80vh;
 }
 
-.pagination-container{
-    padding: 10px 10px 0px 10px;
+.pdf-page{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.react-pdf__Page__canvas {
+    margin: 0 auto;
+    width: 100% !important;
+    height: 100% !important;
+}
+.react-pdf__Page__textContent {
+    display: none !important;
 }
 `

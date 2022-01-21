@@ -20,16 +20,16 @@ const FileDisplayPage = ({ className }) => {
     if (!location.state) {
         return null
     }
-
+    console.log(location)
     return (
         <div className={classnames(className)}>
             <div className='columns box-grid'>
                 <div className="column">
-                    <SkillsDisplayPanel skills={location.state.Resume.skills}/>
+                    <SkillsDisplayPanel skills={location.state.results.skills}/>
                 </div>
                 <div className='column'></div>
-                <div className="column is-two-fifths view-container">
-                    <PDFPageViewer pages={location.state.Resume.content}/>
+                <div className="column is-one-third view-container">
+                    <PDFPageViewer file={location.state.resume}/>
                 </div>
             </div>
         </div>

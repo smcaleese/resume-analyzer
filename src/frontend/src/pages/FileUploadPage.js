@@ -54,7 +54,7 @@ const FileUploadPage = ({ className }) => {
         console.log('file to upload:', file)
         let data = await postResume(file)
         console.log(data)
-        navigate('/results', { state: {'Resume': data}})
+        navigate('/results', { state: {'results': data, 'resume': file}})
 
     }
 

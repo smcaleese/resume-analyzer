@@ -14,6 +14,10 @@ body {
   box-sizing: border-box;
 }
 
+html{
+  overflow-y: auto;
+}
+
 .center {
   display: flex;
   flex-direction: column;

@@ -39,7 +39,7 @@ height: 100%;
 width: 100%;
 
 .box-grid{
-    padding-top:110px;
+    padding:110px 20px 0px 20px;
 
     .view-container{
         height:90vh;

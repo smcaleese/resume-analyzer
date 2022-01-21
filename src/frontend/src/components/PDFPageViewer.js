@@ -45,7 +45,7 @@ overflow: hidden;
 
 .text-container{
     height:95%;
-    overflow:scroll;
+    overflow-y:auto;
     overflow-x:hidden;
 }
 `

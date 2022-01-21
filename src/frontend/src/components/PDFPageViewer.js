@@ -17,7 +17,8 @@ const PDFPageViewer = ({ className, pages }) => {
     let page = pages[pageNumber]
 
     return (
-        <div className={classnames(className, 'box')}>
+        <article className={classnames(className, 'panel is-link')}>
+            <p className='panel-heading'> Resume </p>
             <div className='text-container'>
                 {page.split("\n").map((str, index) => <p key={index}>{str}</p>)}
             </div>
@@ -34,7 +35,7 @@ const PDFPageViewer = ({ className, pages }) => {
                     <a className='pagination-next' onClick={() => {handlePagination(pageNumber + 1)}}> &#10097; </a>
                 </nav>
             </div>
-        </div>
+        </article>
     )
 }
 
@@ -44,8 +45,13 @@ width: 100%;
 overflow: hidden;
 
 .text-container{
-    height:95%;
+    height:90%;
+    padding: 10px 10px 0px 10px;
     overflow-y:auto;
     overflow-x:hidden;
+}
+
+.pagination-container{
+    padding: 10px 10px 0px 10px;
 }
 `

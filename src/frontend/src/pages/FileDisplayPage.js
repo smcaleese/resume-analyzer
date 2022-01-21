@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import classnames from 'classnames'
 import PDFPageViewer from '../components/PDFPageViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
+import SkillsDisplayPanel from '../components/SkillsDisplayPanel'
 
 const FileDisplayPage = ({ className }) => {
     const location = useLocation()
@@ -24,8 +25,9 @@ const FileDisplayPage = ({ className }) => {
         <div className={classnames(className)}>
             <div className='columns box-grid'>
                 <div className="column">
-                    stuff
+                    <SkillsDisplayPanel skills={location.state.Resume.skills}/>
                 </div>
+                <div className='column'></div>
                 <div className="column is-two-fifths view-container">
                     <PDFPageViewer pages={location.state.Resume.content}/>
                 </div>

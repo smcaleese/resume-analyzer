@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { useDropzone } from "react-dropzone";
+import { useNavigate } from 'react-router-dom';
 
 const postResume = async (file) => {
     const formData = new FormData()
@@ -16,7 +17,8 @@ const postResume = async (file) => {
         body: formData,
     })
     const json = await response.json()
-    console.log('resume content:\n', json.content)
+    console.log(json.content[0])
+    return json
 }
 
 const FileUploadPage = ({ className }) => {
@@ -50,7 +52,10 @@ const FileUploadPage = ({ className }) => {
     const uploadResume = async (e) => {
         e.preventDefault()
         console.log('file to upload:', file)
-        postResume(file)
+        let data = await postResume(file)
+        console.log(data)
+        navigate('/results', { state: {'Resume': data}})
+
     }
 
     const onDrop = useCallback((acceptedFile, rejectedFile) => {
@@ -61,7 +66,9 @@ const FileUploadPage = ({ className }) => {
             setFile(file)
         }
     }, [])
+
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
+    const navigate = useNavigate()
 
     return (
         <div className={classnames(className, 'App', 'center')}>

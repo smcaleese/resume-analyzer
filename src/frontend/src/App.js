@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import FileUploadPage from './pages/FileUploadPage';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import FileUploadPage from './pages/FileUploadPage'
 import FileDisplayPage from './pages/FileDisplayPage'
-import Header from './components/Header';
+import Header from './components/Header'
 
 const App = ({className}) => {
   return (
@@ -21,5 +21,5 @@ const App = ({className}) => {
 export default styled(App)`
   height: 100vh;
   width: 100vw;
-  position:relative;
+  position: relative;
 `;

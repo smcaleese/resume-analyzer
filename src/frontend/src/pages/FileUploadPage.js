@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
-import { useDropzone } from "react-dropzone";
-import { useNavigate } from 'react-router-dom';
+import { useDropzone } from 'react-dropzone'
+import { useNavigate } from 'react-router-dom'
+import { Spinner } from 'react-bootstrap'
 
 const postResume = async (file) => {
     const formData = new FormData()
@@ -10,19 +11,21 @@ const postResume = async (file) => {
         'file',
         file,
     )
-
     const response = await fetch('http://localhost:8000/resume-upload', {
         method: 'POST',
         mode: 'cors',
         body: formData,
     })
     const json = await response.json()
-    console.log(json.content[0])
+    console.log('json response:', json)
     return json
 }
 
 const FileUploadPage = ({ className }) => {
-    const [file, setFile] = useState('')
+    const [file, setFile] = useState(null)
+    const [loading, setLoading] = useState(false)
+
+    const navigate = useNavigate()
 
     const checkFileValidity = (file) => {
         const notPDF = file.type !== 'application/pdf'
@@ -39,26 +42,20 @@ const FileUploadPage = ({ className }) => {
         }
     }
 
-    const handleFileUpload = (e) => {
-        e.preventDefault()
-        const file = e.target.files[0]
-
-        if (checkFileValidity(file)) {
-            console.log('upload successful')
-            setFile(file)
-        }
-    }
-
     const uploadResume = async (e) => {
         e.preventDefault()
         console.log('file to upload:', file)
+
+        setLoading(true)
         let data = await postResume(file)
+        setLoading(false)
+
         console.log(data)
         navigate('/results', { state: {'results': data, 'resume': file}})
-
     }
 
     const onDrop = useCallback((acceptedFile, rejectedFile) => {
+        console.log('drop')
         const file = acceptedFile[0]
 
         if (checkFileValidity(file)) {
@@ -67,26 +64,30 @@ const FileUploadPage = ({ className }) => {
         }
     }, [])
 
-    const { getRootProps, getInputProps } = useDropzone({ onDrop });
-    const navigate = useNavigate()
+    const { getRootProps, getInputProps } = useDropzone({ onDrop })
+
+    if (loading) {
+        return (
+            <div className={classnames(className, 'center')}>
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading</span>
+                </Spinner>
+            </div>
+        )
+    }
 
     return (
-        <div className={classnames(className, 'App', 'center')}>
+        <div className={classnames(className, 'center')}>
             <form className='card upload-form center'>
-                <h1 className='title'>Upload a resume</h1>
-                <div {...getRootProps()} className='drag-drop-box'>
+                <h1 className='title'>Upload a resume (PDF)</h1>
+                <div {...getRootProps()} className='drag-drop-box center'>
                     <input {...getInputProps()} />
-                </div>
-                <div className='drag-drop-box-content'>
+                    <div className='drag-drop-box-content center'>
                         <p className='drag-drop-box-text'>{file ? file.name : "Drag and Drop a File"}</p>
-                        <p>{file ? "" : "or"}</p>
-                        <div className='upload-button'>
-                            <label htmlFor='file-upload' className='file-upload-label button is-primary'>
-                                File Upload (PDF)
-                            </label>
-                            <input type="file" id='file-upload' className='upload-input' onChange={handleFileUpload} />
-                        </div>
+                        <p style={{'padding': '0.5rem'}}>{file ? '' : 'or'}</p>
+                        {file ? null : <div className='upload-button button is-primary'>Click Here to Upload</div>}
                     </div>
+                </div>
                 {file ?
                     <button type="submit" className='button submit-button' onClick={uploadResume}><strong>submit</strong></button>
                     :
@@ -100,57 +101,46 @@ const FileUploadPage = ({ className }) => {
 export default styled(FileUploadPage)`
     height: 100%;
     width: 100%;
-  .upload-form {
-    width: 50rem;
-    padding: 2rem;
-    z-index: 100;
+
+    .upload-form {
+        width: 50rem;
+        padding: 2rem;
+        z-index: 100;
+    }
     
     button {
-      width: 10rem;
+        width: 10rem;
     }
 
     .drag-drop-box {
-      height:400px;
-      width:100%;
-      border-radius: 20px;
-      border: 4px dashed grey;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+        height: 400px;
+        width: 100%;
+        border-radius: 20px;
+        border: 4px dashed grey;
     }
 
-    .drag-drop-box-content{
-        position:absolute;
-        width:100%;
-        p{
-            text-align: center
-          }
+    .drag-drop-box-content {
+        position: absolute;
+        width: 100%;
 
-        .drag-drop-box-text{
-            font-size:1.2rem;
-            font-weight:bold;
-          }
+        p {
+            text-align: center;
+        }
+
+        .drag-drop-box-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
         
-        .upload-button{
-            display: table;
-            margin: 0 auto;
-            .file-upload-label {
-                font-weight: bold;
-                width: 10rem;
-              }
-        
-              input[type='file'] {
-                display: none;
-              }
-          }
-      
-
-
+        .upload-button {
+            font-weight: bold;
+        }
     }
 
     .submit-button {
-      color: white;
-      background-color: var(--button-blue);
+        margin-top: 2rem;
+        color: white;
+        background-color: var(--button-blue);
     }
   }
 `

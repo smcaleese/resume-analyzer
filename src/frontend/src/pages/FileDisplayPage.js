@@ -17,12 +17,14 @@ const FileDisplayPage = ({ className }) => {
     }, [location, navigate])
 
     // Block Page render if no resume has been uploaded
+    console.log(location)
+
     if (!location.state) {
         return null
     }
-    console.log(location)
+
     return (
-        <div className={classnames(className)}>
+        <div className={className}>
             <div className='columns box-grid'>
                 <div className="column">
                     <SkillsDisplayPanel skills={location.state.results.skills}/>
@@ -40,11 +42,11 @@ export default styled(FileDisplayPage)`
 height: 100%;
 width: 100%;
 
-.box-grid{
-    padding:110px 20px 0px 20px;
+.box-grid {
+    padding: 110px 20px 0px 20px;
 
-    .view-container{
-        height:90vh;
+    .view-container {
+        height: 90vh;
     }
 }
 `

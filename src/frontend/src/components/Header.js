@@ -18,15 +18,15 @@ const Header = ({ className }) => {
 }
 
 export default styled(Header)`
-    box-shadow: 2px 2px 5px grey;
+    box-shadow: 0px 2px 5px #ccc;
     overflow: hidden;
     position: fixed; 
     top: 0;
     width: 100%;
     z-index: 1000;
 
-    .navbar-item{
-        img{
+    .navbar-item {
+        img {
             max-height: 5rem;
         }
     }

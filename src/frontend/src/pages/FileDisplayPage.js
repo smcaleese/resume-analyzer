@@ -17,8 +17,6 @@ const FileDisplayPage = ({ className }) => {
     }, [location, navigate])
 
     // Block Page render if no resume has been uploaded
-    console.log(location)
-
     if (!location.state) {
         return null
     }
@@ -26,12 +24,11 @@ const FileDisplayPage = ({ className }) => {
     return (
         <div className={className}>
             <div className='columns box-grid'>
-                <div className="column">
-                    <SkillsDisplayPanel skills={location.state.results.skills}/>
+                <div className='column is-half'>
+                    <SkillsDisplayPanel skills={location.state.results.skills} />
                 </div>
-                <div className='column'></div>
-                <div className="column is-one-third view-container">
-                    <PDFPageViewer file={location.state.resume}/>
+                <div className='column is-half'>
+                    <PDFPageViewer file={location.state.resume} />
                 </div>
             </div>
         </div>
@@ -41,12 +38,9 @@ const FileDisplayPage = ({ className }) => {
 export default styled(FileDisplayPage)`
 height: 100%;
 width: 100%;
+margin-top: 8rem;
 
 .box-grid {
     padding: 110px 20px 0px 20px;
-
-    .view-container {
-        height: 90vh;
-    }
 }
 `

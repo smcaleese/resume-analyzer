@@ -51,7 +51,7 @@ const FileUploadPage = ({ className }) => {
         setLoading(false)
 
         console.log(data)
-        navigate('/results', { state: {'results': data, 'resume': file}})
+        navigate('/results', { state: {'results': data, 'resume': file } })
     }
 
     const onDrop = useCallback((acceptedFile, rejectedFile) => {
@@ -101,6 +101,7 @@ const FileUploadPage = ({ className }) => {
 export default styled(FileUploadPage)`
     height: 100%;
     width: 100%;
+    margin-top: 8rem;
 
     .upload-form {
         width: 50rem;

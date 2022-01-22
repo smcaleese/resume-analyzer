@@ -28,15 +28,15 @@ def handle_upload(file: UploadFile = File(...)):
     print('filename:', file.filename)
 
     with pdfplumber.open(file.file) as pdf:
-        content = []
+        pages = []
         for page in pdf.pages:
-            content.append(page.extract_text())
+            pages.append(page.extract_text())
     
         nlp = spacy.load("./models/ner-model")
-        doc = nlp(" ".join(content))
+        doc = nlp(' '.join(pages))
         ents = doc.ents
-        skills=[]
+        skills = []
         for skill in ents:
-            skills.append({'skill':{'name':skill.text, 'start': skill.start, 'end': skill.end}})
+            skills.append({ 'name': skill.text, 'start': skill.start, 'end': skill.end })
 
-    return {'content': content, 'skills': skills}
+    return { 'pages': pages, 'skills': skills }

@@ -31,10 +31,10 @@ export default styled(Header)`
     z-index: 3000;
     cursor: pointer;
 
-.product-name {
-    line-height: 100px; 
-    vertical-align: middle;
-    font-size: 3em;
-    color: #4a4a4a
-}
+    .product-name {
+        line-height: 100px; 
+        vertical-align: middle;
+        font-size: 3em;
+        color: #4a4a4a
+    }
 `

@@ -51,7 +51,7 @@ const FileUploadPage = ({ className }) => {
         setLoading(false)
 
         console.log(data)
-        navigate('/results', { state: {'results': data, 'resume': file } })
+        navigate('/results', { state: { 'results': data, 'resume': file } })
     }
 
     const onDrop = useCallback((acceptedFile, rejectedFile) => {

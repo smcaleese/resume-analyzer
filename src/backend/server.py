@@ -21,7 +21,7 @@ app.add_middleware(
 
 @app.get('/status')
 async def status():
-    return {'message': 'Server is running'}
+    return { 'message': 'Server is running' }
 
 @app.post('/resume-upload')
 def handle_upload(file: UploadFile = File(...)):

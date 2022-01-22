@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Card, ListGroup } from 'react-bootstrap'
 import { nanoid } from 'nanoid'
 
 const SkillsDisplayPanel = ({ className, skills }) => {
@@ -31,4 +31,4 @@ export default styled(SkillsDisplayPanel)`
         background-color: var(--bs-blue);
         color: #fff;
     }
-`;
+`

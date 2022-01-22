@@ -2,7 +2,7 @@ stages:
   - build
   - test
 
-image: tiangolo/uvicorn-gunicorn-fastapi:latest
+image: beevelop/nodejs-python:latest
 
 build_project:
   stage: build
@@ -12,4 +12,16 @@ build_project:
     - pip install -r requirements.txt
     - uvicorn server:app &
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
+
+test:
+  stage: test
+    script:
+    - cd src/backend
+    - pip install -r requirements.txt
+    - npm install -g newman
+    - newman --version
+    - uvicorn server:app &
+    - newman run ../tests/postman/status.postman_collection.json
+    - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
+
 

@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import PDFPageViewer from '../components/PDFPageViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SkillsDisplayPanel from '../components/SkillsDisplayPanel'
+import { Container,Col, Row } from 'react-bootstrap'
 
 const FileDisplayPage = ({ className }) => {
     const location = useLocation()
@@ -25,15 +26,17 @@ const FileDisplayPage = ({ className }) => {
 
     return (
         <div className={className}>
-            <div className='columns box-grid'>
-                <div className="column">
-                    <SkillsDisplayPanel skills={location.state.results.skills}/>
-                </div>
-                <div className='column'></div>
-                <div className="column is-one-third view-container">
-                    <PDFPageViewer file={location.state.resume}/>
-                </div>
-            </div>
+            <Container fluid>
+                <Row className='box-grid'>
+                    <Col lg={3}>
+                        <SkillsDisplayPanel skills={location.state.results.skills}/>
+                    </Col>
+                    <Col lg={5}></Col>
+                    <Col lg={4}>
+                        <PDFPageViewer file={location.state.resume}/>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     )
 }
@@ -43,10 +46,6 @@ height: 100%;
 width: 100%;
 
 .box-grid {
-    padding: 110px 20px 0px 20px;
-
-    .view-container {
-        height: 90vh;
-    }
+    padding: 140px 20px 0px 20px;
 }
 `

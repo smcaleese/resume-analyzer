@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { pdfjs, Document, Page } from 'react-pdf';
+import { Card, Container, Pagination, Row } from 'react-bootstrap'
 
 pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
@@ -23,42 +24,47 @@ const PDFPageViewer = ({ className, file }) => {
     }
 
     return (
-        <article className={classnames(className, 'panel is-link')}>
-            <p className='panel-heading'> Resume </p>
-            <div className='pdf-container'>
-                <Document
-                    file={file}
-                    onLoadSuccess={onDocumentLoadSuccess}
-                    className='pdf-page'
-                >
-                    <Page
-                        pageNumber={pageNumber}
-                    />
-                </Document>
-            </div>
-            <div>
-                <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">
-                    <a class="pagination-previous" onClick={() => {handlePagination(pageNumber-1)}}>&#10096;</a>
-                    <a class="pagination-next" onClick={() => {handlePagination(pageNumber+1)}}>&#10097;</a>
-                    <ul class="pagination-list">
-                        {
-                            Array.from(
-                                new Array(numPages),
-                                (el, index) => (
-                                    <li><a
-                                        class={"pagination-link" + (index + 1 === pageNumber ? " is-current" : "")}
-                                        key={index + 1}
-                                        aria-label={"Goto page " + index + 1}
-                                        onClick={() => {handlePagination(index+1)}}
-                                    >
-                                        {index + 1}</a></li>
-                                ),
-                            )
-                        }
-                    </ul>
-                </nav>
-            </div>
-        </article>
+        <Card className={classnames(className)}>
+            <Card.Header className="card-heading" as="h3">
+                Resume
+            </Card.Header>
+            <Card.Body>
+                <Container fluid>
+                    <Row>
+                        <Document
+                            file={file}
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            className='pdf-page'
+                        >
+                            <Page
+                                pageNumber={pageNumber}
+                            />
+                        </Document>
+                    </Row>
+                    <Row className='justify-content-center pagination-container'>
+                        <Pagination className='pagination-controller justify-content-center'>
+                            <Pagination.Prev onClick={() => { handlePagination(pageNumber - 1) }} />
+                            {
+                                Array.from(
+                                    new Array(numPages),
+                                    (el, index) => (
+
+                                        <Pagination.Item
+                                            active={index + 1 === pageNumber}
+                                            key={index + 1}
+                                            onClick={() => { handlePagination(index + 1) }}
+                                        >
+                                            {index + 1}
+                                        </Pagination.Item>
+                                    ),
+                                )
+                            }
+                            <Pagination.Next onClick={() => { handlePagination(pageNumber + 1) }} />
+                        </Pagination>
+                    </Row>
+                </Container>
+            </Card.Body>
+        </Card>
     )
 }
 
@@ -66,14 +72,20 @@ export default styled(PDFPageViewer)`
 height: 100%;
 width: 100%;
 overflow: hidden;
+box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
 
-.pdf-container{
-    height:80vh;
+.pagination-container{
+    padding:0;
 }
 
-.pdf-page{
-    width: 100% !important;
-    height: 100% !important;
+.pagination-controller{
+    maring:0;
+    padding:0;
+}
+
+.card-heading{
+    background-color:var(--bs-blue);
+    color:#fff;
 }
 
 .react-pdf__Page__canvas {

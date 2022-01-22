@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
@@ -54,7 +54,7 @@ const FileUploadPage = ({ className }) => {
         navigate('/results', { state: { 'results': data, 'resume': file } })
     }
 
-    const onDrop = useCallback((acceptedFile, rejectedFile) => {
+    const onDrop = useCallback((acceptedFile) => {
         console.log('drop')
         const file = acceptedFile[0]
 
@@ -69,8 +69,8 @@ const FileUploadPage = ({ className }) => {
     if (loading) {
         return (
             <div className={classnames(className, 'center')}>
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading</span>
+                <Spinner animation='border' role='status'>
+                    <span className='visually-hidden'>Loading</span>
                 </Spinner>
             </div>
         )
@@ -83,13 +83,13 @@ const FileUploadPage = ({ className }) => {
                 <div {...getRootProps()} className='drag-drop-box center'>
                     <input {...getInputProps()} />
                     <div className='drag-drop-box-content center'>
-                        <p className='drag-drop-box-text'>{file ? file.name : "Drag and Drop a File"}</p>
+                        <p className='drag-drop-box-text'>{file ? file.name : 'Drag and Drop a File'}</p>
                         <p style={{'padding': '0.5rem'}}>{file ? '' : 'or'}</p>
                         {file ? null : <div className='upload-button button is-primary'>Click Here to Upload</div>}
                     </div>
                 </div>
                 {file ?
-                    <button type="submit" className='button submit-button' onClick={uploadResume}><strong>submit</strong></button>
+                    <button type='submit' className='button submit-button' onClick={uploadResume}><strong>submit</strong></button>
                     :
                     null
                 }

@@ -18,14 +18,15 @@ const PaginationComponent = ({pageNumber, setPageNumber, numPages}) => {
             setPageNumber(n)
     }
 
-    const paginationItems = Array.from({length: numPages}, (_, index) => (
-        <Pagination.Item
-            active={index + 1 === pageNumber}
-            key={nanoid()}
-            onClick={() => { handlePagination(index + 1) }}
-        >
-            {index + 1}
-        </Pagination.Item>
+    const paginationItems = Array.from({length: numPages}, 
+        (_, index) => (
+            <Pagination.Item
+                active={index + 1 === pageNumber}
+                key={nanoid()}
+                onClick={() => { handlePagination(index + 1) }}
+            >
+                {index + 1}
+            </Pagination.Item>
         )
     )
 
@@ -41,8 +42,8 @@ const PaginationComponent = ({pageNumber, setPageNumber, numPages}) => {
 }
 
 const PDFPageViewer = ({ className, file }) => {
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
+    const [numPages, setNumPages] = useState(null)
+    const [pageNumber, setPageNumber] = useState(1)
 
     const onDocumentLoadSuccess = ({ numPages: nextNumPages }) => {
         console.log('pages in function:', numPages)
@@ -51,7 +52,7 @@ const PDFPageViewer = ({ className, file }) => {
 
     return (
         <Card className={classnames(className)}>
-            <Card.Header className="card-heading" as="h3">
+            <Card.Header className='card-heading' as='h3'>
                 Resume
             </Card.Header>
             <Card.Body>

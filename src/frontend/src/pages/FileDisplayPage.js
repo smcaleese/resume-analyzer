@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import classnames from 'classnames'
 import PDFPageViewer from '../components/PDFPageViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SkillsDisplayPanel from '../components/SkillsDisplayPanel'

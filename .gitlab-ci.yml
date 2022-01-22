@@ -15,7 +15,7 @@ build_project:
 
 test:
   stage: test
-    script:
+  script:
     - cd src/backend
     - pip install -r requirements.txt
     - npm install -g newman

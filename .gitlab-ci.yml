@@ -21,7 +21,7 @@ test:
     - npm install -g newman
     - newman --version
     - uvicorn server:app &
-    - sudo netstat -lntup
+    - netstat -lntup
     - newman run ../tests/postman/status.postman_collection.json
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
 

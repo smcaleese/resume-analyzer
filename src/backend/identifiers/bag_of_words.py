@@ -7,9 +7,9 @@ import sys
 sys.path.append('..')
 from database import engine, Base, Session
 from crud import get_all_job_posts
-
 from nltk.corpus import stopwords
-import time
+
+stop_words_set = set(stopwords.words('english'))
 
 skills = {
     'Javascript': {'Javascript', 'JS'},
@@ -72,6 +72,11 @@ skills = {
     'shell': {'shell', 'BASH', 'ZSH'},
 }
 
+# make all keys and values lowercase
+skills_lowercase = {}
+for k, v in skills.items():
+    skills_lowercase[k.lower()] = [x.lower() for x in v]
+
 def skill_match(word, skills_lowercase):
     for item in skills_lowercase.items():
         key, values_set = item
@@ -79,38 +84,44 @@ def skill_match(word, skills_lowercase):
             return True, key
     return False, None
 
+# figure out how to run it in main and have a function for csv_to_db.py
+# first figure out the helper function
+
+def get_skills(description):
+    description_arr = description.split()
+    skills_set = set()
+
+    for word in description_arr:
+        word = word.lower()
+        if word not in stop_words_set:
+            match, skill = skill_match(word, skills_lowercase)
+            if match:
+                skills_set.add(skill)
+
+    return ' '.join(skills_set)
+
 def main():
     db = Session()
     with db.begin():
         Base.metadata.create_all(bind=engine)
     all_job_posts = get_all_job_posts(db)
-
-    skills_lowercase = {}
-    for k, v in skills.items():
-        skills_lowercase[k.lower()] = [x.lower() for x in v]
-
-    stop_words_set = set(stopwords.words('english'))
-
-    time1 = time.time()
     skill_counts = {}
-    for key in skills_lowercase.keys():
-        skill_counts[key] = 0
 
     for post in all_job_posts:
         post_words = post.description.split()
         for word in post_words:
             if word not in stop_words_set:
-                match, word = skill_match(word, skills_lowercase)
+                match, skill = skill_match(word, skills_lowercase)
                 if match:
-                    skill_counts[word] += 1
+                    if skill not in skill_counts:
+                        skill_counts[skill] = 1
+                    else:
+                        skill_counts[skill] += 1
 
     sorted_items = sorted(skill_counts.items(), key=lambda x: x[1], reverse=True)
     for item in sorted_items:
         print(item)
     print()
-
-    time2 = time.time()
-    print(time2 - time1, 's')
 
 if __name__ == '__main__':
     main()

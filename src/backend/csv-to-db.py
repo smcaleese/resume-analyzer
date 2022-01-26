@@ -23,7 +23,7 @@ def add_to_db(db, filename):
                     'title': job_title,
                     'location': location,
                     'description': description,
-                    'requirements': str(requirements) if requirements else None
+                    'requirements': requirements if requirements else None
                 }
                 new_job_post = models.JobPost(**data)
                 add_job_post(db, new_job_post)

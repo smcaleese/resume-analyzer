@@ -1,5 +1,6 @@
 from sqlalchemy import Column, BigInteger, String
 from sqlalchemy.schema import Identity
+from sqlalchemy.dialects.postgresql import ARRAY
 from database import Base
 
 class JobPost(Base):
@@ -9,7 +10,7 @@ class JobPost(Base):
     title = Column(String, nullable=False)
     location = Column(String, nullable=False)
     description = Column(String(20000))
-    requirements = Column(String(20000))
+    requirements = Column(ARRAY(String))
 
 
     def __repr__(self):

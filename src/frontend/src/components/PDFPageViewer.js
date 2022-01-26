@@ -82,8 +82,6 @@ const PDFPageViewer = ({ className, file }) => {
 }
 
 export default styled(PDFPageViewer)`
-height: 100%;
-overflow: hidden;
 box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
 
 .pagination-container {
@@ -97,7 +95,8 @@ box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
 
 .card-heading {
     background-color: var(--bs-blue);
-    color:#fff;
+    color: #fff;
+}
 
 .pdf-page {
     width: 100% !important;

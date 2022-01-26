@@ -107,6 +107,10 @@ export default styled(FileUploadPage)`
         width: 50rem;
         padding: 2rem;
         z-index: 100;
+
+        .title {
+            margin: 1rem;
+        }
     }
     
     button {

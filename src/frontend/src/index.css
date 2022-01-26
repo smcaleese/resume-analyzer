@@ -29,13 +29,13 @@ html {
   --button-blue: #004cff;
 }
 
-.button.is-primary{
+.button.is-primary {
   background-color: #00d1b2;
   border-color: transparent;
   color: #fff;
 }
 
-.button.is-primary:hover{
+.button.is-primary:hover {
   background-color: #00c4a7;
 }
 

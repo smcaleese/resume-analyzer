@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import PDFPageViewer from '../components/PDFPageViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SkillsDisplayPanel from '../components/SkillsDisplayPanel'
-import { Container,Col, Row } from 'react-bootstrap'
+import SkillFrequenciesPanel from '../components/SkillFrequenciesPanel'
+import { Container, Col, Row } from 'react-bootstrap'
 
 const FileDisplayPage = ({ className }) => {
     const location = useLocation()
@@ -21,15 +22,17 @@ const FileDisplayPage = ({ className }) => {
         return null
     }
 
+
     return (
         <div className={className}>
             <Container fluid>
                 <Row className='box-grid'>
                     <Col lg={6}>
-                        <SkillsDisplayPanel skills={location.state.results.skills}/>
+                        <SkillsDisplayPanel skills={location.state.results.skills} />
+                        <SkillFrequenciesPanel skills={location.state.results.skills} />
                     </Col>
                     <Col lg={6}>
-                        <PDFPageViewer file={location.state.resume}/>
+                        <PDFPageViewer file={location.state.resume} />
                     </Col>
                 </Row>
             </Container>

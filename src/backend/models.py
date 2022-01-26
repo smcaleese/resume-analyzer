@@ -11,8 +11,10 @@ class JobPost(Base):
     location = Column(String, nullable=False)
     description = Column(String(20000))
     requirements = Column(ARRAY(String))
+    
 
 
     def __repr__(self):
         return '<JobPost id={} company={} title={} location={} description={} requirements={}>' \
                 .format(self.id, self.company, self.title, self.location, self.description, self.requirements)
+

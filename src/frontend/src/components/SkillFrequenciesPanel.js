@@ -8,11 +8,14 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     const options = {
         plugins: {
             legend: {
-                position: 'bottom'
+                position: 'bottom',
+                // Prevent legend toggle
+                onClick: () => {
+                }
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         return ` ${context.formattedValue}`
                     }
                 }
@@ -26,12 +29,12 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     const gray = '#aaa'
 
     // sort in descending order by value
-    const jobPostSkillsSorted = Object.entries(skillCounts).sort((a, b) => b[1] - a[1])
+    const jobPostSkillsSorted = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 100)
     const resumeSkillsSetLower = new Set(skills.map((skill) => skill.name.toLowerCase()))
 
     // check if each skill is in the resume
-    jobPostSkillsSorted.forEach(([name,  value]) => {
-        if(resumeSkillsSetLower.has(name.toLowerCase())) {
+    jobPostSkillsSorted.forEach(([name, value]) => {
+        if (resumeSkillsSetLower.has(name.toLowerCase())) {
             backgroundColors.push(green)
         } else {
             backgroundColors.push(gray)
@@ -47,7 +50,7 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
             {
                 label: 'Skills found in your resume',
                 backgroundColor: backgroundColors,
-                data: values 
+                data: values
             },
         ]
     }
@@ -65,8 +68,8 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
 }
 
 export default styled(SkillFrequenciesPanel)`
-    margin-top: 2rem;
     box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
+    height: 100%;
 
     .card-heading {
         background-color: var(--bs-blue);

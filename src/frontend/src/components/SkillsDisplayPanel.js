@@ -11,7 +11,7 @@ const SkillsDisplayPanel = ({ className, skills }) => {
             <Card.Header className='card-heading' as='h3'>
                 Skills
             </Card.Header>
-            <Card.Body>
+            <Card.Body className='card-body'>
                 <ListGroup variant='flush'>
                     {skills.map((skill, index) => 
                         <ListGroup.Item key={nanoid()}>{skill.name}</ListGroup.Item>
@@ -24,11 +24,14 @@ const SkillsDisplayPanel = ({ className, skills }) => {
 
 export default styled(SkillsDisplayPanel)`
     box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
-    max-height: 100%;
-    overflow-y: auto;
+    max-height: 500px;
 
     .card-heading {
         background-color: var(--bs-blue);
         color: #fff;
+    }
+
+    .card-body{
+        overflow-y:auto;
     }
 `

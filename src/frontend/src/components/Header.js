@@ -30,6 +30,7 @@ export default styled(Header)`
     background-color: #fff;
     z-index: 3000;
     cursor: pointer;
+    position: fixed;
 
     .product-name {
         line-height: 100px; 

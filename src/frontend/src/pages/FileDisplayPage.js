@@ -28,16 +28,18 @@ const FileDisplayPage = ({ className }) => {
         <div className={className}>
             <Container fluid>
                 <Row className='box-grid'>
-                    <Col lg={6}>
-                        <SkillsDisplayPanel skills={location.state.results.skills} />
+                    <Col lg={7}>
+                        <Row>
+                            <Col lg={6}>
+                                <SkillsDisplayPanel skills={location.state.results.skills} />
+                            </Col>
+                            <Col lg={6}>
+                                <SkillFrequenciesPanel skills={location.state.results.skills} skillCounts={location.state.results.skill_counts} />
+                            </Col>
+                        </Row>
                     </Col>
-                    <Col lg={6}>
+                    <Col lg={5}>
                         <PDFPageViewer file={location.state.resume} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={12}>
-                        <SkillFrequenciesPanel skills={location.state.results.skills} skillCounts={location.state.results.skill_counts} />
                     </Col>
                 </Row>
             </Container>
@@ -48,7 +50,6 @@ const FileDisplayPage = ({ className }) => {
 export default styled(FileDisplayPage)`
 height: 100%;
 width: 100%;
-margin-top: 8rem;
 
 .box-grid {
     padding: 140px 20px 0px 20px;

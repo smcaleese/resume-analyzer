@@ -71,10 +71,13 @@ def handle_upload(file: UploadFile = File(...)):
         nlp = spacy.load('./models/ner-model')
         doc = nlp(' '.join(pages))
         ents = doc.ents
+        skill_set = set()
+        for ent in ents:
+            skill_set.add(ent.text)
         skills = []
-        skill_colors = gen_skill_colors(ents) 
-        for idx, skill in enumerate(ents):
-            skills.append({'name':skill.text, 'color': skill_colors[idx]})
+        skill_colors = gen_skill_colors(skill_set) 
+        for idx, skill in enumerate(skill_set):
+            skills.append({'name':skill, 'color': skill_colors[idx]})
 
     return { 'pages': pages, 'skills': skills, 'skill_counts': skill_counts }
 

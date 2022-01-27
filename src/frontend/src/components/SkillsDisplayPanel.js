@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
-import { Card, ListGroup } from 'react-bootstrap'
+import SkillCard from './SkillCard'
+import { Card, ListGroup, Row } from 'react-bootstrap'
 
 const SkillsDisplayPanel = ({ className, skills }) => {
     console.log(skills)
@@ -11,11 +12,11 @@ const SkillsDisplayPanel = ({ className, skills }) => {
                 Skills
             </Card.Header>
             <Card.Body className='card-body'>
-                <ListGroup variant='flush'>
+                <Row>
                     {skills.map((skill, index) => 
-                        <ListGroup.Item key={index}>{skill.name}</ListGroup.Item>
+                        <SkillCard key={index} skill={skill.name} color={skill.color}/>
                     )}
-                </ListGroup>
+                </Row>
             </Card.Body>
         </Card>
     )
@@ -32,5 +33,6 @@ export default styled(SkillsDisplayPanel)`
 
     .card-body{
         overflow-y:auto;
+        inline-block
     }
 `

@@ -35,7 +35,15 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     // check if each skill is in the resume
     jobPostSkillsSorted.forEach(([name, value]) => {
         if (resumeSkillsSetLower.has(name.toLowerCase())) {
-            backgroundColors.push(green)
+            let color_flag = false
+            skills.forEach(skill => {
+                if (skill.name.toLowerCase() === name.toLowerCase()){
+                    backgroundColors.push(`rgb(${skill.color})`)
+                    color_flag = true
+                }
+            })
+            if (!color_flag)
+                backgroundColors.push(green)
         } else {
             backgroundColors.push(gray)
         }

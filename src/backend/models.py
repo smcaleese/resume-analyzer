@@ -1,5 +1,6 @@
 from sqlalchemy import Column, BigInteger, String, Text, ARRAY
 from sqlalchemy.schema import Identity
+from sqlalchemy.dialects.postgresql import ARRAY
 from database import Base
 
 class JobPost(Base):
@@ -14,3 +15,4 @@ class JobPost(Base):
     def __repr__(self):
         return '<JobPost id={} company={} title={} location={} description={} requirements={}>' \
                 .format(self.id, self.company, self.title, self.location, self.description, self.requirements)
+

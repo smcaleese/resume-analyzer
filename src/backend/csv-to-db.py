@@ -16,10 +16,12 @@ def add_to_db(db, filename):
         for row in csvreader:
             try:
                 id, company, job_title, location, description = row
+                if company.lower() == 'company':
+                    continue
                 # store requirements as space-separated string eg. 'python java ruby'
                 requirements = ' '.join(list(set([i.text for i in nlp(job_title + '. ' + description).ents])))
 
-                # # make sure only job posts with unique descriptions are added:
+                # make sure only unique descriptions are added:
                 description_in_db = db.query(models.JobPost).filter(models.JobPost.id == hash(description)).first()
                 if description_in_db or len(description) == 0:
                     continue

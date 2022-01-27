@@ -77,7 +77,6 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
 
 export default styled(SkillFrequenciesPanel)`
     box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
-    height: 100%;
 
     .card-heading {
         background-color: var(--bs-blue);

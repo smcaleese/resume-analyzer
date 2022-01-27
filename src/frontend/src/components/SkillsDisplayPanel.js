@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import SkillCard from './SkillCard'
-import { Card, ListGroup, Row } from 'react-bootstrap'
+import { Card, Row } from 'react-bootstrap'
 
 const SkillsDisplayPanel = ({ className, skills }) => {
     console.log(skills)
@@ -25,6 +25,7 @@ const SkillsDisplayPanel = ({ className, skills }) => {
 export default styled(SkillsDisplayPanel)`
     box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
     max-height: 500px;
+    padding:0 ;
 
     .card-heading {
         background-color: var(--bs-blue);
@@ -33,6 +34,5 @@ export default styled(SkillsDisplayPanel)`
 
     .card-body{
         overflow-y:auto;
-        inline-block
     }
 `

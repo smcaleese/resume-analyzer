@@ -56,7 +56,7 @@ def handle_upload(file: UploadFile = File(...)):
         ents = doc.ents
         skills = []
         for skill in ents:
-            skills.append({ 'name': skill.text, 'start': skill.start, 'end': skill.end })
+            skills.append(skill.text)
 
     return { 'pages': pages, 'skills': skills, 'skill_counts': skill_counts }
 

@@ -30,7 +30,7 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
 
     // sort in descending order by value
     const jobPostSkillsSorted = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 100)
-    const resumeSkillsSetLower = new Set(skills.map((skill) => skill.name.toLowerCase()))
+    const resumeSkillsSetLower = new Set(skills.map((skill) => skill.toLowerCase()))
 
     // check if each skill is in the resume
     jobPostSkillsSorted.forEach(([name, value]) => {

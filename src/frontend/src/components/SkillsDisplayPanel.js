@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { Card, ListGroup } from 'react-bootstrap'
-import { nanoid } from 'nanoid'
 
 const SkillsDisplayPanel = ({ className, skills }) => {
     console.log(skills)
@@ -14,7 +13,7 @@ const SkillsDisplayPanel = ({ className, skills }) => {
             <Card.Body className='card-body'>
                 <ListGroup variant='flush'>
                     {skills.map((skill, index) => 
-                        <ListGroup.Item key={nanoid()}>{skill.name}</ListGroup.Item>
+                        <ListGroup.Item key={index}>{skill}</ListGroup.Item>
                     )}
                 </ListGroup>
             </Card.Body>

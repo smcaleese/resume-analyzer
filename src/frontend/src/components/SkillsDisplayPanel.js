@@ -13,7 +13,7 @@ const SkillsDisplayPanel = ({ className, skills }) => {
             <Card.Body className='card-body'>
                 <ListGroup variant='flush'>
                     {skills.map((skill, index) => 
-                        <ListGroup.Item key={index}>{skill}</ListGroup.Item>
+                        <ListGroup.Item key={index}>{skill.name}</ListGroup.Item>
                     )}
                 </ListGroup>
             </Card.Body>

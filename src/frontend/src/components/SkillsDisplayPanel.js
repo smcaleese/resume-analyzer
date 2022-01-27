@@ -24,7 +24,7 @@ const SkillsDisplayPanel = ({ className, skills }) => {
 
 export default styled(SkillsDisplayPanel)`
     box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
-    max-height: 30%;
+    max-height: 100%;
     overflow-y: auto;
 
     .card-heading {

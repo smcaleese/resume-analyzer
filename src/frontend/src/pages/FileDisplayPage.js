@@ -22,6 +22,7 @@ const FileDisplayPage = ({ className }) => {
         return null
     }
 
+    // TODO: turn these cards into dropdowns or allow them to be rearanged
 
     return (
         <div className={className}>
@@ -29,10 +30,14 @@ const FileDisplayPage = ({ className }) => {
                 <Row className='box-grid'>
                     <Col lg={6}>
                         <SkillsDisplayPanel skills={location.state.results.skills} />
-                        <SkillFrequenciesPanel skills={location.state.results.skills} />
                     </Col>
                     <Col lg={6}>
                         <PDFPageViewer file={location.state.resume} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col lg={12}>
+                        <SkillFrequenciesPanel skills={location.state.results.skills} skillCounts={location.state.results.skill_counts} />
                     </Col>
                 </Row>
             </Container>

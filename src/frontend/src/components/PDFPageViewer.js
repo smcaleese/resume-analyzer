@@ -89,7 +89,7 @@ box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
 }
 
 .pagination-controller {
-    maring: 0;
+    margin: 0;
     padding: 0;
 }
 

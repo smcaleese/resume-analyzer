@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap'
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
 
-const SkillFrequenciesPanel = ({ className, skills }) => {
+const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     const options = {
         plugins: {
             legend: {
@@ -20,44 +20,34 @@ const SkillFrequenciesPanel = ({ className, skills }) => {
         }
     }
 
-    const labels = [
-        'Python',
-        'Java',
-        'JavaScript',
-        'C++',
-        'C#',
-        'HTML',
-        'CSS',
-        'SQL',
-        'React',
-        'Ruby on Rails',
-        'Node.js',
-        'Django',
-        'Git',
-        'GitHub',
-        'AWS',
-        'Docker',
-    ]
+    // make bar green if job post skill is found in resume. Otherwise, make it gray
+    const backgroundColors = []
+    const green = '#4caf50'
+    const gray = '#aaa'
 
-    // how do I change the color depending on whether they have the skill in their resume?
+    // sort in descending order by value
+    const jobPostSkillsSorted = Object.entries(skillCounts).sort((a, b) => b[1] - a[1])
+    const resumeSkillsSetLower = new Set(skills.map((skill) => skill.name.toLowerCase()))
+
+    // check if each skill is in the resume
+    jobPostSkillsSorted.forEach(([name,  value]) => {
+        if(resumeSkillsSetLower.has(name.toLowerCase())) {
+            backgroundColors.push(green)
+        } else {
+            backgroundColors.push(gray)
+        }
+    })
+
+    const labels = jobPostSkillsSorted.map((arr) => arr[0])
+    const values = jobPostSkillsSorted.map((arr) => arr[1])
 
     const data = {
         labels: labels,
         datasets: [
             {
                 label: 'Skills found in your resume',
-                // backgroundColor: '#4caf50',
-                backgroundColor: [
-                    '#4caf50',
-                    '#4caf50',
-                    '#4caf50',
-                    '#4caf50',
-                    '#4caf50',
-                    'gray',
-                    'gray',
-                    'gray',
-                ],
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 5, 6, 3, 2, 6, 2, 8]
+                backgroundColor: backgroundColors,
+                data: values 
             },
         ]
     }

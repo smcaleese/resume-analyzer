@@ -84,9 +84,6 @@ def skill_match(word, skills_lowercase):
             return True, key
     return False, None
 
-# figure out how to run it in main and have a function for csv_to_db.py
-# first figure out the helper function
-
 def get_skills(description):
     description_arr = description.split()
     skills_set = set()

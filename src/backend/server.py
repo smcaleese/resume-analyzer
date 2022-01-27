@@ -6,7 +6,7 @@ import pdfplumber
 import spacy
 from database import engine, Base, Session
 import models
-from crud import add_job_post, delete_all_job_posts, get_all_job_posts
+from crud import add_job_post, delete_all_job_posts, get_all_job_posts, get_ranked_job_posts
 import uvicorn
 import colorsys
 from math import floor
@@ -52,6 +52,23 @@ def gen_skill_colors(skills):
         encoded_rgb_skill_colors.append(color_string)
     return encoded_rgb_skill_colors
 
+def get_skills_from_ents(ents):
+    skill_set = set()
+    for ent in ents:
+        skill_set.add(ent.text)
+    skills = []
+    skill_colors = gen_skill_colors(skill_set) 
+    for idx, skill in enumerate(skill_set):
+        skills.append({'name':skill, 'color': skill_colors[idx]})
+    return skills
+
+def get_ranked_jobs(skills):
+    db = Session()
+    jobs = get_ranked_job_posts(db, skills)
+    db.close()
+
+    return jobs
+
 
 # Routes
 @app.get('/status')
@@ -71,15 +88,10 @@ def handle_upload(file: UploadFile = File(...)):
         nlp = spacy.load('./models/ner-model')
         doc = nlp(' '.join(pages))
         ents = doc.ents
-        skill_set = set()
-        for ent in ents:
-            skill_set.add(ent.text)
-        skills = []
-        skill_colors = gen_skill_colors(skill_set) 
-        for idx, skill in enumerate(skill_set):
-            skills.append({'name':skill, 'color': skill_colors[idx]})
+        skills = get_skills_from_ents(ents)
+        jobs = get_ranked_jobs([skill['name'] for skill in skills])
 
-    return { 'pages': pages, 'skills': skills, 'skill_counts': skill_counts }
+    return { 'pages': pages, 'skills': skills, 'skill_counts': skill_counts, 'jobs': jobs }
 
 if __name__ == '__main__':
     uvicorn.run('server:app', host='127.0.0.1', port=8000, log_level='info')

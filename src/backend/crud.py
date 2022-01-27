@@ -38,7 +38,10 @@ def get_ranked_job_posts(db: Session, skills: list):
     ranked_list = []
     for row in query_response:
         row = list(row)
-        row[len(row) - 1] = int(row[len(row) - 1][1:-1])
-        row[len(row) - 2] = row[len(row) - 2][2:-2].split(",") if len(row[len(row) - 2]) > 2 else [] 
-        ranked_list.append(row)
+        job_obj = {}
+        job_obj['company'] = row[0]
+        job_obj['title'] = row[1]
+        job_obj['skill_match'] = int(row[len(row) - 1][1:-1])
+        job_obj['match_count'] = row[len(row) - 2][2:-2].split(",") if len(row[len(row) - 2]) > 2 else [] 
+        ranked_list.append(job_obj)
     return ranked_list

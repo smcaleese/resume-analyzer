@@ -5,7 +5,6 @@ from database import engine, Base, Session
 import models
 import spacy
 from crud import add_job_post, delete_all_job_posts
-from identifiers.bag_of_words import get_skills
 
 # create a function which accepts a description string and returns a space separated list of skills
 
@@ -18,8 +17,8 @@ def add_to_db(db, filename):
                 id, company, job_title, location, description = row
                 if company.lower() == 'company':
                     continue
-                # store requirements as space-separated string eg. 'python java ruby'
-                requirements = ' '.join(list(set([i.text for i in nlp(job_title + '. ' + description).ents])))
+
+                requirements = list(set([i.text for i in nlp(job_title + '. ' + description).ents]))
 
                 # make sure only unique descriptions are added:
                 description_in_db = db.query(models.JobPost).filter(models.JobPost.id == hash(description)).first()
@@ -32,7 +31,7 @@ def add_to_db(db, filename):
                     'title': job_title,
                     'location': location,
                     'description': description,
-                    'requirements': requirements
+                    'requirements': requirements if requirements else None
                 }
                 new_job_post = models.JobPost(**data)
                 add_job_post(db, new_job_post)

@@ -32,19 +32,18 @@ def get_skill_counts():
 
     skill_counts = {} 
     for skill_string in skill_strings_arr:
-        skills = skill_string.split()
-        for skill in skills:
-            if skill not in skill_counts:
-                skill_counts[skill] = 1
-            else:
-                skill_counts[skill] += 1
+        skills = skill_string
+        if skills:
+            for skill in skills:
+                if skill not in skill_counts:
+                    skill_counts[skill] = 1
+                else:
+                    skill_counts[skill] += 1
     return skill_counts
 
 @app.post('/resume-upload')
 def handle_upload(file: UploadFile = File(...)):
     skill_counts = get_skill_counts()
-    print('skill counts:')
-    print(skill_counts)
 
     with pdfplumber.open(file.file) as pdf:
         pages = []

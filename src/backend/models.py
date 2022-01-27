@@ -10,7 +10,7 @@ class JobPost(Base):
     title = Column(String, nullable=False)
     location = Column(String, nullable=False)
     description = Column(Text)
-    requirements = Column(String)
+    requirements = Column(ARRAY(String))
 
     def __repr__(self):
         return '<JobPost id={} company={} title={} location={} description={} requirements={}>' \

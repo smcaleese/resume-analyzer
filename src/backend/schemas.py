@@ -6,7 +6,7 @@ class JobPost(BaseModel):
     title: str
     location: str
     description: str
-    requirements: str
+    requirements: list
 
     class Config:
         orm_mode = True

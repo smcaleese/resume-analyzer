@@ -27,7 +27,7 @@ const FileDisplayPage = ({ className }) => {
         <div className={className}>
             <Container fluid>
                 <Row className='box-grid'>
-                    <Col lg={6}>
+                    <Col lg={8}>
                         <Row>
                             <SkillsDisplayPanel skills={location.state.results.skills} />
                         </Row>
@@ -38,7 +38,7 @@ const FileDisplayPage = ({ className }) => {
                             <JobsDisplayPanel jobs={location.state.results.jobs}/>
                         </Row>
                     </Col>
-                    <Col lg={6}>
+                    <Col lg={4}>
                         <PDFPageViewer file={location.state.resume} />
                     </Col>
                 </Row>

@@ -7,6 +7,8 @@ import DisplayCard from './DisplayCard'
 
 const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     const options = {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'bottom',

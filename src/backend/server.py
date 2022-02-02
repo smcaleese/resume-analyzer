@@ -14,9 +14,10 @@ from math import floor
 # Set up app
 app = FastAPI()
 
+origins = ['http://localhost:3000', 'https://fourth-year-project-front-end.herokuapp.com', 'http://www.resumeanalyzer.xyz'],
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:3000', 'https://fourth-year-project-front-end.herokuapp.com'],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],

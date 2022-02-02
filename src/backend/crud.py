@@ -33,8 +33,8 @@ def get_skill_counts(db):
     return skill_counts
 
 def get_ranked_job_posts(db: Session, skills: list):
-    query_response = list(db.query(Column('company',String), Column('title',String), Column('skill_match',String), Column('match_count',String)).from_statement(text("""
-        SELECT i.company, i.title,  skill_match, match_count 
+    query_response = list(db.query(Column('company',String), Column('title',String), Column('description',String), Column('requirements',String), Column('skill_match',String), Column('match_count',String)).from_statement(text("""
+        SELECT i.company, i.title, i.description, i.requirements, skill_match, match_count 
         FROM   job_post i
             , Lateral (
                 SELECT ARRAY_AGG(uid)
@@ -54,8 +54,10 @@ def get_ranked_job_posts(db: Session, skills: list):
         job_obj = {}
         job_obj['company'] = row[0]
         job_obj['title'] = row[1]
+        job_obj['description'] = row[2]
+        job_obj['requirements'] = row[3]
 
-        skill_str = row[2][1:-1]
+        skill_str = row[4][1:-1]
         if not skill_str:
             continue
         skill_str = skill_str[2:-2]

@@ -11,7 +11,9 @@ const postResume = async (file) => {
         'file',
         file,
     )
-    const response = await fetch('http://localhost:8000/resume-upload', {
+    const localUrl = 'http://localhost:8000'
+    const serverUrl = 'https://fourth-year-project-api.herokuapp.com'
+    const response = await fetch(`${serverUrl}/resume-upload`, {
         method: 'POST',
         mode: 'cors',
         body: formData,

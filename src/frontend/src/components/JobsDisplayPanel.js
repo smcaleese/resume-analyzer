@@ -35,7 +35,7 @@ const StyledJobsTable = styled(JobsTable)`
 
 const JobsDisplayPanel = ({ className, jobs }) => {
     return (
-        <DisplayCard header='Matching Jobs' className={className}>
+        <DisplayCard header='Matching Jobs' className={className} height='50'>
             <StyledJobsTable jobs={jobs} />
         </DisplayCard>
     )

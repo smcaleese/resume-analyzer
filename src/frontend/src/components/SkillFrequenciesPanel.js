@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Card } from 'react-bootstrap'
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
+import DisplayCard from './DisplayCard'
 
 const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     const options = {
@@ -64,22 +65,11 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     }
 
     return (
-        <Card className={className} as='h3'>
-            <Card.Header className='card-heading'>
-                Skill Frequencies
-            </Card.Header>
-            <Card.Body>
-                <Bar options={options} data={data} />
-            </Card.Body>
-        </Card>
+        <DisplayCard header='Skill Frequencies'>
+            <Bar options={options} data={data} />
+        </DisplayCard>
     )
 }
 
 export default styled(SkillFrequenciesPanel)`
-    box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
-
-    .card-heading {
-        background-color: var(--bs-blue);
-        color: #fff;
-    }
 `

@@ -1,14 +1,9 @@
 stages:
-  - setup
   - build
   - test
   - deploy
 
 image: beevelop/nodejs-python:latest
-
-before_script:
-  stage: setup
-    - apt-get install git-core
 
 build_project:
   stage: build
@@ -39,5 +34,6 @@ heroku:
   only:
     - master
   script:
+    - apt-get install git-core
     - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/fourth-year-project-api.git
     - git push heroku `git subtree split --prefix src/backend master`:master --force

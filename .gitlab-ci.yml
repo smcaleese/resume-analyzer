@@ -1,7 +1,6 @@
 stages:
   - build
   - test
-  - deploy
 
 image: beevelop/nodejs-python:latest
 
@@ -28,12 +27,3 @@ test:
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'}
     - newman run ../tests/postman/status.postman_collection.json
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
-
-heroku:
-  stage: deploy
-  only:
-    - master
-  script:
-    - apt-get install git
-    - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/fourth-year-project-api.git
-    - git push heroku `git subtree split --prefix src/backend master`:master --force

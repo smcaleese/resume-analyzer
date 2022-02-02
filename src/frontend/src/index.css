@@ -12,10 +12,12 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 html {
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .center {

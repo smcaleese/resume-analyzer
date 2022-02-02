@@ -8,7 +8,7 @@ const DisplayCard = ({ header, children, className }) => {
             <Card.Header className='card-heading'>
                 { header }
             </Card.Header>
-            <Card.Body>
+            <Card.Body className='card-body'>
                 { children }
             </Card.Body>
         </Card>
@@ -18,11 +18,14 @@ const DisplayCard = ({ header, children, className }) => {
 export default styled(DisplayCard)`
     box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
     padding: 0;
-    height: ${props => props.height}vh;
+    height: ${props => props.height};
     max-height: 100vh;
 
     .card-heading {
         background-color: var(--bs-blue);
         color: #fff;
+    }
+    .card-body {
+        overflow-y: auto;
     }
 `

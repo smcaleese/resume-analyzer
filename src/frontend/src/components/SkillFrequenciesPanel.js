@@ -7,7 +7,6 @@ import DisplayCard from './DisplayCard'
 
 const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     const options = {
-        responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
@@ -67,7 +66,7 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
     }
 
     return (
-        <DisplayCard header='Skill Frequencies'>
+        <DisplayCard header='Skill Frequencies' height='37.5vh'>
             <Bar options={options} data={data} />
         </DisplayCard>
     )

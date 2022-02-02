@@ -39,12 +39,11 @@ const StyledJobsTable = styled(JobsTable)`
 
 const JobsDisplayPanel = ({ className, jobs }) => {
     return (
-        <DisplayCard header='Matching Jobs' className={className} height='50'>
+        <DisplayCard header='Matching Jobs' className={className} height='40vh'>
             <StyledJobsTable jobs={jobs} />
         </DisplayCard>
     )
 }
 
 export default styled(JobsDisplayPanel)`
-    overflow-y: scroll;
 `

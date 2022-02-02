@@ -48,7 +48,7 @@ const FileDisplayPage = ({ className }) => {
 }
 
 export default styled(FileDisplayPage)`
-    height: 100%;
+    height: 80vh;
     width: 100%;
     padding: 0;
 

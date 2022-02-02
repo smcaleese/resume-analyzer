@@ -52,7 +52,7 @@ const PDFPageViewer = ({ className, file }) => {
     }
 
     return (
-        <DisplayCard header='Resume'>
+        <DisplayCard header='Resume' className={className}>
             <Container fluid>
                 <Row>
                     <Document

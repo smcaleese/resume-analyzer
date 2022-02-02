@@ -6,7 +6,7 @@ import pdfplumber
 import spacy
 from database import engine, Base, Session
 import models
-from crud import add_job_post, delete_all_job_posts, get_all_job_posts, get_ranked_job_posts
+from crud import get_skill_counts, get_ranked_job_posts
 import uvicorn
 import colorsys
 from math import floor
@@ -22,24 +22,7 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-# Functions
-def get_skill_counts():
-    db = Session()
-    skill_strings_tuples_arr = db.query(models.JobPost.requirements).all()
-    skill_strings_arr = [s[0] for s in skill_strings_tuples_arr]
-    db.close()
-
-    skill_counts = {} 
-    for skill_string in skill_strings_arr:
-        skills = skill_string
-        if skills:
-            for skill in skills:
-                if skill not in skill_counts:
-                    skill_counts[skill] = 1
-                else:
-                    skill_counts[skill] += 1
-    return skill_counts
-
+# Helper functions
 def gen_skill_colors(skills):
     hsv_skill_colors = [(x*1.0/len(skills), 1, 1) for x in range(len(skills))]
     rgb_skill_colors = [colorsys.hsv_to_rgb(*x) for x in hsv_skill_colors]
@@ -59,16 +42,8 @@ def get_skills_from_ents(ents):
     skills = []
     skill_colors = gen_skill_colors(skill_set) 
     for idx, skill in enumerate(skill_set):
-        skills.append({'name':skill, 'color': skill_colors[idx]})
+        skills.append({'name': skill, 'color': skill_colors[idx]})
     return skills
-
-def get_ranked_jobs(skills):
-    db = Session()
-    jobs = get_ranked_job_posts(db, skills)
-    db.close()
-
-    return jobs
-
 
 # Routes
 @app.get('/status')
@@ -77,7 +52,8 @@ async def status():
 
 @app.post('/resume-upload')
 def handle_upload(file: UploadFile = File(...)):
-    skill_counts = get_skill_counts()
+    db = Session()
+    skill_counts = get_skill_counts(db)
 
     with pdfplumber.open(file.file) as pdf:
         pages = []
@@ -88,8 +64,12 @@ def handle_upload(file: UploadFile = File(...)):
         nlp = spacy.load('./models/ner-model')
         doc = nlp(' '.join(pages))
         ents = doc.ents
+        print('ents:', ents)
         skills = get_skills_from_ents(ents)
-        jobs = get_ranked_jobs([skill['name'] for skill in skills])
+        skill_names = [skill['name'] for skill in skills]
+        jobs = get_ranked_job_posts(db, skill_names)
+
+    db.close()
 
     return { 'pages': pages, 'skills': skills, 'skill_counts': skill_counts, 'jobs': jobs }
 

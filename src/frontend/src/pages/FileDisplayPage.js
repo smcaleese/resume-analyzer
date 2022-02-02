@@ -23,8 +23,6 @@ const FileDisplayPage = ({ className }) => {
         return null
     }
 
-    // TODO: turn these cards into dropdowns or allow them to be rearanged
-
     return (
         <div className={className}>
             <Container fluid>
@@ -50,14 +48,15 @@ const FileDisplayPage = ({ className }) => {
 }
 
 export default styled(FileDisplayPage)`
-height: 100%;
-width: 100%;
+    height: 100%;
+    width: 100%;
+    padding: 0;
 
-.box-grid {
-    padding: 140px 20px 0px 20px;
+    .box-grid {
+        margin: 150px 10px 0px 10px;
 
-    .job-display-row {
-        padding: 12px 0px 0px 0px;
+        .job-display-row {
+            padding: 12px 0px 0px 0px;
+        }
     }
-}
 `

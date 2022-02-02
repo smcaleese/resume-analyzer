@@ -1,38 +1,40 @@
 import React from 'react'
+import DisplayCard from './DisplayCard'
 import styled from 'styled-components'
-import classnames from 'classnames'
-import SkillCard from './SkillCard'
-import { Card, Row } from 'react-bootstrap'
+
+const SkillBadge = ({ className, skill }) => {
+    return (
+        <div className={className}>
+            { skill }
+        </div>
+    )
+}
+
+const StyledSkillBadge = styled(SkillBadge)`
+    display: inline-block;
+    color: white;
+    background-color: rgb(${props => props.color});
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+`
 
 const SkillsDisplayPanel = ({ className, skills }) => {
     console.log(skills)
+
+    const skillBoxes = skills.map((skill, index) => 
+        <StyledSkillBadge key={index} skill={skill.name} color={skill.color} />
+    )
+
     return (
-        <Card className={classnames(className)}>
-            <Card.Header className='card-heading' as='h3'>
-                Skills
-            </Card.Header>
-            <Card.Body className='card-body'>
-                <Row>
-                    {skills.map((skill, index) => 
-                        <SkillCard key={index} skill={skill.name} color={skill.color}/>
-                    )}
-                </Row>
-            </Card.Body>
-        </Card>
+        <DisplayCard header='Skills' className={className}>
+            <div className='skill-boxes-container'>
+                { skillBoxes }
+            </div>
+        </DisplayCard>
     )
 }
 
 export default styled(SkillsDisplayPanel)`
-    box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
-    max-height: 500px;
-    padding:0 ;
-
-    .card-heading {
-        background-color: var(--bs-blue);
-        color: #fff;
-    }
-
-    .card-body{
-        overflow-y:auto;
-    }
 `

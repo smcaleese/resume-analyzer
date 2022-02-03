@@ -3,38 +3,19 @@ import styled from 'styled-components'
 import classnames from 'classnames'
 import { Card, Table, Accordion, Row, Col } from 'react-bootstrap'
 import DisplayCard from './DisplayCard'
+import JobRequirementsIndicator from './JobRequirementsIndicator'
 
-const JobsTable = ({ className, jobs }) => {
+// TODO
+// Fix the indicator circles
+const JobsTable = ({ className, jobs, skills }) => {
 
     return (
-        // <Table size='sm' className={className}>
-        //     <thead>
-        //         <tr>
-        //             <th>#</th>
-        //             <th>Company</th>
-        //             <th>Title</th>
-        //             <th>Matched Requirements</th>
-        //         </tr>
-        //     </thead>
-        //     <tbody>
-        //         {jobs.map((job, index) => {
-        //             return (
-        //                 <tr key={index}>
-        //                     <td>{index}</td>
-        //                     <td>{job.company}</td>
-        //                     <td>{job.title}</td>
-        //                     <td>{job.skill_match.join(', ')}</td>
-        //                 </tr>
-        //             )
-        //         })}
-        //     </tbody>
-        // </Table>
         <Accordion>
             <Accordion.Item>
                 <Row className='accordian-title'>
-                    <Col xs={2}>#</Col>
-                    <Col xs={5}>Company</Col>
+                    <Col xs={2}>Company</Col>
                     <Col xs={5}>Title</Col>
+                    <Col xs={5}>Requirements</Col>
                 </Row>
             </Accordion.Item>
             {jobs.map((job, index) => {
@@ -43,9 +24,9 @@ const JobsTable = ({ className, jobs }) => {
                     <Accordion.Item eventKey={index+''} key={index}>
                         <Accordion.Header>
                             <Row className='accordian-header'>
-                                <Col xs={2}>{index}</Col>
-                                <Col xs={5}>{job.company}</Col>
+                                <Col xs={2}>{job.company}</Col>
                                 <Col xs={5}>{job.title}</Col>
+                                <Col xs={2}><JobRequirementsIndicator skills={skills} requirements={job.requirements} /></Col>
                             </Row>
                         </Accordion.Header>
                         <Accordion.Body>
@@ -62,10 +43,10 @@ const StyledJobsTable = styled(JobsTable)`
     font-size: 12px;
 `
 
-const JobsDisplayPanel = ({ className, jobs }) => {
+const JobsDisplayPanel = ({ className, jobs, skills }) => {
     return (
         <DisplayCard header='Matching Jobs' className={className} height='40vh'>
-            <StyledJobsTable jobs={jobs} />
+            <StyledJobsTable jobs={jobs} skills={skills} />
         </DisplayCard>
     )
 }

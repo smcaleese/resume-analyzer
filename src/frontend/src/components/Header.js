@@ -18,7 +18,7 @@ const Header = ({ className }) => {
                         height='100'
                         className='d-inline-block align-top' 
                     />{' '}
-                    <span className='product-name'>ResumAI</span>
+                    <span className='product-name'>ResumeAnalyzer</span>
                 </Navbar.Brand>
             </Container>
         </Navbar>

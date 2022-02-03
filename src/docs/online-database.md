@@ -24,3 +24,5 @@ Tables can be listed with the command `\dt`
 
 The database URL needed to connect to the database in `database.py` can be retrieved with this command:
 `heroku config:get DATABASE_URL -a fourth-year-project-api`
+
+Note: the database can be managed in a terminal as described above or in the PgAdmin GUI application.

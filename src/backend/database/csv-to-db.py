@@ -23,6 +23,7 @@ def extract_reqirements(description, stop_words, skills):
     for word in filtered_words:
         for skill in skills:
             if word.lower() == skill.name.lower() or (skill.altnames and word.lower() in skill.altnames):
+                skill.count = skill.count + 1
                 requirements.append(skill.name)
     print(requirements)
     return requirements

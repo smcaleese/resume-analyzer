@@ -4,9 +4,9 @@ from pydantic import BaseModel
 from typing import Optional
 import pdfplumber
 import spacy
-from ./database/database import engine, Base, Session
-import ./database/models
-from ./database/crud import get_skill_counts, get_ranked_job_posts
+from database import engine, Base, Session
+import models as mdoels
+from crud import get_skill_counts, get_ranked_job_posts
 import uvicorn
 import colorsys
 from math import floor

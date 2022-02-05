@@ -1,7 +1,7 @@
 import csv
 from numpy import require
 from sqlalchemy.sql.expression import desc
-from database import engine, Base, Session
+from database import engine, Base, Session, get_jobs_table
 import models
 import spacy
 from crud import add_job_post, delete_all_job_posts
@@ -9,7 +9,7 @@ from crud import add_job_post, delete_all_job_posts
 # create a function which accepts a description string and returns a space separated list of skills
 
 def add_to_db(db, filename):
-    with open(f'../data/{filename}', newline='') as csvfile:
+    with open(f'../../data/{filename}', newline='') as csvfile:
         nlp = spacy.load('./models/ner-model')
         csvreader = csv.reader(csvfile, delimiter=',')
         for row in csvreader:
@@ -44,8 +44,9 @@ def main():
 
     with db.begin():
         print('drop and create table')
-        Base.metadata.drop_all(bind=engine)
-        Base.metadata.create_all(bind=engine)
+        job_table = get_jobs_table()
+        jobs_table.drop(engine, checkfirst=True)
+        jobs_table.create(engine)
 
     add_to_db(db, 'indeed-scraped-data.csv')
 

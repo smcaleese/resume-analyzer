@@ -10,3 +10,12 @@ class JobPost(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Skill(BaseModel):
+    id: int
+    name: str
+    altnames: list
+    count: int
+
+    class Config:
+        orm_mode = True

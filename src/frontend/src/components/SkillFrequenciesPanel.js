@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Card } from 'react-bootstrap'
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
 import DisplayCard from './DisplayCard'
 
-const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
+const SkillFrequenciesPanel = ({ className, skills, requirementCounts }) => {
+    const [labels, setLabels] = useState([])
+    const [values, setValues] = useState([])
+    const [backgroundColors, setBackgroundColors] = useState([])
+
     const options = {
         maintainAspectRatio: false,
         plugins: {
@@ -25,34 +29,25 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
         }
     }
 
-    // make bar green if job post skill is found in resume. Otherwise, make it gray
-    const backgroundColors = []
-    const green = '#4caf50'
-    const gray = '#aaa'
+    useEffect(() => {
+        const sortedRequirementsDesc = Object.entries(requirementCounts).sort((a, b) => b[1] - a[1]).slice(0, 100)
+        setLabels(Object.keys(sortedRequirementsDesc))
+        setValues(Object.values(sortedRequirementsDesc))
 
-    // sort in descending order by value
-    const jobPostSkillsSorted = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 100)
-    const resumeSkillsSetLower = new Set(skills.map((skill) => skill.name.toLowerCase()))
-
-    // check if each skill is in the resume
-    jobPostSkillsSorted.forEach(([name, value]) => {
-        if (resumeSkillsSetLower.has(name.toLowerCase())) {
-            let color_flag = false
-            skills.forEach(skill => {
-                if (skill.name.toLowerCase() === name.toLowerCase()){
-                    backgroundColors.push(`rgb(${skill.color})`)
-                    color_flag = true
+        const backgroundColors = sortedRequirementsDesc.map(([requirement, count]) => {
+            const resumeSkillMatch = skills.find((skill) => requirement.toLowerCase() === skill.name.toLowerCase())
+            if(resumeSkillMatch) {
+                return {
+                    backgroundColor: `rgb(${resumeSkillMatch.color})`,
                 }
-            })
-            if (!color_flag)
-                backgroundColors.push(green)
-        } else {
-            backgroundColors.push(gray)
-        }
-    })
+            }
+            return {
+                backgroundColor: '#ccc',
+            }
+        })
 
-    const labels = jobPostSkillsSorted.map((arr) => arr[0])
-    const values = jobPostSkillsSorted.map((arr) => arr[1])
+        setBackgroundColors(backgroundColors)
+    }, [])
 
     const data = {
         labels: labels,

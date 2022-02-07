@@ -32,10 +32,16 @@ const FileDisplayPage = ({ className }) => {
                             <SkillsDisplayPanel skills={location.state.results.skills} />
                         </Row>
                         <Row>
-                            <SkillFrequenciesPanel skills={location.state.results.skills} skillCounts={location.state.results.skill_counts} />
+                            <SkillFrequenciesPanel
+                                skills={location.state.results.skills}
+                                skillCounts={location.state.results.skill_counts}
+                            />
                         </Row>
                         <Row className='job-display-row'>
-                            <JobsDisplayPanel jobs={location.state.results.jobs} skills={location.state.results.skills}/>
+                            <JobsDisplayPanel
+                                jobs={location.state.results.jobs}
+                                skills={location.state.results.skills}
+                            />
                         </Row>
                     </Col>
                     <Col lg={4}>

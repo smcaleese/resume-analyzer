@@ -47,7 +47,6 @@ const PDFPageViewer = ({ className, file }) => {
     const [pageNumber, setPageNumber] = useState(1)
 
     const onDocumentLoadSuccess = ({ numPages: nextNumPages }) => {
-        console.log('pages in function:', numPages)
         setNumPages(nextNumPages)
     }
 

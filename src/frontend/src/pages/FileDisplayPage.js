@@ -43,7 +43,10 @@ const FileDisplayPage = ({ className }) => {
                 <Row className='box-grid'>
                     <Col lg={8}>
                         <Row>
-                            <SkillsDisplayPanel skills={skills} />
+                            <SkillsDisplayPanel
+                                skills={skills}
+                                skillCounts={skillCounts}
+                            />
                         </Row>
                         <Row>
                             <SkillFrequenciesPanel

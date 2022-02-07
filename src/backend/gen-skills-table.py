@@ -12,7 +12,9 @@ def main():
 
     with open('skills.csv', 'r', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
-        for row in reader:
+        csvrows = [row for row in reader]
+
+        for row in csvrows[1:]:
             name = row[0]
             altnames = row[1][1:-1].split('|')
             data = {

@@ -20,10 +20,28 @@ const StyledSkillBadge = styled(SkillBadge)`
     font-size: 1rem;
 `
 
-const SkillsDisplayPanel = ({ className, skills }) => {
-    console.log(skills)
+const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
 
-    const skillBoxes = skills.map((skill, index) => 
+    const resumeSkillCounts = skills.reduce((acc, skill) => {
+        const skillName = skill.name.toLowerCase()
+        const key = Object.keys(skillCounts).find(key => skillName === key.toLowerCase())
+
+        acc[skillName] = 0
+        if(key) {
+            acc[skillName] = skillCounts[key]
+        }
+
+        return acc
+    }, {})
+
+    const sortedSkills = skills.sort((a, b) => {
+        const aCount = resumeSkillCounts[a.name.toLowerCase()]
+        const bCount = resumeSkillCounts[b.name.toLowerCase()]
+
+        return bCount - aCount
+    })
+
+    const skillBoxes = sortedSkills.map((skill, index) => 
         <StyledSkillBadge key={index} skill={skill.name} color={skill.color} />
     )
 

@@ -8,7 +8,6 @@ import JobRequirementsIndicator from './JobRequirementsIndicator'
 // TODO
 // Fix the indicator circles
 const JobsTable = ({ className, jobs, skills }) => {
-
     return (
         <Accordion>
             <Accordion.Item>
@@ -18,23 +17,20 @@ const JobsTable = ({ className, jobs, skills }) => {
                     <Col xs={5}>Requirements</Col>
                 </Row>
             </Accordion.Item>
-            {jobs.map((job, index) => {
-
-                return(
-                    <Accordion.Item eventKey={index+''} key={index}>
-                        <Accordion.Header>
-                            <Row className='accordian-header'>
-                                <Col xs={2}>{job.company}</Col>
-                                <Col xs={5}>{job.title}</Col>
-                                <Col xs={2}><JobRequirementsIndicator skills={skills} requirements={job.requirements} /></Col>
-                            </Row>
-                        </Accordion.Header>
-                        <Accordion.Body>
-                            <p className='description'>{job.description}</p>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                )
-            })}
+            {jobs.map((job, index) => (
+                <Accordion.Item eventKey={index} key={index}>
+                    <Accordion.Header>
+                        <Row className='accordian-header'>
+                            <Col xs={2}>{job.company}</Col>
+                            <Col xs={5}>{job.title}</Col>
+                            <Col xs={2}><JobRequirementsIndicator skills={skills} requirements={job.requirements} /></Col>
+                        </Row>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <p className='description'>{job.description}</p>
+                    </Accordion.Body>
+                </Accordion.Item>
+            ))}
         </Accordion>
     )
 }
@@ -52,17 +48,18 @@ const JobsDisplayPanel = ({ className, jobs, skills }) => {
 }
 
 export default styled(JobsDisplayPanel)`
-.accordian-title{
-    width: 100%;
-    font-size: 0.75em;
-    padding: 1rem 1.25rem;
-}
+    .accordian-title {
+        width: 100%;
+        font-size: 0.75em;
+        padding: 1rem 1.25rem;
+        margin: 0;
+    }
 
-.accordian-header{
-    width: 100%;
-}
+    .accordian-header {
+        width: 100%;
+    }
 
-.description{
-    font-size: 0.5em;
-}
+    .description {
+        font-size: 0.5em;
+    }
 `

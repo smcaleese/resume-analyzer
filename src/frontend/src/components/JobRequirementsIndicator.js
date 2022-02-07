@@ -3,66 +3,59 @@ import { Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import styled from 'styled-components'
 
 const JobRequirementsIndicator = ({className, skills, requirements}) => {
-
-    const circleStyle = {
-        borderRadius: '50%',
-        height: '15px',
-        width: '15px',
-    }
+    // console.log('skills in JobRequirementsIndicator:', skills)
 
     const [circleState, setCircleState] = useState([])
 
-
     useEffect(() => {
-        let circleArray = []
-        const unMatchedRequirements = []
-        requirements.sort()
-        requirements.forEach(requirement => {
-            let foundFlag = false
-            skills.forEach(skill => {
-                if (skill.name.toLowerCase() === requirement.toLowerCase()){
-                    foundFlag = true
-                    circleArray.push({...skill, match: true})
-                }
-            })
-            if(!foundFlag){
-                unMatchedRequirements.push({name: requirement, color: '150, 150, 150', match: false})
+        const circleArray = requirements.sort().map((requirement) => {
+            const skillMatchInResume = skills.find((skill) => requirement.toLowerCase() === skill.name.toLowerCase())
+            if(skillMatchInResume) {
+                return {...skillMatchInResume, match: true}
+            } else {
+                return {name: requirement, color: '150, 150, 150', match: false}
             }
         })
-        circleArray = circleArray.concat(unMatchedRequirements)
         setCircleState(circleArray)
-    }, [setCircleState])
+    }, [])
 
-    return(
+    const getCircleStyle = (skill) => {
+        if(skill.match) {
+            return {
+                backgroundColor: `rgb(${skill.color})`,
+            }
+        }
+        return {
+            border: `3px solid rgb(${skill.color})`,
+        }
+    }
+
+    return (
         <Row className={className}>
-            {circleState.map((skill, index) => {
-                console.log(skill)
-                return(
-                    <Col xs={1} key={index} className='circle-container'>
-                        <OverlayTrigger
-                            placement='top'
-                            overlay={<Tooltip>{skill.name}</Tooltip>}
-                        >
-                            <div className='circle' style={skill.match ? {backgroundColor:`rgb(${skill.color})`} : {border: `3px solid rgb(${skill.color})`}}></div>
-                        </OverlayTrigger>
-                    </Col>
-                )
-            })}
+            {circleState.map((skill, index) => (
+                <Col xs={1} key={index} className='circle-container'>
+                    <OverlayTrigger
+                        placement='top'
+                        overlay={<Tooltip>{skill.name}</Tooltip>}
+                    >
+                        <div className='circle' style={getCircleStyle(skill)}></div>
+                    </OverlayTrigger>
+                </Col>
+            ))}
             <Col></Col>
         </Row>
     )
 }
 
 export default styled(JobRequirementsIndicator)`
-display: flex;
-.circle-container{
-    flex: 1;
+    display: flex;
+    .circle-container {
+        flex: 1;
 
-    .circle{
-        border-radius: 50%;
-        height: 15px;
-        width: 15px;
+        .circle {
+            border-radius: 50%;
+            height: 15px;
+            width: 15px;
+        }
     }
-}
- 
 `

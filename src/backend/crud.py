@@ -69,3 +69,13 @@ def get_ranked_job_posts(db: Session, skills: list):
         ranked_list.append(job_obj)
 
     return ranked_list
+
+def add_skill(db: Session, new_skill: schemas.Skill):
+    db.add(new_skill)
+    db.commit()
+    db.refresh(new_skill)
+    return new_skill
+
+def get_all_skills(db: Session):
+    print('getting all skills', end='\n\n')
+    return db.query(models.Skill).distinct().all()

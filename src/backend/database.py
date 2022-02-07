@@ -9,3 +9,13 @@ engine = create_engine(POSTGRESQL_DATABASE_URL, echo=True)
 
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
+
+def get_skills_table():
+    for table in Base.metadata.sorted_tables:
+        if table.name == 'skill':
+            return table
+
+def get_jobs_table():
+    for table in Base.metadata.sorted_tables:
+        if table.name == 'job_post':
+            return table

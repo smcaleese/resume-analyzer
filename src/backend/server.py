@@ -5,11 +5,17 @@ from typing import Optional
 import pdfplumber
 import spacy
 from database import engine, Base, Session
-import models
-from crud import get_skill_counts, get_ranked_job_posts
+import models as mdoels
+from crud import get_skill_counts, get_ranked_job_posts, get_all_skills
 import uvicorn
 import colorsys
 from math import floor
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+nltk.download("stopwords")
+nltk.download('punkt')
 
 # Set up app
 app = FastAPI()
@@ -37,13 +43,35 @@ def gen_skill_colors(skills):
         encoded_rgb_skill_colors.append(color_string)
     return encoded_rgb_skill_colors
 
-def get_skills_from_ents(ents):
-    skill_set = set()
-    for ent in ents:
-        skill_set.add(ent.text)
+# def get_skills_from_ents(ents):
+#     skill_set = set()
+#     for ent in ents:
+#         skill_set.add(ent.text)
+#     skills = []
+#     skill_colors = gen_skill_colors(skill_set) 
+#     for idx, skill in enumerate(skill_set):
+#         skills.append({'name': skill, 'color': skill_colors[idx]})
+#     return skills
+
+def extract_skills(text, db):
+    stop_words = set(stopwords.words("english"))
+    skill_list = get_all_skills(db)
+
+    words = word_tokenize(text)
+    filtered_words = []
+    for word in words:
+        if word.casefold() not in stop_words:
+            filtered_words.append(word)
+    requirements = set()
+    for word in filtered_words:
+        for skill in skill_list:
+            if word.lower() == skill.name.lower() or (skill.altnames and word.lower() in skill.altnames):
+                skill.count = skill.count + 1
+                requirements.add(skill.name)
     skills = []
-    skill_colors = gen_skill_colors(skill_set) 
-    for idx, skill in enumerate(skill_set):
+    skill_names = list(requirements)
+    skill_colors = gen_skill_colors(skill_names) 
+    for idx, skill in enumerate(skill_names):
         skills.append({'name': skill, 'color': skill_colors[idx]})
     return skills
 
@@ -63,11 +91,8 @@ def handle_upload(file: UploadFile = File(...)):
             pages.append(page.extract_text())
     
         # get skills in resume
-        nlp = spacy.load('./models/ner-model')
-        doc = nlp(' '.join(pages))
-        ents = doc.ents
-        print('ents:', ents)
-        skills = get_skills_from_ents(ents)
+        skills = extract_skills(' '.join(pages), db)
+        print(skills)
         skill_names = [skill['name'] for skill in skills]
         jobs = get_ranked_job_posts(db, skill_names)
 

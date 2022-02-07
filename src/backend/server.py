@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from numpy import extract
 from pydantic import BaseModel
 from typing import Optional
 import pdfplumber
@@ -14,17 +15,21 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
-nltk.download("stopwords")
+nltk.download('stopwords')
 nltk.download('punkt')
 
 # Set up app
 app = FastAPI()
 
-allowed_origins = ['http://localhost:3000', 'https://fourth-year-project-front-end.herokuapp.com', 'http://www.resumeanalyzer.xyz']
+origins = [
+    'http://localhost:3000',
+    'https://fourth-year-project-front-end.herokuapp.com',
+    'http://www.resumeanalyzer.xyz'
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
@@ -35,45 +40,37 @@ def gen_skill_colors(skills):
     hsv_skill_colors = [(x*1.0/len(skills), 0.8, 1) for x in range(len(skills))]
     rgb_skill_colors = [colorsys.hsv_to_rgb(*x) for x in hsv_skill_colors]
     encoded_rgb_skill_colors = []
+
     for color in rgb_skill_colors:
         new_color = []
         for channel in color:
             new_color.append(floor(channel*255))
         color_string = ','.join(str(x) for x in new_color)
         encoded_rgb_skill_colors.append(color_string)
+
     return encoded_rgb_skill_colors
 
-# def get_skills_from_ents(ents):
-#     skill_set = set()
-#     for ent in ents:
-#         skill_set.add(ent.text)
-#     skills = []
-#     skill_colors = gen_skill_colors(skill_set) 
-#     for idx, skill in enumerate(skill_set):
-#         skills.append({'name': skill, 'color': skill_colors[idx]})
-#     return skills
-
 def extract_skills(text, db):
-    stop_words = set(stopwords.words("english"))
+    stop_words = set(stopwords.words('english'))
     skill_list = get_all_skills(db)
-
+    
     words = word_tokenize(text)
-    filtered_words = []
-    for word in words:
-        if word.casefold() not in stop_words:
-            filtered_words.append(word)
-    requirements = set()
+    filtered_words = [word for word in words if word.casefold() not in stop_words]
+
+    skills = set()
     for word in filtered_words:
         for skill in skill_list:
             if word.lower() == skill.name.lower() or (skill.altnames and word.lower() in skill.altnames):
-                skill.count = skill.count + 1
-                requirements.add(skill.name)
-    skills = []
-    skill_names = list(requirements)
+                skills.add(skill.name)
+
+    skill_names = list(skills)
     skill_colors = gen_skill_colors(skill_names) 
+
+    skill_items = []
     for idx, skill in enumerate(skill_names):
-        skills.append({'name': skill, 'color': skill_colors[idx]})
-    return skills
+        skill_items.append({'name': skill, 'color': skill_colors[idx]})
+        
+    return skill_items
 
 # Routes
 @app.get('/status')
@@ -83,7 +80,10 @@ async def status():
 @app.post('/resume-upload')
 def handle_upload(file: UploadFile = File(...)):
     db = Session()
+    print('find all skills:')
+
     skill_counts = get_skill_counts(db)
+    print('skill_counts: ', skill_counts)
 
     with pdfplumber.open(file.file) as pdf:
         pages = []
@@ -92,13 +92,14 @@ def handle_upload(file: UploadFile = File(...)):
     
         # get skills in resume
         skills = extract_skills(' '.join(pages), db)
-        print(skills)
         skill_names = [skill['name'] for skill in skills]
         jobs = get_ranked_job_posts(db, skill_names)
 
     db.close()
 
-    return { 'pages': pages, 'skills': skills, 'skill_counts': skill_counts, 'jobs': jobs }
+    response = { 'skills': skills, 'skill_counts': skill_counts, 'jobs': jobs }
+
+    return response
 
 if __name__ == '__main__':
     uvicorn.run('server:app', host='127.0.0.1', port=8000, log_level='info')

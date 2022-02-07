@@ -28,7 +28,7 @@ const SkillsDisplayPanel = ({ className, skills }) => {
     )
 
     return (
-        <DisplayCard header='Skills' className={className}>
+        <DisplayCard header='Resume Skills' className={className}>
             <div className='skill-boxes-container'>
                 { skillBoxes }
             </div>

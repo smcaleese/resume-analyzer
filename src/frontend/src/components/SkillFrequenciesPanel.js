@@ -5,19 +5,36 @@ import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
 import DisplayCard from './DisplayCard'
 
-const SkillFrequenciesPanel = ({ className, skills, requirementCounts }) => {
-    const [labels, setLabels] = useState([])
-    const [values, setValues] = useState([])
-    const [backgroundColors, setBackgroundColors] = useState([])
+const SkillFrequenciesPanel = ({className, skills, skillCounts}) => {
+    const sortedRequirementsDesc = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 100)
+
+    const labels = sortedRequirementsDesc.map(req => req[0])
+    const values = sortedRequirementsDesc.map(req => req[1])
+
+    const backgroundColors = labels.map((label) => {
+        const resumeSkillMatch = skills.find((skill) => label.toLowerCase() === skill.name.toLowerCase())
+        if(resumeSkillMatch) {
+            return `rgb(${resumeSkillMatch.color})`
+        }
+        return '#bbb'
+    })
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Skills found in your resume',
+                backgroundColor: backgroundColors,
+                data: values,
+            },
+        ]
+    }
 
     const options = {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'bottom',
-                // Prevent legend toggle
-                onClick: () => {
-                }
+                display: false,
             },
             tooltip: {
                 callbacks: {
@@ -27,37 +44,6 @@ const SkillFrequenciesPanel = ({ className, skills, requirementCounts }) => {
                 }
             }
         }
-    }
-
-    useEffect(() => {
-        const sortedRequirementsDesc = Object.entries(requirementCounts).sort((a, b) => b[1] - a[1]).slice(0, 100)
-        setLabels(Object.keys(sortedRequirementsDesc))
-        setValues(Object.values(sortedRequirementsDesc))
-
-        const backgroundColors = sortedRequirementsDesc.map(([requirement, count]) => {
-            const resumeSkillMatch = skills.find((skill) => requirement.toLowerCase() === skill.name.toLowerCase())
-            if(resumeSkillMatch) {
-                return {
-                    backgroundColor: `rgb(${resumeSkillMatch.color})`,
-                }
-            }
-            return {
-                backgroundColor: '#ccc',
-            }
-        })
-
-        setBackgroundColors(backgroundColors)
-    }, [])
-
-    const data = {
-        labels: labels,
-        datasets: [
-            {
-                label: 'Skills found in your resume',
-                backgroundColor: backgroundColors,
-                data: values
-            },
-        ]
     }
 
     return (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PDFPageViewer from '../components/PDFPageViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -11,11 +11,25 @@ const FileDisplayPage = ({ className }) => {
     const location = useLocation()
     const navigate = useNavigate()
 
+    const [skills, setSkills] = useState([])
+    const [skillCounts, setSkillCounts] = useState([])
+    const [jobs, setJobs] = useState([])
+    const [resume, setResume] = useState(null)
+
     useEffect(() => {
         // Redirect user with no uploaded resume back to resume upload
         if (!location.state) {
             navigate('/')
         }
+
+        const resume = location.state.resume
+        setResume(resume)
+
+        const { skills, skill_counts: skillCounts, jobs } = location.state.results
+        setSkills(skills)
+        setSkillCounts(skillCounts)
+        setJobs(jobs)
+
     }, [location, navigate])
 
     // Block Page render if no resume has been uploaded
@@ -29,23 +43,23 @@ const FileDisplayPage = ({ className }) => {
                 <Row className='box-grid'>
                     <Col lg={8}>
                         <Row>
-                            <SkillsDisplayPanel skills={location.state.results.skills} />
+                            <SkillsDisplayPanel skills={skills} />
                         </Row>
                         <Row>
                             <SkillFrequenciesPanel
-                                skills={location.state.results.skills}
-                                skillCounts={location.state.results.skill_counts}
+                                skills={skills}
+                                skillCounts={skillCounts}
                             />
                         </Row>
                         <Row className='job-display-row'>
                             <JobsDisplayPanel
-                                jobs={location.state.results.jobs}
-                                skills={location.state.results.skills}
+                                jobs={jobs}
+                                skills={skills}
                             />
                         </Row>
                     </Col>
                     <Col lg={4}>
-                        <PDFPageViewer file={location.state.resume} />
+                        <PDFPageViewer file={resume} />
                     </Col>
                 </Row>
             </Container>

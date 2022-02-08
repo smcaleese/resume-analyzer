@@ -7,7 +7,7 @@ import pdfplumber
 import spacy
 from database import engine, Base, Session
 import models as mdoels
-from crud import get_skill_counts, get_ranked_job_posts, get_all_skills
+from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience
 import uvicorn
 import colorsys
 from math import floor
@@ -83,7 +83,8 @@ def handle_upload(file: UploadFile = File(...)):
     print('find all skills:')
 
     skill_counts = get_skill_counts(db)
-    print('skill_counts: ', skill_counts)
+
+    years_of_experience = get_years_of_experience(db)
 
     with pdfplumber.open(file.file) as pdf:
         pages = []
@@ -97,7 +98,12 @@ def handle_upload(file: UploadFile = File(...)):
 
     db.close()
 
-    response = { 'skills': skills, 'skill_counts': skill_counts, 'jobs': jobs }
+    response = {
+        'skills': skills,
+        'skill_counts': skill_counts,
+        'jobs': jobs,
+        'years_of_experience': years_of_experience
+    }
 
     return response
 

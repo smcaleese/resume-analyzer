@@ -1,34 +1,15 @@
 import csv
 from numpy import require
 from sqlalchemy.sql.expression import desc
-from database import engine, Base, Session, get_jobs_table
+from database import engine, Base, Session 
 from models import JobPost
 from crud import add_job_post, delete_all_job_posts, get_all_skills
 import nltk
-from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from identifiers import extract_requirements, get_years_of_experience
 
 nltk.download('stopwords')
 nltk.download('punkt')
-
-# extract all requirements from each job post and increment the skill counts in the skill table
-def extract_requirements(description, stop_words, skills):
-    words = word_tokenize(description)
-    filtered_words = []
-    # nltk processing from https://realpython.com/nltk-nlp-python/
-
-    for word in words:
-        if word.casefold() not in stop_words:
-            filtered_words.append(word)
-
-    requirements = set()
-    for word in filtered_words:
-        for skill in skills:
-            if word.lower() == skill.name.lower() or (skill.altnames and word.lower() in skill.altnames):
-                skill.count = skill.count + 1
-                requirements.add(skill.name)
-
-    return list(requirements)
 
 def add_to_db(db, filename):
     stop_words = set(stopwords.words('english'))
@@ -48,13 +29,16 @@ def add_to_db(db, filename):
                 if description_in_db or len(description) == 0:
                     continue
 
+                years_of_experience = get_years_of_experience(description)
+
                 data = {
                     'id': hash(description),
                     'company': company,
                     'title': title,
                     'location': location,
                     'description': description,
-                    'requirements': requirements if requirements else None
+                    'requirements': requirements if requirements else None,
+                    'experience': years_of_experience if years_of_experience else None
                 }
                 new_job_post = JobPost(**data)
                 add_job_post(db, new_job_post)

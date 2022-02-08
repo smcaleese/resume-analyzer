@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import SkillsDisplayPanel from '../components/SkillsDisplayPanel'
 import SkillFrequenciesPanel from '../components/SkillFrequenciesPanel'
 import JobsDisplayPanel from '../components/JobsDisplayPanel'
+import YearsOfExperiencePanel from '../components/YearsOfExperiencePanel'
 import { Container, Col, Row, Card } from 'react-bootstrap'
 
 const FileDisplayPage = ({ className }) => {
@@ -15,6 +16,7 @@ const FileDisplayPage = ({ className }) => {
     const [skillCounts, setSkillCounts] = useState([])
     const [jobs, setJobs] = useState([])
     const [resume, setResume] = useState(null)
+    const [yearsOfExperience, setYearsOfExperience] = useState([])
 
     useEffect(() => {
         // Redirect user with no uploaded resume back to resume upload
@@ -25,10 +27,17 @@ const FileDisplayPage = ({ className }) => {
         const resume = location.state.resume
         setResume(resume)
 
-        const { skills, skill_counts: skillCounts, jobs } = location.state.results
+        const {
+            skills,
+            skill_counts: skillCounts,
+            jobs,
+            years_of_experience: yearsOfExperience
+        } = location.state.results
+
         setSkills(skills)
         setSkillCounts(skillCounts)
         setJobs(jobs)
+        setYearsOfExperience(yearsOfExperience)
 
     }, [location, navigate])
 
@@ -54,10 +63,15 @@ const FileDisplayPage = ({ className }) => {
                                 skillCounts={skillCounts}
                             />
                         </Row>
-                        <Row className='job-display-row'>
+                        <Row>
                             <JobsDisplayPanel
                                 jobs={jobs}
                                 skills={skills}
+                            />
+                        </Row>
+                        <Row>
+                            <YearsOfExperiencePanel
+                                yearsOfExperience={yearsOfExperience}
                             />
                         </Row>
                     </Col>
@@ -77,9 +91,5 @@ export default styled(FileDisplayPage)`
 
     .box-grid {
         margin: 150px 10px 0px 10px;
-
-        .job-display-row {
-            padding: 12px 0px 0px 0px;
-        }
     }
 `

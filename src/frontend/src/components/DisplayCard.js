@@ -18,6 +18,7 @@ const DisplayCard = ({ header, children, className }) => {
 export default styled(DisplayCard)`
     box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
     padding: 0;
+    margin-top: 1rem;
     height: ${props => props.height};
     max-height: 100vh;
 

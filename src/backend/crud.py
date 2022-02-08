@@ -73,3 +73,11 @@ def get_skill_counts(db):
         name, count = row
         skill_counts[name] = count
     return skill_counts
+
+def get_years_of_experience(db):
+    years_arr = []
+    for row in db.query(JobPost.experience).all():
+        num = row[0]
+        if num:
+            years_arr.append(num)
+    return years_arr

@@ -1,5 +1,5 @@
 import csv
-from database import engine, Base, Session, get_skills_table
+from database import engine, Base, Session
 from models import Skill
 from crud import add_skill
 

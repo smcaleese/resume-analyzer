@@ -19,7 +19,7 @@ def find_jk_values(page, jk_value_set):
 
 def getJobData(page, dataList):
     # [ID, Company, Job Title, Location, Description,]
-    company = page.find("div", class_="icl-u-lg-mr--sm icl-u-xs-mr--xs").get_text()
+    company = page.findAll("div", class_="icl-u-lg-mr--sm icl-u-xs-mr--xs")[1].get_text()
 
     job_title = page.find("h1", class_="icl-u-xs-mb--xs icl-u-xs-mt--none jobsearch-JobInfoHeader-title").get_text()
     location = page.find("div",
@@ -36,34 +36,56 @@ def getJobData(page, dataList):
 
     return dataList + [company, job_title, location, description]
 
+def get_jkv_values(page_url, page_number, jk_values):
+    try:
+        page_soup = BeautifulSoup(requests.get(page_url + "&start=" + str((page_number * 10))).content, "html.parser")
+        find_jk_values(page_soup, jk_values)
+
+        if page_soup.find('a', {"aria-label": 'Next'}):
+            return 1
+        else:
+            return 0
+    except Exception as e:
+        print(e)
+        print("Rate limit hit scraping page {}. Waiting 10 minute".format(page_number) )
+        time.sleep(600)
+        return 2
+
+def add_job_data(csv_writer, jkv):
+    try:
+        job_page = BeautifulSoup(requests.get("https://www.indeed.com/viewjob?jk=" + jkv).content, "html.parser")
+        if(job_page):
+            csv_writer.writerow(getJobData(job_page, [jkv]))
+            return True
+    except Exception as e:
+        print(e)
+        print("Rate limit hit scraping page {}. Waiting 10 minute".format(jkv) )
+        time.sleep(3600)
+        return False
 
 def scrape(page_url, csv_writer):
     # Get HTML page and convert to soup
     landing_page_soup = BeautifulSoup(requests.get(page_url).content, "html.parser")
     i = 0
-
+    flag = 1
     jk_values = set()
-    page_soup = BeautifulSoup(requests.get(page_url + "&start=" + str((i * 10))).content, "html.parser")
-    while page_soup.find('a', {"aria-label": 'Next'}):
+
+    while(flag > 0):
         print(jk_values)
-        # Function will go add all jk_values from page to set
-        find_jk_values(page_soup, jk_values)
-        # To stop captcha from appearing
-        time.sleep(2)
-        i += 1
-        page_soup = BeautifulSoup(requests.get(page_url + "&start=" + str((i * 10))).content, "html.parser")
+        flag = get_jkv_values( page_url, i, jk_values)
+        if flag == 1:
+            i += 1
 
-    for jkv in jk_values:
-        print(jkv)
-        job_page = BeautifulSoup(requests.get("https://www.indeed.com/viewjob?jk=" + jkv).content, "html.parser")
-        # Check to make sure job listing page is returned
-        if (True):
-            csv_writer.writerow(getJobData(job_page, [jkv]))
-        # Sleep to avoid rate limit
-        time.sleep(2)
+    i = 0
+    flag = True
+    jkv_list = list(jk_values)
+    while i < len(jkv_list):
+        flag = add_job_data(csv_writer, jkv_list[i])
+        if flag:
+            i += 1
 
 
-def main():
+def main(search_term, search_location):
     # TODO:
     # Add multicoutry support https://www.indeed.com/worldwide
     # Look into adding filter=0 to request to stop job hiding
@@ -72,15 +94,14 @@ def main():
 
     # Execute program as python indeed-jobs-scraping-script.py <Search Term> <Search Location>
     # Leave search term blank to get all jobs in a country
-    if len(sys.argv) == 3:
-        search_term = sys.argv[1]
-        search_location = sys.argv[2]
-    else:
-        search_term = input("Search Term: ")
-        search_location = input("Search Location: ")
+    # if len(sys.argv) == 3:
+    #     search_term = sys.argv[1]
+    #     search_location = sys.argv[2]
+    # else:
+    #     search_term = input("Search Term: ")
+    #     search_location = input("Search Location: ")
 
-    with open('./indeed-scraped-data.csv', 'w', newline='', encoding='utf-8') as f:
-
+    with open('./indeed-scraped-data-test.csv', 'w', newline='', encoding='utf-8') as f:
         # CSV writer set up
         writer = csv.writer(f)
         writer.writerow(['ID', 'Company', 'Job Title', 'Location', 'Description'])
@@ -92,4 +113,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main("Software Developer", "Ireland")

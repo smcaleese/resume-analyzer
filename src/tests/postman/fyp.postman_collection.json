@@ -40,11 +40,11 @@
 							"\r",
 							"pm.test('Skills', function() {\r",
 							"    var data = pm.response.json();\r",
-							"    var skillsList = data.skills;\r",
-							"    pm.expect(skillsList[0].name).to.equal('ReactJS')\r",
-							"    pm.expect(skillsList[1].name).to.equal('Python')\r",
-							"    pm.expect(skillsList[2].name).to.equal('Java')\r",
-							"    pm.expect(skillsList[3].name).to.equal('JavaScript')\r",
+							"    var skillsList = [data.skills[0].name, data.skills[1].name, data.skills[2].name, data.skills[3].name];\r",
+							"    pm.expect(skillsList).to.contain('ReactJS')\r",
+							"    pm.expect(skillsList).to.contain('Python')\r",
+							"    pm.expect(skillsList).to.contain('Java')\r",
+							"    pm.expect(skillsList).to.contain('JavaScript')\r",
 							"})"
 						],
 						"type": "text/javascript"

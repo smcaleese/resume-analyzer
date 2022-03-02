@@ -25,5 +25,5 @@ test:
     - ps aux
     - ps aux | grep -i "[u]vicorn" 
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'}
-    - newman run ../tests/postman/status.postman_collection.json
+    - newman run ../tests/postman/fyp.postman_collection.json
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9

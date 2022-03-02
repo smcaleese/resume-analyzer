@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "200b4506-eb7b-452a-ac91-a5e1dfe574ca",
+		"name": "4th Year Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Status Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/status",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "file upload",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status Code', function() {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test('Skills', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    var skillsList = data.skills;\r",
+							"    pm.expect(skillsList[0].name).to.equal('ReactJS')\r",
+							"    pm.expect(skillsList[1].name).to.equal('Python')\r",
+							"    pm.expect(skillsList[2].name).to.equal('Java')\r",
+							"    pm.expect(skillsList[3].name).to.equal('JavaScript')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "../../backend/test-resume.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/resume-upload",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"resume-upload"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

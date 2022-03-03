@@ -5,23 +5,28 @@ from database import Session
 from crud import get_all_job_posts
 from models import JobPost
 from string import punctuation
+import nltk
+from nltk.corpus import stopwords
+
+nltk.download('stopwords')
+nltk.download('punkt')
 
 # extract all requirements from each job post and increment the skill counts in the skill table
-def extract_requirements(description, stop_words, skills):
+def extract_requirements(description, skills):
+    stop_words = set(stopwords.words('english'))
     words = word_tokenize(description)
-    filtered_words = []
+    potential_skill_words = []
     # nltk processing from https://realpython.com/nltk-nlp-python/
 
     for word in words:
         if word.casefold() not in stop_words:
-            filtered_words.append(word)
+            potential_skill_words.append(word)
 
     requirements = set()
-    for word in filtered_words:
-        for skill in skills:
-            if word.lower() == skill.name.lower() or (skill.altnames and word.lower() in skill.altnames):
-                skill.count = skill.count + 1
-                requirements.add(skill.name)
+    for word in potential_skill_words:
+        for skill, altnames in skills.items():
+            if word.lower() == skill.lower() or (altnames and word.lower() in altnames):
+                requirements.add(skill)
 
     return list(requirements)
 
@@ -32,7 +37,7 @@ def normalize_text(text):
     return normalized_text
 
 def get_years_of_experience(description):
-    nlp = spacy.load("en_core_web_sm")
+    nlp = spacy.load('en_core_web_sm')
     matcher = Matcher(nlp.vocab)
 
     pattern = [

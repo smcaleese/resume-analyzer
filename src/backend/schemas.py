@@ -7,7 +7,7 @@ class JobPost(BaseModel):
     location: str
     description: str
     requirements: list
-    experience: int
+    experience: list
 
     class Config:
         orm_mode = True

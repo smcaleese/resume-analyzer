@@ -16,7 +16,7 @@ const FileDisplayPage = ({ className }) => {
     const [skillCounts, setSkillCounts] = useState([])
     const [jobs, setJobs] = useState([])
     const [resume, setResume] = useState(null)
-    const [yearsOfExperience, setYearsOfExperience] = useState([])
+    const [yearsOfExperienceCounts, setYearsOfExperienceCounts] = useState([])
 
     useEffect(() => {
         // Redirect user with no uploaded resume back to resume upload
@@ -31,13 +31,13 @@ const FileDisplayPage = ({ className }) => {
             skills,
             skill_counts: skillCounts,
             jobs,
-            years_of_experience: yearsOfExperience
+            years_of_experience_counts: counts
         } = location.state.results
 
         setSkills(skills)
         setSkillCounts(skillCounts)
         setJobs(jobs)
-        setYearsOfExperience(yearsOfExperience)
+        setYearsOfExperienceCounts(counts)
 
     }, [location, navigate])
 
@@ -71,7 +71,7 @@ const FileDisplayPage = ({ className }) => {
                         </Row>
                         <Row>
                             <YearsOfExperiencePanel
-                                yearsOfExperience={yearsOfExperience}
+                                yearsOfExperienceCounts={yearsOfExperienceCounts}
                             />
                         </Row>
                     </Col>

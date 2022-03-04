@@ -19,7 +19,7 @@ def get_skills():
 
     return skills
 
-def gather_data(filename, job_post_row_data, skill_counts, skills):
+def gather_data(filename, job_post_row_data, skill_counts, skills, count):
     with open(f'../data/{filename}', newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=',')
         csvrows = [row for row in csvreader][1:]
@@ -48,7 +48,8 @@ def gather_data(filename, job_post_row_data, skill_counts, skills):
                     'experience': years_of_experience if years_of_experience else None
                 }
                 job_post_row_data[row_id] = row_data
-                print('Processed job post')
+                print(f'Processed job post {count["total"]}')
+                count['total'] += 1
 
             except Exception:
                 continue
@@ -91,8 +92,9 @@ def main():
     skill_counts = defaultdict(int)
 
     skills = get_skills()
-    gather_data('indeed-scraped-data.csv', job_post_row_data, skill_counts, skills)
-    gather_data('linkedin-scraped-data.csv', job_post_row_data, skill_counts, skills)
+    count = {'total': 1}
+    gather_data('indeed-scraped-data.csv', job_post_row_data, skill_counts, skills, count)
+    gather_data('linkedin-scraped-data.csv', job_post_row_data, skill_counts, skills, count)
 
     insert_job_post_rows(db, job_post_row_data)
     insert_skill_rows(db, skills, skill_counts)

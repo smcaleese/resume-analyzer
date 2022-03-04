@@ -11,7 +11,7 @@ class JobPost(Base):
     location = Column(String, nullable=False)
     description = Column(Text)
     requirements = Column(ARRAY(String))
-    experience = Column(Integer, nullable=True)
+    experience = Column(ARRAY(Integer), nullable=True)
 
     def __repr__(self):
         return '<JobPost id={} company={} title={} location={} description={} requirements={} experience={}>' \

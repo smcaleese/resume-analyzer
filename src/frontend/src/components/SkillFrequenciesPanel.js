@@ -47,7 +47,7 @@ const SkillFrequenciesPanel = ({className, skills, skillCounts}) => {
     }
 
     return (
-        <DisplayCard header='Skill Frequencies' height='37.5vh'>
+        <DisplayCard header='Skill Frequencies' height='30rem'>
             <Bar options={options} data={data} />
         </DisplayCard>
     )

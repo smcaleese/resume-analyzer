@@ -52,6 +52,9 @@ def get_years_of_experience(description):
         {"LOWER": "experience"}
     ]
 
+    # create a regular expression that finds years of experience from the text:
+    expression = r'\d+\syears\sof\sexperience'
+
     matcher.add("PATTERN", [pattern])
 
     normalized_description = normalize_text(description)

@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
+import { NavContext } from '../App'
 
 const postResume = async (file) => {
     const formData = new FormData()
@@ -13,7 +14,7 @@ const postResume = async (file) => {
     )
     const localUrl = 'http://localhost:8000'
     const serverUrl = 'https://fourth-year-project-api.herokuapp.com'
-    const response = await fetch(`${localUrl}/resume-upload`, {
+    const response = await fetch(`${serverUrl}/resume-upload`, {
         method: 'POST',
         mode: 'cors',
         body: formData,
@@ -27,6 +28,7 @@ const FileUploadPage = ({ className }) => {
     const [file, setFile] = useState(null)
     const [loading, setLoading] = useState(false)
 
+    const setPage = useContext(NavContext)
     const navigate = useNavigate()
 
     const checkFileValidity = (file) => {
@@ -53,6 +55,7 @@ const FileUploadPage = ({ className }) => {
         setLoading(false)
 
         console.log(data)
+        setPage('results')
         navigate('/results', { state: { 'results': data, 'resume': file } })
     }
 
@@ -101,7 +104,7 @@ const FileUploadPage = ({ className }) => {
 }
 
 export default styled(FileUploadPage)`
-    height: 100%;
+    height: calc(100% - 100px);
     width: 100%;
 
     .upload-form {

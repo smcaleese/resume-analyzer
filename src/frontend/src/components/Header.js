@@ -8,29 +8,16 @@ const Header = ({ className }) => {
     const navigate = useNavigate()
 
     return (
-        <Navbar className={className} fixed='top' onClick={() => navigate('/')}>
-            <Container fluid>
-                <Navbar.Brand>
-                    <img
-                        alt='logo'
-                        src={logo}
-                        width='100'
-                        height='100'
-                        className='d-inline-block align-top' 
-                    />{' '}
-                    <span className='product-name'>ResumeAnalyzer</span>
-                </Navbar.Brand>
-            </Container>
-        </Navbar>
+        <div className={className}>
+            <span className='product-name'>ResumeAnalyzer</span>
+        </div>
     )
 }
 
 export default styled(Header)`
-    box-shadow: 0px 2px 5px #ccc;
-    background-color: #fff;
-    z-index: 3000;
-    cursor: pointer;
-    position: fixed;
+    z-index: 9999;
+    position: absoulte;
+    margin-left: 125px;
 
     .product-name {
         line-height: 100px; 

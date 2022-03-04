@@ -85,11 +85,5 @@ const FileDisplayPage = ({ className }) => {
 }
 
 export default styled(FileDisplayPage)`
-    height: 80vh;
-    width: 100%;
-    padding: 0;
-
-    .box-grid {
-        margin: 150px 10px 0px 10px;
-    }
+    margin: 0px 10px 0px 110px;
 `

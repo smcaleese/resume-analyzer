@@ -13,6 +13,7 @@ body {
     sans-serif;
   box-sizing: border-box;
   overflow-x: hidden;
+  background-color: #DFE1EB !important;
 }
 
 html {
@@ -65,4 +66,28 @@ html {
   line-height: 1.5;
   position: relative;
   vertical-align: top;
+}
+
+/* Chrome and Safrai Custom Scroll */
+::-webkit-scrollbar{
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track{
+  margin-block: 5px;
+}
+::-webkit-scrollbar-thumb{
+  background: rgba(123,123,123,0.7);
+  border-radius: 100vw;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: rgba(123,123,123,1);
+}
+
+/* Firefox Custom Scroll*/
+@supports (scrollbar-color: green yellow){
+  * {
+    scrollbar-color: rgba(123,123,123,0.7) transparent;
+    scrollbar-width: thin;
+  }
 }

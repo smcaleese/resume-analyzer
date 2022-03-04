@@ -13,6 +13,7 @@ body {
     sans-serif;
   box-sizing: border-box;
   overflow-x: hidden;
+  background-color: #DFE1EB !important;
 }
 
 html {

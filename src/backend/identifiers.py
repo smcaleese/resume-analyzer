@@ -11,8 +11,8 @@ from nltk.corpus import stopwords
 from database import Session
 import re
 
-# nltk.download('stopwords')
-# nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('punkt')
 
 # extract all requirements from each job post and increment the skill counts in the skill table
 def extract_requirements(description, skills):
@@ -67,41 +67,3 @@ def get_years_of_experience(description):
             years.append(round(average_years))
 
     return years
-
-'''
-if __name__ == '__main__':
-    db = Session()
-    all_descriptions = [tup[0] for tup in db.query(JobPost.description).all()]
-    years_of_experience = []
-
-    for description in all_descriptions:
-        years = get_years_of_experience(description)
-        if years:
-            for year in years:
-                years_of_experience.append(year)
-
-    for year in years_of_experience:
-        print('year:', year)
-
-    db.close()
-
-    print('len:', len(years_of_experience), len(all_descriptions))
-
-    recall = len(years_of_experience) / len(all_descriptions)
-
-    print('recall:', recall)
-    # # years = []
-    # with open('../data/years-of-experience-phrases.txt', 'r') as file:
-    #     lines = file.readlines()
-
-    #     with open('../data/normalized-phrases.txt', 'w') as f2:
-    #         for line in lines:
-    #             normalized_line = normalize_text(line)
-    #             f2.write(normalized_line + '\n')
-
-    # for line in lines:
-    #     years = get_years_of_experience(line)
-    #     print('line:', line.strip())
-    #     print('years:', years)
-    #     print()
-'''

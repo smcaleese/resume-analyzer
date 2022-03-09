@@ -27,13 +27,15 @@ const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
             {
                 label: 'Years of experience required',
                 data: values,
-                backgroundColor: '#15bf75'
+                backgroundColor: '#33DDAA'
             }
         ]
     }
 
+    const infoDescription = 'Distribution of experience requirements from job listings.' 
+
     return (
-        <DisplayCard header='Job Posts Years of Experience Distribution' className={className}>
+        <DisplayCard header='Experience Distribution' info={infoDescription} className={className}>
             <Bar options={options} data={data} />
         </DisplayCard>
     )

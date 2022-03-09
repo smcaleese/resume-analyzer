@@ -48,8 +48,10 @@ const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
         <StyledSkillBadge key={index} skill={skill.name} color={skill.color} />
     )
 
+    const infoDescription = 'List of skills identified from submited resume.'
+
     return (
-        <DisplayCard header='Skills' className={className}>
+        <DisplayCard header='Skills' info={infoDescription} className={className}>
             <Row>
                 <Col lg={2} className='d-none d-lg-block'>
                     <img src={SkillIcon} width='70px' />

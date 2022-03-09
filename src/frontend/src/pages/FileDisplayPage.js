@@ -65,7 +65,7 @@ const FileDisplayPage = ({ className }) => {
                                     />
                                 </Row>
                             </Col>
-                            <Col lg={6}>
+                            <Col lg={6} className='skillFreqPanel'>
                                 <SkillFrequenciesPanel
                                     skills={skills}
                                     skillCounts={skillCounts}
@@ -90,4 +90,8 @@ const FileDisplayPage = ({ className }) => {
 
 export default styled(FileDisplayPage)`
     margin: 0px 10px 0px 110px;
+
+    .skillFreqPanel{
+        padding-right: 0;
+    }
 `

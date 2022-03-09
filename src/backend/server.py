@@ -37,7 +37,7 @@ app.add_middleware(
 
 # Helper functions
 def gen_skill_colors(skills):
-    hsv_skill_colors = [(x*1.0/len(skills), 0.8, 1) for x in range(len(skills))]
+    hsv_skill_colors = [(x*1.0/len(skills), 0.6, .9) for x in range(len(skills))]
     rgb_skill_colors = [colorsys.hsv_to_rgb(*x) for x in hsv_skill_colors]
     encoded_rgb_skill_colors = []
 

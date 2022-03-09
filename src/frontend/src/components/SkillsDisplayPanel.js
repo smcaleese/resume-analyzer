@@ -1,11 +1,13 @@
 import React from 'react'
 import DisplayCard from './DisplayCard'
 import styled from 'styled-components'
+import SkillIcon from '../assets/Icons/skill.png'
+import { Col, Row } from 'react-bootstrap'
 
 const SkillBadge = ({ className, skill }) => {
     return (
         <div className={className}>
-            { skill }
+            {skill}
         </div>
     )
 }
@@ -14,10 +16,11 @@ const StyledSkillBadge = styled(SkillBadge)`
     display: inline-block;
     color: white;
     background-color: rgb(${props => props.color});
-    border-radius: 5px;
-    padding: 0.5rem;
+    border-radius: 10px;
+    padding: 10px 20px;
     margin: 0.5rem;
     font-size: 1rem;
+    height: 40px;
 `
 
 const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
@@ -27,7 +30,7 @@ const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
         const key = Object.keys(skillCounts).find(key => skillName === key.toLowerCase())
 
         acc[skillName] = 0
-        if(key) {
+        if (key) {
             acc[skillName] = skillCounts[key]
         }
 
@@ -41,15 +44,22 @@ const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
         return bCount - aCount
     })
 
-    const skillBoxes = sortedSkills.map((skill, index) => 
+    const skillBoxes = sortedSkills.map((skill, index) =>
         <StyledSkillBadge key={index} skill={skill.name} color={skill.color} />
     )
 
     return (
-        <DisplayCard header='Resume Skills' className={className}>
-            <div className='skill-boxes-container'>
-                { skillBoxes }
-            </div>
+        <DisplayCard header='Skills' className={className}>
+            <Row>
+                <Col lg={2} className='d-none d-lg-block'>
+                    <img src={SkillIcon} width='70px' />
+                </Col>
+                <Col lg={10}>
+                    <div>
+                        {skillBoxes}
+                    </div>
+                </Col>
+            </Row>
         </DisplayCard>
     )
 }

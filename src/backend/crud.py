@@ -49,8 +49,6 @@ def get_ranked_job_posts(db: Session, skills: list):
             continue
         skill_str = skill_str[2:-2]
         skills_arr = skill_str.split(',')
-        if len(skills_arr) < 3:
-            continue
         job_obj['skill_match'] = skills_arr
 
         ranked_list.append(job_obj)

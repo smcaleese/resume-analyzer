@@ -56,7 +56,7 @@ const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
                 <Col lg={2} className='d-none d-lg-block'>
                     <img src={SkillIcon} width='70px' />
                 </Col>
-                <Col lg={10}>
+                <Col lg={10} className='skill-list'>
                     <div>
                         {skillBoxes}
                     </div>
@@ -67,4 +67,8 @@ const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
 }
 
 export default styled(SkillsDisplayPanel)`
+.skill-list{
+    max-height: 120px;
+    overflow-y: auto; 
+}
 `

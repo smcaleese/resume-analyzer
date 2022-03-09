@@ -93,5 +93,7 @@ export default styled(FileDisplayPage)`
 
     .skillFreqPanel{
         padding-right: 0;
+        position: relative;
+        margin-bottom: 10px;
     }
 `

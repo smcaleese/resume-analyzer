@@ -27,7 +27,7 @@ const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
             {
                 label: 'Years of experience required',
                 data: values,
-                backgroundColor: '#33DDAA'
+                backgroundColor: '#33DAC1'
             }
         ]
     }

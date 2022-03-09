@@ -9,20 +9,22 @@ const Header = ({ className }) => {
 
     return (
         <div className={className}>
-            <span className='product-name'>ResumeAnalyzer</span>
+            <h1 className='product-name' onClick={() => navigate('/')}>
+                ResumeAnalyzer
+            </h1>
         </div>
     )
 }
 
 export default styled(Header)`
-    z-index: 9999;
-    position: absoulte;
-    margin-left: 125px;
+    margin: 1rem 0 1rem 120px;
+    cursor: pointer;
 
     .product-name {
-        line-height: 100px; 
+        margin: 0;
+        font-weight: normal;
         vertical-align: middle;
         font-size: 3em;
-        color: #4a4a4a
+        color: #4a4a4a;
     }
 `

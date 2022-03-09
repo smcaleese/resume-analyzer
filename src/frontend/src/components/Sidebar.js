@@ -21,7 +21,7 @@ const Sidebar = ({ className, page, setPage }) => {
         >
             <div className='sidebar-items'></div>
             <Nav.Item>
-                <Nav.Link className='logo-container' eventKey='home' onClick={() => navigate('/')}>
+                <Nav.Link className='logo-container center' eventKey='home' onClick={() => navigate('/')}>
                     <img
                         alt='Brand Logo'
                         src={logo}
@@ -32,7 +32,7 @@ const Sidebar = ({ className, page, setPage }) => {
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link className='icon-container' style={page === 'home' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='home' onClick={() => navigate('/')}>
+                <Nav.Link className='icon-container center' style={page === 'home' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='home' onClick={() => navigate('/')}>
                     <img
                         alt='Home Icon'
                         src={page === 'home' ? selected_home_icon : unselected_home_icon}
@@ -44,7 +44,7 @@ const Sidebar = ({ className, page, setPage }) => {
             {page === 'home' ? null :
                 <>
                     <Nav.Item>
-                        <Nav.Link className='icon-container' style={page === 'results' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='results'>
+                        <Nav.Link className='icon-container center' style={page === 'results' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='results'>
                             <img
                                 alt='Results Icon'
                                 src={page === 'results' ? selected_chart_icon : unselected_chart_icon}
@@ -54,7 +54,7 @@ const Sidebar = ({ className, page, setPage }) => {
                         </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link className='icon-container' style={page === 'tree' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='tree'>
+                        <Nav.Link className='icon-container center' style={page === 'tree' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='tree'>
                             <img
                                 alt='Chart Icon'
                                 src={page === 'tree' ? selected_tree_icon : unselected_tree_icon}
@@ -77,31 +77,17 @@ export default styled(Sidebar)`
     left: 0;
     background-color: #373B53;
     z-index: 9999;
-    width: 100px !important;
+    width: 100px;
 
-    .logo-container{
+    .logo-container {
         background-color: #33DAC1;
-        height:100px;
-        padding:0;
-        display: flex;
-        justify-content: center;
-
-        .logo-image{
-            margin: auto;
-            display: block;
-        }
+        height: 100px;
+        padding: 0;
     }
 
-    .icon-container{
+    .icon-container {
         margin: 10px;
-        height:80px;
-        display: flex;
-        justify-content: center;
+        height: 80px;
         border-radius: 50%;
-
-        .icon{
-            margin: auto;
-            display: block;
-        }
     }
 `

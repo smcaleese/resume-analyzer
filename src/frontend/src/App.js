@@ -29,7 +29,6 @@ const App = ({ className }) => {
 }
 
 export default styled(App)`
-    height: 100vh;
     width: 100vw;
     position: relative;
 `

@@ -49,29 +49,33 @@ const FileDisplayPage = ({ className }) => {
     return (
         <div className={className}>
             <Container fluid>
-                <Row className='box-grid'>
+                <Row>
                     <Col lg={8}>
                         <Row>
-                            <SkillsDisplayPanel
-                                skills={skills}
-                                skillCounts={skillCounts}
-                            />
-                        </Row>
-                        <Row>
-                            <SkillFrequenciesPanel
-                                skills={skills}
-                                skillCounts={skillCounts}
-                            />
+                            <Col lg={6}>
+                                <Row>
+                                    <SkillsDisplayPanel
+                                        skills={skills}
+                                        skillCounts={skillCounts}
+                                    />
+                                </Row>
+                                <Row>
+                                    <YearsOfExperiencePanel
+                                        yearsOfExperienceCounts={yearsOfExperienceCounts}
+                                    />
+                                </Row>
+                            </Col>
+                            <Col lg={6}>
+                                <SkillFrequenciesPanel
+                                    skills={skills}
+                                    skillCounts={skillCounts}
+                                />
+                            </Col>
                         </Row>
                         <Row>
                             <JobsDisplayPanel
                                 jobs={jobs}
                                 skills={skills}
-                            />
-                        </Row>
-                        <Row>
-                            <YearsOfExperiencePanel
-                                yearsOfExperienceCounts={yearsOfExperienceCounts}
                             />
                         </Row>
                     </Col>

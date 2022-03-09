@@ -21,10 +21,12 @@ export default styled(DisplayCard)`
     margin-top: 1rem;
     height: ${props => props.height};
     max-height: 100vh;
+    border-radius: 10px;
 
     .card-heading {
-        background-color: var(--bs-blue);
-        color: #fff;
+        background-color: transparent;
+        color: #373B53;
+        border-bottom: 0px;
     }
     .card-body {
         overflow-y: auto;

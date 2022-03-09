@@ -25,6 +25,6 @@ export default styled(Header)`
         font-weight: normal;
         vertical-align: middle;
         font-size: 3em;
-        color: #4a4a4a;
+        color: #373B53;
     }
 `

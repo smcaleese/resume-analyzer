@@ -12,10 +12,10 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
 
     const getSkillColor = (name) => {
         const resumeSkillMatch = skills.find((skill) => name.toLowerCase() === skill.name.toLowerCase())
-        if (resumeSkillMatch){
+        if (resumeSkillMatch) {
             return resumeSkillMatch.color
         }
-        else{
+        else {
             return '187,187,187'
         }
     }
@@ -71,15 +71,17 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
             <div className='count-table'>
                 <Table responsive='sm' size='sm'>
                     <thead>
-                        <th>&nbsp;</th>
-                        <th>Skill</th>
-                        <th>Count</th>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Skill</th>
+                            <th>Count</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        {sortedRequirementsDesc.map((req,index) => {
-                            return(
+                        {sortedRequirementsDesc.map((req, index) => {
+                            return (
                                 <tr key={index}>
-                                    <td><div className='circle-indicator' style={{backgroundColor:`rgb(${getSkillColor(req[0])})`}}></div></td>
+                                    <td><div className='circle-indicator' style={{ backgroundColor: `rgb(${getSkillColor(req[0])})` }}></div></td>
                                     <td>{req[0]}</td>
                                     <td>{req[1]}</td>
                                 </tr>
@@ -111,6 +113,7 @@ export default styled(SkillFrequenciesPanel)`
     .count-table{
         height: 30%;
         overflow-y: auto;
+        padding: 0px 40px;
 
         .circle-indicator{
             height: 15px;

@@ -5,13 +5,11 @@ import { Card, Table, Accordion, Row, Col } from 'react-bootstrap'
 import DisplayCard from './DisplayCard'
 import JobRequirementsIndicator from './JobRequirementsIndicator'
 
-// TODO
-// Fix the indicator circles
 const JobsTable = ({ className, jobs, skills }) => {
     return (
         <Accordion>
             <Accordion.Item>
-                <Row className='accordian-title'>
+                <Row className='accordion-title'>
                     <Col xs={2}>Company</Col>
                     <Col xs={5}>Title</Col>
                     <Col xs={5}>Requirements</Col>
@@ -20,7 +18,7 @@ const JobsTable = ({ className, jobs, skills }) => {
             {jobs.map((job, index) => (
                 <Accordion.Item eventKey={index} key={index}>
                     <Accordion.Header>
-                        <Row className='accordian-header'>
+                        <Row className='accordion-header'>
                             <Col xs={2}>{job.company}</Col>
                             <Col xs={5}>{job.title}</Col>
                             <Col xs={2}><JobRequirementsIndicator skills={skills} requirements={job.requirements} /></Col>
@@ -48,14 +46,25 @@ const JobsDisplayPanel = ({ className, jobs, skills }) => {
 }
 
 export default styled(JobsDisplayPanel)`
-    .accordian-title {
+    .accordion-title {
         width: 100%;
-        font-size: 0.75em;
-        padding: 1rem 1.25rem;
+        font-size: 0.9em;
+        padding: 1rem 0rem;
+        color: #373B53;
         margin: 0;
     }
 
-    .accordian-header {
+    .accordion-item:first-of-type{
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .accordion-item:last-of-type{
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .accordion-header {
         width: 100%;
     }
 

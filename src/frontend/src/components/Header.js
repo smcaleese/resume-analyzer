@@ -17,9 +17,10 @@ const Header = ({ className }) => {
 }
 
 export default styled(Header)`
-    margin: 1rem 0 1rem 120px;
+    margin: 0 0 0 120px;
     cursor: pointer;
-    height: 75px;
+    padding: calc((100px - 3em) / 2) 0 calc((100px - 3em) / 2) 0;
+    height: 100px;
 
     .product-name {
         margin: 0;

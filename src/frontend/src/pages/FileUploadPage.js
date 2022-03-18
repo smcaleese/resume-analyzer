@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
-import { NavContext } from '../App'
+import { AppContext } from '../App'
 
 const postResume = async (file) => {
     const formData = new FormData()
@@ -28,7 +28,7 @@ const FileUploadPage = ({ className }) => {
     const [file, setFile] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const setPage = useContext(NavContext)
+    const {dispatch} = useContext(AppContext)
     const navigate = useNavigate()
 
     const checkFileValidity = (file) => {
@@ -48,6 +48,7 @@ const FileUploadPage = ({ className }) => {
 
     const uploadResume = async (e) => {
         e.preventDefault()
+        dispatch({type: 'SET_RESUME', payload: file})
         console.log('file to upload:', file)
 
         setLoading(true)
@@ -55,12 +56,12 @@ const FileUploadPage = ({ className }) => {
         setLoading(false)
 
         console.log(data)
-        setPage('results')
-        navigate('/results', { state: { 'results': data, 'resume': file } })
+        dispatch({type: 'SET_RESULTS_DATA', payload: data})
+        dispatch({type: 'SET_PAGE', payload: 'results'})
+        navigate('/results')
     }
 
     const onDrop = useCallback((acceptedFile) => {
-        console.log('drop')
         const file = acceptedFile[0]
 
         if (checkFileValidity(file)) {

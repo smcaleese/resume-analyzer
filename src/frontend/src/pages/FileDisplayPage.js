@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import PDFPageViewer from '../components/PDFPageViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -7,44 +7,70 @@ import SkillFrequenciesPanel from '../components/SkillFrequenciesPanel'
 import JobsDisplayPanel from '../components/JobsDisplayPanel'
 import YearsOfExperiencePanel from '../components/YearsOfExperiencePanel'
 import { Container, Col, Row, Card } from 'react-bootstrap'
+import { AppContext } from '../App'
 
 const FileDisplayPage = ({ className }) => {
     const location = useLocation()
     const navigate = useNavigate()
 
-    const [skills, setSkills] = useState([])
-    const [skillCounts, setSkillCounts] = useState([])
-    const [jobs, setJobs] = useState([])
-    const [resume, setResume] = useState(null)
-    const [yearsOfExperienceCounts, setYearsOfExperienceCounts] = useState([])
+    // const [skills, setSkills] = useState([])
+    // const [skillCounts, setSkillCounts] = useState([])
+    // const [jobs, setJobs] = useState([])
+    // const [resume, setResume] = useState(null)
+    // const [yearsOfExperienceCounts, setYearsOfExperienceCounts] = useState([])
 
-    useEffect(() => {
-        // Redirect user with no uploaded resume back to resume upload
-        if (!location.state) {
-            navigate('/')
-        }
 
-        const resume = location.state.resume
-        setResume(resume)
+    // useEffect(() => {
+    //     const {
+    //         skills,
+    //         skill_counts: skillCounts,
+    //         jobs,
+    //         years_of_experience_counts: counts
+    //     } = state.resultsData
 
-        const {
-            skills,
-            skill_counts: skillCounts,
-            jobs,
-            years_of_experience_counts: counts
-        } = location.state.results
+    // }, [])
 
-        setSkills(skills)
-        setSkillCounts(skillCounts)
-        setJobs(jobs)
-        setYearsOfExperienceCounts(counts)
+    // useEffect(() => {
+    //     // Redirect user with no uploaded resume back to resume upload
+    //     if (!location.state) {
+    //         navigate('/')
+    //     }
 
-    }, [location, navigate])
+    //     const resume = location.state.resume
+    //     setResume(resume)
+
+    //     const {
+    //         skills,
+    //         skill_counts: skillCounts,
+    //         jobs,
+    //         years_of_experience_counts: counts
+    //     } = location.state.results
+
+    //     setSkills(skills)
+    //     setSkillCounts(skillCounts)
+    //     setJobs(jobs)
+    //     setYearsOfExperienceCounts(counts)
+
+    // }, [location, navigate])
 
     // Block Page render if no resume has been uploaded
-    if (!location.state) {
-        return null
-    }
+    // if (!location.state) {
+    //     return null
+    // }
+
+    const {appState} = useContext(AppContext)
+
+    const {
+        skills,
+        skill_counts: skillCounts,
+        jobs,
+        years_of_experience_counts: yearsOfExperienceCounts
+    } = appState.resultsData
+    const resume = appState.resume
+
+    useEffect(() => {
+        console.log('rerendering FileDisplayPage')
+    }, [appState])
 
     return (
         <div className={className}>

@@ -32,7 +32,7 @@ const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
         ]
     }
 
-    const infoDescription = 'Distribution of experience requirements from job listings.' 
+    const infoDescription = 'Distribution of years of experience requirements from job posts.' 
 
     return (
         <DisplayCard header='Experience Distribution' info={infoDescription} className={className}>

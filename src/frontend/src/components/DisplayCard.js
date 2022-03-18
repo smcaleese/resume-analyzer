@@ -66,6 +66,7 @@ export default styled(DisplayCard)`
     .card-heading {
         background-color: transparent;
         border-bottom: 0px;
+        padding: 1rem 2rem;
 
         .card-title {
             color: #373B53;

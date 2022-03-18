@@ -63,8 +63,10 @@ const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
         }
     }]
 
+    const infoDescription = 'Keyword counts from job posts.'
+
     return (
-        <DisplayCard className={className} header='Skill Frequencies'>
+        <DisplayCard className={className} header='Skill Frequencies' info={infoDescription}>
             <div className='doughnut-chart'>
                 <Doughnut options={options} data={data} plugins={plugins} />
             </div>

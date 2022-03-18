@@ -1,30 +1,18 @@
-# CA400 template repo
+# Job Posting and Resume Analyzer
 
-This is a template for CA400 projects.
+ResumeAnalyzer is a 4th year project that was created by Darragh McGonigle and Stephen 
+McAleese and can be found running at https://resumeanalyzer.xyz.
 
-## 1. Create your repo
+The project is an online web application that allows software engineers to upload and analyze their resumes to learn more 
+about how how valuable their skills are in the job market and how they could improve.
 
-One person from your project team should fork this repo, then add other teammates as project members on GitLab.
+ResumeAnalyzer extracts insights from large numbers of job posts and uses these insights to analyze users' resumes.
 
-## 2. Name your repo appropriately
+<br>
 
-The name of your project must be of the form `2022-ca400-XXXXXXX`, where "`XXXXXXX`"
-should be replaced with your usernames (e.g. `2022-ca400-sblott-pclarke`).
-**Note** that the year should be set as appropriate to your year of study. For example, in the
-2022/2023 academic year this would change to '2023-ca400-sblott-pclarke'), 
-in the 2023/2024 academic year this would change to '2024-ca400-sblott-pclarke'), etc. 
+![](./res/project-screenshot.png)
 
-It is the *name of your repo* which matters (not the name of your project).
-
-You can change the name of your repo on GitLab under:
-
-- Settings / General / Advanced / Change path
-
-It looks like this:
-
-![change-repo-path](./res/repo-change-path.png "Change repo path.")
-
-You should replace all of this file with a README describing your own project.
+<br>
 
 ## Additional resources
 

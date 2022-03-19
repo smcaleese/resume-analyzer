@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import DisplayCard from './DisplayCard'
 import styled from 'styled-components'
 import { Chart as ChartJS } from 'chart.js/auto'
@@ -34,6 +34,10 @@ const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
 
     const infoDescription = 'Distribution of years of experience requirements from job posts.' 
 
+    useEffect(() => {
+        console.log('rerendering YearsOfExperiencePanel')
+    })
+
     return (
         <DisplayCard header='Experience Distribution' info={infoDescription} className={className}>
             <Bar options={options} data={data} />
@@ -41,5 +45,9 @@ const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
     )
 }
 
-export default styled(YearsOfExperiencePanel)`
-`
+const propsEqual = (prevProps, nextProps) => {
+    console.log('props:', prevProps, nextProps)
+    return true
+}
+
+export default React.memo(YearsOfExperiencePanel, propsEqual)

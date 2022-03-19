@@ -14,7 +14,7 @@ const postResume = async (file) => {
     )
     const localUrl = 'http://localhost:8000'
     const serverUrl = 'https://fourth-year-project-api.herokuapp.com'
-    const response = await fetch(`${serverUrl}/resume-upload`, {
+    const response = await fetch(`${localUrl}/resume-upload`, {
         method: 'POST',
         mode: 'cors',
         body: formData,
@@ -24,11 +24,12 @@ const postResume = async (file) => {
     return json
 }
 
-const FileUploadPage = ({ className }) => {
+const FileUploadPage = ({ className, setPage }) => {
     const [file, setFile] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const {dispatch} = useContext(AppContext)
+    // const {dispatch} = useContext(AppContext)
+    const {setAppState} = useContext(AppContext)
     const navigate = useNavigate()
 
     const checkFileValidity = (file) => {
@@ -48,7 +49,7 @@ const FileUploadPage = ({ className }) => {
 
     const uploadResume = async (e) => {
         e.preventDefault()
-        dispatch({type: 'SET_RESUME', payload: file})
+        // dispatch({type: 'SET_RESUME', payload: file})
         console.log('file to upload:', file)
 
         setLoading(true)
@@ -56,8 +57,12 @@ const FileUploadPage = ({ className }) => {
         setLoading(false)
 
         console.log(data)
-        dispatch({type: 'SET_RESULTS_DATA', payload: data})
-        dispatch({type: 'SET_PAGE', payload: 'results'})
+        // dispatch({type: 'SET_RESULTS_DATA', payload: data})
+        setAppState({
+            resume: file,
+            resultsData: data,
+        })
+        setPage('results')
         navigate('/results')
     }
 

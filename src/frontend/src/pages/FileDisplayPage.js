@@ -10,9 +10,6 @@ import { Container, Col, Row, Card } from 'react-bootstrap'
 import { AppContext } from '../App'
 
 const FileDisplayPage = ({ className }) => {
-    const location = useLocation()
-    const navigate = useNavigate()
-
     // const [skills, setSkills] = useState([])
     // const [skillCounts, setSkillCounts] = useState([])
     // const [jobs, setJobs] = useState([])
@@ -70,7 +67,7 @@ const FileDisplayPage = ({ className }) => {
 
     useEffect(() => {
         console.log('rerendering FileDisplayPage')
-    }, [appState])
+    })
 
     return (
         <div className={className}>
@@ -114,7 +111,7 @@ const FileDisplayPage = ({ className }) => {
     )
 }
 
-export default styled(FileDisplayPage)`
+const StyledFileDisplayPage = styled(FileDisplayPage)`
     margin: 0px 10px 0px 110px;
 
     .skillFreqPanel{
@@ -123,3 +120,11 @@ export default styled(FileDisplayPage)`
         margin-bottom: 10px;
     }
 `
+
+const propsEqual = (prevProps, nextProps) => {
+    console.log('props:', prevProps, nextProps)
+    return true
+}
+
+// export default React.memo(StyledFileDisplayPage, propsEqual) 
+export default StyledFileDisplayPage

@@ -76,7 +76,7 @@ const PDFPageViewer = ({ className, file }) => {
     )
 }
 
-export default styled(PDFPageViewer)`
+const StyledPDFPageViewer = styled(PDFPageViewer)`
 .pagination-container {
     padding: 0;
 }
@@ -100,3 +100,5 @@ export default styled(PDFPageViewer)`
     display: none !important;
 }
 `
+
+export default React.memo(StyledPDFPageViewer)

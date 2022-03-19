@@ -20,8 +20,8 @@ const FileDisplayPage = ({ className }) => {
         <div className={className}>
             <Container fluid>
                 <Row>
-                    <Col lg={8}>
-                        <Row>
+                    <Col xl={8}>
+                        <Row className='left-row'>
                             <Col lg={6}>
                                 <Row>
                                     <SkillsDisplayPanel />
@@ -38,7 +38,7 @@ const FileDisplayPage = ({ className }) => {
                             <JobsDisplayPanel />
                         </Row>
                     </Col>
-                    <Col lg={4}>
+                    <Col xl={4}>
                         <PDFPageViewer />
                     </Col>
                 </Row>
@@ -52,7 +52,6 @@ const StyledFileDisplayPage = styled(FileDisplayPage)`
 
     .skillFreqPanel {
         padding-right: 0;
-        position: relative;
         margin-bottom: 10px;
     }
 `

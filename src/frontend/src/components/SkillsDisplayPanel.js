@@ -71,9 +71,9 @@ const SkillsDisplayPanel = ({ className }) => {
 
 const StyledSkillsDisplayPanel = styled(SkillsDisplayPanel)`
     .skill-list {
-        max-height: 120px;
+        max-height: 150px;
         overflow-y: auto; 
     }
 `
 
-export default React.memo(StyledSkillsDisplayPanel)
+export default StyledSkillsDisplayPanel

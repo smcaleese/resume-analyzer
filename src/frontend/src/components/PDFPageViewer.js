@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { Card, Container, Pagination, Row } from 'react-bootstrap'
 import { pdfjs, Document, Page } from 'react-pdf'
 import { nanoid } from 'nanoid'
 import DisplayCard from './DisplayCard'
+import { AppContext } from '../App'
 
 // render PDF files using separate thread to improve performance:
 pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js'
@@ -42,7 +43,10 @@ const PaginationComponent = ({pageNumber, setPageNumber, numPages}) => {
     )
 }
 
-const PDFPageViewer = ({ className, file }) => {
+const PDFPageViewer = ({ className }) => {
+    const { appState } = useContext(AppContext)
+    const file = appState.resume
+
     const [numPages, setNumPages] = useState(null)
     const [pageNumber, setPageNumber] = useState(1)
 
@@ -76,7 +80,7 @@ const PDFPageViewer = ({ className, file }) => {
     )
 }
 
-export default styled(PDFPageViewer)`
+const StyledPDFPageViewer = styled(PDFPageViewer)`
 .pagination-container {
     padding: 0;
 }
@@ -100,3 +104,5 @@ export default styled(PDFPageViewer)`
     display: none !important;
 }
 `
+
+export default React.memo(StyledPDFPageViewer)

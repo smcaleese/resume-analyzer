@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import PDFPageViewer from '../components/PDFPageViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -7,44 +7,23 @@ import SkillFrequenciesPanel from '../components/SkillFrequenciesPanel'
 import JobsDisplayPanel from '../components/JobsDisplayPanel'
 import YearsOfExperiencePanel from '../components/YearsOfExperiencePanel'
 import { Container, Col, Row, Card } from 'react-bootstrap'
+import { AppContext } from '../App'
 
 const FileDisplayPage = ({ className }) => {
-    const location = useLocation()
-    const navigate = useNavigate()
+    // const {appState} = useContext(AppContext)
+    const store = useContext(AppContext)
 
-    const [skills, setSkills] = useState([])
-    const [skillCounts, setSkillCounts] = useState([])
-    const [jobs, setJobs] = useState([])
-    const [resume, setResume] = useState(null)
-    const [yearsOfExperienceCounts, setYearsOfExperienceCounts] = useState([])
-
-    useEffect(() => {
-        // Redirect user with no uploaded resume back to resume upload
-        if (!location.state) {
-            navigate('/')
-        }
-
-        const resume = location.state.resume
-        setResume(resume)
-
-        const {
-            skills,
-            skill_counts: skillCounts,
-            jobs,
-            years_of_experience_counts: counts
-        } = location.state.results
-
-        setSkills(skills)
-        setSkillCounts(skillCounts)
-        setJobs(jobs)
-        setYearsOfExperienceCounts(counts)
-
-    }, [location, navigate])
-
-    // Block Page render if no resume has been uploaded
-    if (!location.state) {
+    if (!store.appState.resultsData) {
         return null
     }
+
+    useEffect(() => {
+        console.log('rerendering file display page')
+    }, [store])
+
+    useEffect(() => {
+        console.log('rerendering FileDisplayPage')
+    })
 
     return (
         <div className={className}>
@@ -54,33 +33,22 @@ const FileDisplayPage = ({ className }) => {
                         <Row>
                             <Col lg={6}>
                                 <Row>
-                                    <SkillsDisplayPanel
-                                        skills={skills}
-                                        skillCounts={skillCounts}
-                                    />
+                                    <SkillsDisplayPanel />
                                 </Row>
                                 <Row>
-                                    <YearsOfExperiencePanel
-                                        yearsOfExperienceCounts={yearsOfExperienceCounts}
-                                    />
+                                    <YearsOfExperiencePanel />
                                 </Row>
                             </Col>
                             <Col lg={6} className='skillFreqPanel'>
-                                <SkillFrequenciesPanel
-                                    skills={skills}
-                                    skillCounts={skillCounts}
-                                />
+                                <SkillFrequenciesPanel />
                             </Col>
                         </Row>
                         <Row>
-                            <JobsDisplayPanel
-                                jobs={jobs}
-                                skills={skills}
-                            />
+                            <JobsDisplayPanel />
                         </Row>
                     </Col>
                     <Col lg={4}>
-                        <PDFPageViewer file={resume} />
+                        <PDFPageViewer />
                     </Col>
                 </Row>
             </Container>
@@ -88,7 +56,7 @@ const FileDisplayPage = ({ className }) => {
     )
 }
 
-export default styled(FileDisplayPage)`
+const StyledFileDisplayPage = styled(FileDisplayPage)`
     margin: 0px 10px 0px 110px;
 
     .skillFreqPanel{
@@ -97,3 +65,11 @@ export default styled(FileDisplayPage)`
         margin-bottom: 10px;
     }
 `
+
+const propsEqual = (prevProps, nextProps) => {
+    console.log('props:', prevProps, nextProps)
+    return true
+}
+
+export default React.memo(StyledFileDisplayPage, propsEqual) 
+// export default StyledFileDisplayPage

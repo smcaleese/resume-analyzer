@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import DisplayCard from './DisplayCard'
 import styled from 'styled-components'
 import SkillIcon from '../assets/Icons/skill.png'
 import { Col, Row } from 'react-bootstrap'
+import { AppContext } from '../App'
 
 const SkillBadge = ({ className, skill }) => {
     return (
@@ -23,7 +24,9 @@ const StyledSkillBadge = styled(SkillBadge)`
     height: 40px;
 `
 
-const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
+const SkillsDisplayPanel = ({ className }) => {
+    const { appState } = useContext(AppContext)
+    const { skills, skill_counts: skillCounts } = appState.resultsData
 
     const resumeSkillCounts = skills.reduce((acc, skill) => {
         const skillName = skill.name.toLowerCase()
@@ -66,9 +69,11 @@ const SkillsDisplayPanel = ({ className, skills, skillCounts }) => {
     )
 }
 
-export default styled(SkillsDisplayPanel)`
-.skill-list{
-    max-height: 120px;
-    overflow-y: auto; 
-}
+const StyledSkillsDisplayPanel = styled(SkillsDisplayPanel)`
+    .skill-list {
+        max-height: 120px;
+        overflow-y: auto; 
+    }
 `
+
+export default React.memo(StyledSkillsDisplayPanel)

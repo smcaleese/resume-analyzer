@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useEffect, useContext} from 'react'
 import DisplayCard from './DisplayCard'
 import styled from 'styled-components'
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
+import { AppContext } from '../App'
 
-const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
+const YearsOfExperiencePanel = ({ className }) => {
     const options = {
         responsive: true,
         plugins: {
@@ -17,6 +18,9 @@ const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
             },
         },
     }
+
+    const { appState } = useContext(AppContext)
+    const { years_of_experience_counts: yearsOfExperienceCounts } = appState.resultsData
 
     const labels = yearsOfExperienceCounts.map((value, index) => index)
     const values = yearsOfExperienceCounts
@@ -32,7 +36,11 @@ const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
         ]
     }
 
-    const infoDescription = 'Distribution of experience requirements from job listings.' 
+    const infoDescription = 'Distribution of years of experience requirements from job posts.' 
+
+    useEffect(() => {
+        console.log('rerendering YearsOfExperiencePanel')
+    })
 
     return (
         <DisplayCard header='Experience Distribution' info={infoDescription} className={className}>
@@ -41,5 +49,9 @@ const YearsOfExperiencePanel = ({ className, yearsOfExperienceCounts }) => {
     )
 }
 
-export default styled(YearsOfExperiencePanel)`
-`
+const propsEqual = (prevProps, nextProps) => {
+    console.log('props:', prevProps, nextProps)
+    return true
+}
+
+export default React.memo(YearsOfExperiencePanel, propsEqual)

@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
-import { NavContext } from '../App'
+import { AppContext } from '../App'
 
 const postResume = async (file) => {
     const formData = new FormData()
@@ -14,7 +14,7 @@ const postResume = async (file) => {
     )
     const localUrl = 'http://localhost:8000'
     const serverUrl = 'https://fourth-year-project-api.herokuapp.com'
-    const response = await fetch(`${serverUrl}/resume-upload`, {
+    const response = await fetch(`${localUrl}/resume-upload`, {
         method: 'POST',
         mode: 'cors',
         body: formData,
@@ -24,11 +24,11 @@ const postResume = async (file) => {
     return json
 }
 
-const FileUploadPage = ({ className }) => {
+const FileUploadPage = ({ className, setPage }) => {
     const [file, setFile] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    const setPage = useContext(NavContext)
+    const { dispatch } = useContext(AppContext)
     const navigate = useNavigate()
 
     const checkFileValidity = (file) => {
@@ -55,17 +55,18 @@ const FileUploadPage = ({ className }) => {
         setLoading(false)
 
         console.log(data)
+        dispatch({type: 'SET_RESULTS_DATA', payload: data})
         setPage('results')
-        navigate('/results', { state: { 'results': data, 'resume': file } })
+        navigate('/results')
     }
 
     const onDrop = useCallback((acceptedFile) => {
-        console.log('drop')
         const file = acceptedFile[0]
 
         if (checkFileValidity(file)) {
             console.log('upload successful')
             setFile(file)
+            dispatch({type: 'SET_RESUME', payload: file})
         }
     }, [])
 

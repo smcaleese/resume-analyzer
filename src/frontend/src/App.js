@@ -25,43 +25,10 @@ const reducer = (state, action) => {
 
 const App = ({ className }) => {
     const [page, setPage] = useState('home')
-    // const [appState, dispatch] = useReducer(reducer, initialState)
-    // const store = useMemo(() => ({ appState, dispatch }), [appState])
-    // const [appState, setAppState] = useState({
-    //     resume: null,
-    //     resultsData: null,
-    // })
-    const [appState, setAppState] = useState({
-        resume: {
-            path: 'resume-stephen-mcaleese-2021.pdf',
-            type: 'application/json'
-        },
-        resultsData: {
-            skill_counts: {
-                AWS: 1
-            },
-            skills: [
-                {
-                    name: 'Java',
-                    color: '229,91,166'
-                }
-            ],
-            years_of_experience_counts: [1, 2, 3],
-            jobs: [
-                {
-                    company: 'ABC',
-                    description: '',
-                    requirements: ['Git'],
-                    skill_match: ['HTTP'],
-                    title: ''
-                }
-            ]
-        }
-    })
-
+    const [appState, dispatch] = useReducer(reducer, initialState)
     const store = useMemo(() => {
         console.log('useMemo')
-        return { appState, setAppState }
+        return { appState, dispatch }
     }, [appState])
 
     useEffect(() => {
@@ -73,8 +40,8 @@ const App = ({ className }) => {
         <div className={className}>
             <Router>
                 <Header />
+                <Sidebar page={page} setPage={setPage} />
                 <AppContext.Provider value={store}>
-                    <Sidebar page={page} setPage={setPage} />
                     <Routes>
                         <Route exact path='/' element={<Navigate to='/home' />} />
                         <Route path='/home' element={<FileUploadPage setPage={setPage} />} />

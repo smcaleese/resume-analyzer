@@ -10,60 +10,16 @@ import { Container, Col, Row, Card } from 'react-bootstrap'
 import { AppContext } from '../App'
 
 const FileDisplayPage = ({ className }) => {
-    // const [skills, setSkills] = useState([])
-    // const [skillCounts, setSkillCounts] = useState([])
-    // const [jobs, setJobs] = useState([])
-    // const [resume, setResume] = useState(null)
-    // const [yearsOfExperienceCounts, setYearsOfExperienceCounts] = useState([])
+    // const {appState} = useContext(AppContext)
+    const store = useContext(AppContext)
 
+    if (!store.appState.resultsData) {
+        return null
+    }
 
-    // useEffect(() => {
-    //     const {
-    //         skills,
-    //         skill_counts: skillCounts,
-    //         jobs,
-    //         years_of_experience_counts: counts
-    //     } = state.resultsData
-
-    // }, [])
-
-    // useEffect(() => {
-    //     // Redirect user with no uploaded resume back to resume upload
-    //     if (!location.state) {
-    //         navigate('/')
-    //     }
-
-    //     const resume = location.state.resume
-    //     setResume(resume)
-
-    //     const {
-    //         skills,
-    //         skill_counts: skillCounts,
-    //         jobs,
-    //         years_of_experience_counts: counts
-    //     } = location.state.results
-
-    //     setSkills(skills)
-    //     setSkillCounts(skillCounts)
-    //     setJobs(jobs)
-    //     setYearsOfExperienceCounts(counts)
-
-    // }, [location, navigate])
-
-    // Block Page render if no resume has been uploaded
-    // if (!location.state) {
-    //     return null
-    // }
-
-    const {appState} = useContext(AppContext)
-
-    const {
-        skills,
-        skill_counts: skillCounts,
-        jobs,
-        years_of_experience_counts: yearsOfExperienceCounts
-    } = appState.resultsData
-    const resume = appState.resume
+    useEffect(() => {
+        console.log('rerendering file display page')
+    }, [store])
 
     useEffect(() => {
         console.log('rerendering FileDisplayPage')
@@ -77,33 +33,22 @@ const FileDisplayPage = ({ className }) => {
                         <Row>
                             <Col lg={6}>
                                 <Row>
-                                    <SkillsDisplayPanel
-                                        skills={skills}
-                                        skillCounts={skillCounts}
-                                    />
+                                    <SkillsDisplayPanel />
                                 </Row>
                                 <Row>
-                                    <YearsOfExperiencePanel
-                                        yearsOfExperienceCounts={yearsOfExperienceCounts}
-                                    />
+                                    <YearsOfExperiencePanel />
                                 </Row>
                             </Col>
                             <Col lg={6} className='skillFreqPanel'>
-                                <SkillFrequenciesPanel
-                                    skills={skills}
-                                    skillCounts={skillCounts}
-                                />
+                                <SkillFrequenciesPanel />
                             </Col>
                         </Row>
                         <Row>
-                            <JobsDisplayPanel
-                                jobs={jobs}
-                                skills={skills}
-                            />
+                            <JobsDisplayPanel />
                         </Row>
                     </Col>
                     <Col lg={4}>
-                        <PDFPageViewer file={resume} />
+                        <PDFPageViewer />
                     </Col>
                 </Row>
             </Container>
@@ -126,5 +71,5 @@ const propsEqual = (prevProps, nextProps) => {
     return true
 }
 
-// export default React.memo(StyledFileDisplayPage, propsEqual) 
-export default StyledFileDisplayPage
+export default React.memo(StyledFileDisplayPage, propsEqual) 
+// export default StyledFileDisplayPage

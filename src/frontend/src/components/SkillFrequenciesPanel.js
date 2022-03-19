@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { Doughnut } from 'react-chartjs-2'
 import DisplayCard from './DisplayCard'
 import SkillIcon from '../assets/Icons/skill.png'
 import { Table } from 'react-bootstrap'
+import { AppContext } from '../App'
 
-const SkillFrequenciesPanel = ({ className, skills, skillCounts }) => {
+const SkillFrequenciesPanel = ({ className }) => {
+    const { appState } = useContext(AppContext)
+    const { skills, skill_counts: skillCounts } = appState.resultsData
+
     const sortedRequirementsDesc = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 50)
     const labels = sortedRequirementsDesc.map(req => req[0])
     const values = sortedRequirementsDesc.map(req => req[1])

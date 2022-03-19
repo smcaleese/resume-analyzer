@@ -28,8 +28,7 @@ const FileUploadPage = ({ className, setPage }) => {
     const [file, setFile] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    // const {dispatch} = useContext(AppContext)
-    const {setAppState} = useContext(AppContext)
+    const { dispatch } = useContext(AppContext)
     const navigate = useNavigate()
 
     const checkFileValidity = (file) => {
@@ -49,7 +48,6 @@ const FileUploadPage = ({ className, setPage }) => {
 
     const uploadResume = async (e) => {
         e.preventDefault()
-        // dispatch({type: 'SET_RESUME', payload: file})
         console.log('file to upload:', file)
 
         setLoading(true)
@@ -57,11 +55,7 @@ const FileUploadPage = ({ className, setPage }) => {
         setLoading(false)
 
         console.log(data)
-        // dispatch({type: 'SET_RESULTS_DATA', payload: data})
-        setAppState({
-            resume: file,
-            resultsData: data,
-        })
+        dispatch({type: 'SET_RESULTS_DATA', payload: data})
         setPage('results')
         navigate('/results')
     }
@@ -72,6 +66,7 @@ const FileUploadPage = ({ className, setPage }) => {
         if (checkFileValidity(file)) {
             console.log('upload successful')
             setFile(file)
+            dispatch({type: 'SET_RESUME', payload: file})
         }
     }, [])
 

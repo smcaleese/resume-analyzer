@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { Card, Table, Accordion, Row, Col } from 'react-bootstrap'
 import DisplayCard from './DisplayCard'
 import JobRequirementsIndicator from './JobRequirementsIndicator'
+import { AppContext } from '../App'
 
 const JobsTable = ({ className, jobs, skills }) => {
     return (
@@ -37,7 +38,10 @@ const StyledJobsTable = styled(JobsTable)`
     font-size: 12px;
 `
 
-const JobsDisplayPanel = ({ className, jobs, skills }) => {
+const JobsDisplayPanel = ({ className }) => {
+    const { appState } = useContext(AppContext)
+    const { skills, jobs } = appState.resultsData
+
     return (
         <DisplayCard header='Matching Jobs' className={className} height='40vh'>
             <StyledJobsTable jobs={jobs} skills={skills} />

@@ -71,7 +71,6 @@ const SkillsDisplayPanel = ({ className }) => {
 
 const StyledSkillsDisplayPanel = styled(SkillsDisplayPanel)`
     .skill-list {
-        max-height: 150px;
         overflow-y: auto; 
     }
 `

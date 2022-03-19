@@ -83,7 +83,6 @@ def handle_upload(file: UploadFile = File(...)):
     print('find all skills:')
 
     skill_counts = get_skill_counts(db)
-
     years_of_experience_counts = get_years_of_experience(db)
 
     with pdfplumber.open(file.file) as pdf:
@@ -102,6 +101,20 @@ def handle_upload(file: UploadFile = File(...)):
         'skills': skills,
         'skill_counts': skill_counts,
         'jobs': jobs,
+        'years_of_experience_counts': years_of_experience_counts
+    }
+
+    return response
+
+@app.get('/report-data')
+def get_report_data():
+    db = Session()
+    skill_counts = get_skill_counts(db)
+    years_of_experience_counts = get_years_of_experience(db)
+    db.close()
+
+    response = {
+        'skill_counts': skill_counts,
         'years_of_experience_counts': years_of_experience_counts
     }
 

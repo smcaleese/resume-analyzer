@@ -12,7 +12,7 @@ import { AppContext } from '../App'
 const FileDisplayPage = ({ className }) => {
     const {appState} = useContext(AppContext)
 
-    if (!appState.resultsData) {
+    if (!appState.resume) {
         return null
     }
 
@@ -26,9 +26,9 @@ const FileDisplayPage = ({ className }) => {
                                 <Row>
                                     <SkillsDisplayPanel />
                                 </Row>
-                                <Row>
+                                {/* <Row>
                                     <YearsOfExperiencePanel />
-                                </Row>
+                                </Row> */}
                             </Col>
                             <Col lg={6} className='skillFreqPanel'>
                                 <SkillFrequenciesPanel />

@@ -112,11 +112,11 @@ export default styled(SkillFrequenciesPanel)`
     }
 
     .doughnut-chart {
-        height: 300px;
+        height: 50%;
     }
 
     .count-table {
-        max-height: calc(100% - 300px);
+        height: 50%;
         overflow-y: auto;
         padding: 10px 40px;
 

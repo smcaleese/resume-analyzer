@@ -50,17 +50,11 @@ const FileDisplayPage = ({ className }) => {
 const StyledFileDisplayPage = styled(FileDisplayPage)`
     margin: 0px 10px 0px 110px;
 
-    .skillFreqPanel{
+    .skillFreqPanel {
         padding-right: 0;
         position: relative;
         margin-bottom: 10px;
     }
 `
 
-const propsEqual = (prevProps, nextProps) => {
-    console.log('props:', prevProps, nextProps)
-    return true
-}
-
-// export default React.memo(StyledFileDisplayPage, propsEqual) 
 export default StyledFileDisplayPage

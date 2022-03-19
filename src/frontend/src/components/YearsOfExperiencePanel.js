@@ -45,9 +45,4 @@ const YearsOfExperiencePanel = ({ className }) => {
     )
 }
 
-const propsEqual = (prevProps, nextProps) => {
-    console.log('props:', prevProps, nextProps)
-    return true
-}
-
-export default React.memo(YearsOfExperiencePanel, propsEqual)
+export default YearsOfExperiencePanel

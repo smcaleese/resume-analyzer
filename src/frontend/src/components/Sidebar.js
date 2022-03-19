@@ -7,10 +7,11 @@ import selected_chart_icon from '../assets/Icons/Chart-Selected.png'
 import unselected_chart_icon from '../assets/Icons/Chart-Unselected.png'
 import selected_tree_icon from '../assets/Icons/Tree-Selected.png'
 import unselected_tree_icon from '../assets/Icons/Tree-Unselected.png'
+import selected_reports_icon from '../assets/Icons/Reports-Selected.png'
+import unselected_reports_icon from '../assets/Icons/Reports-Unselected.png'
 import { Nav } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import classnames from 'classnames'
-import { AppContext } from '../App'
 
 const Sidebar = ({ className, page, setPage }) => {
     const navigate = useNavigate()
@@ -19,6 +20,9 @@ const Sidebar = ({ className, page, setPage }) => {
         setPage(page)
         navigate(page)
     }
+
+    const getStyle = (iconType) =>
+        iconType === page ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }
 
     return (
         <Nav className={classnames(className, 'd-block')}
@@ -38,7 +42,7 @@ const Sidebar = ({ className, page, setPage }) => {
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link className='icon-container center' style={page === 'home' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='home'>
+                <Nav.Link className='icon-container center' style={getStyle('home')} eventKey='home'>
                     <img
                         alt='Home Icon'
                         src={page === 'home' ? selected_home_icon : unselected_home_icon}
@@ -48,7 +52,7 @@ const Sidebar = ({ className, page, setPage }) => {
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link className='icon-container center' style={page === 'results' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='results'>
+                <Nav.Link className='icon-container center' style={getStyle('results')} eventKey='results'>
                     <img
                         alt='Results Icon'
                         src={page === 'results' ? selected_chart_icon : unselected_chart_icon}
@@ -58,7 +62,17 @@ const Sidebar = ({ className, page, setPage }) => {
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link className='icon-container center' style={page === 'tree' ? { backgroundColor: '#33DAC1' } : { backgroundColor: 'transparent' }} eventKey='tree'>
+                <Nav.Link className='icon-container center' style={getStyle('reports')} eventKey='reports'>
+                    <img
+                        alt='Chart Icon'
+                        src={page === 'reports' ? selected_reports_icon : unselected_reports_icon}
+                        width='50'
+                        className='icon'
+                    />
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link className='icon-container center' style={getStyle('tree')} eventKey='tree'>
                     <img
                         alt='Chart Icon'
                         src={page === 'tree' ? selected_tree_icon : unselected_tree_icon}

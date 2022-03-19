@@ -2,10 +2,11 @@ import React, { useEffect, useReducer, useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import FileUploadPage from './pages/FileUploadPage'
-import FileDisplayPage from './pages/FileDisplayPage'
+import ResumeAnalysisPage from './pages/ResumeAnalysisPage'
+import ReportsPage from './pages/ReportsPage'
+import TreePage from './pages/TreePage'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
-import Tree from './components/Tree'
 
 export const AppContext = React.createContext()
 
@@ -37,8 +38,9 @@ const App = ({ className }) => {
                     <Routes>
                         <Route exact path='/' element={<Navigate to='/home' />} />
                         <Route path='/home' element={<FileUploadPage setPage={setPage} />} />
-                        <Route path='/results' element={<FileDisplayPage />} />
-                        <Route path='/tree' element={<Tree />} />
+                        <Route path='/results' element={<ResumeAnalysisPage />} />
+                        <Route path='/reports' element={<ReportsPage />} />
+                        <Route path='/tree' element={<TreePage />} />
                         <Route path='*' element={<Navigate to='/home' />} />
                     </Routes>
                 </AppContext.Provider>

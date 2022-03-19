@@ -10,20 +10,11 @@ import { Container, Col, Row, Card } from 'react-bootstrap'
 import { AppContext } from '../App'
 
 const FileDisplayPage = ({ className }) => {
-    // const {appState} = useContext(AppContext)
-    const store = useContext(AppContext)
+    const {appState} = useContext(AppContext)
 
-    if (!store.appState.resultsData) {
+    if (!appState.resultsData) {
         return null
     }
-
-    useEffect(() => {
-        console.log('rerendering file display page')
-    }, [store])
-
-    useEffect(() => {
-        console.log('rerendering FileDisplayPage')
-    })
 
     return (
         <div className={className}>
@@ -71,5 +62,5 @@ const propsEqual = (prevProps, nextProps) => {
     return true
 }
 
-export default React.memo(StyledFileDisplayPage, propsEqual) 
-// export default StyledFileDisplayPage
+// export default React.memo(StyledFileDisplayPage, propsEqual) 
+export default StyledFileDisplayPage

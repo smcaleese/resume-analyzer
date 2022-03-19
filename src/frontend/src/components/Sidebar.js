@@ -16,14 +16,9 @@ const Sidebar = ({ className, page, setPage }) => {
     const navigate = useNavigate()
 
     const changePage = (page) => {
-        console.log('set page', page)
         setPage(page)
         navigate(page)
     }
-
-    useEffect(() => {
-        console.log('rerender navbar')
-    })
 
     return (
         <Nav className={classnames(className, 'd-block')}

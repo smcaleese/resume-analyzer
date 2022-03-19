@@ -26,20 +26,12 @@ const reducer = (state, action) => {
 const App = ({ className }) => {
     const [page, setPage] = useState('home')
     const [appState, dispatch] = useReducer(reducer, initialState)
-    const store = useMemo(() => {
-        console.log('useMemo')
-        return { appState, dispatch }
-    }, [appState])
-
-    useEffect(() => {
-        console.log('rerendering app')
-        console.log('state:', appState)
-    })
+    const store = useMemo(() => ({ appState, dispatch }), [appState])
 
     return (
         <div className={className}>
+            <Header />
             <Router>
-                <Header />
                 <Sidebar page={page} setPage={setPage} />
                 <AppContext.Provider value={store}>
                     <Routes>

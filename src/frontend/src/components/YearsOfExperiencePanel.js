@@ -38,10 +38,6 @@ const YearsOfExperiencePanel = ({ className }) => {
 
     const infoDescription = 'Distribution of years of experience requirements from job posts.' 
 
-    useEffect(() => {
-        console.log('rerendering YearsOfExperiencePanel')
-    })
-
     return (
         <DisplayCard header='Experience Distribution' info={infoDescription} className={className}>
             <Bar options={options} data={data} />

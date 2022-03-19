@@ -8,6 +8,7 @@ class JobPost(BaseModel):
     description: str
     requirements: list
     experience: list
+    role: str
 
     class Config:
         orm_mode = True

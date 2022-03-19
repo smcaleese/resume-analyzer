@@ -2,7 +2,7 @@ import csv
 from database import engine, Base, Session 
 from models import JobPost, Skill
 from crud import add_job_post, add_skill
-from identifiers import extract_requirements, get_years_of_experience
+from identifiers import extract_requirements, get_years_of_experience, get_classification
 from collections import defaultdict
 
 # get the skills data from skills.csv
@@ -38,6 +38,8 @@ def gather_data(filename, job_post_row_data, skill_counts, skills, count):
 
                 years_of_experience = get_years_of_experience(description)
 
+                classification = get_classification(description)
+
                 row_data = {
                     'id': row_id,
                     'company': company,
@@ -45,7 +47,8 @@ def gather_data(filename, job_post_row_data, skill_counts, skills, count):
                     'location': location,
                     'description': description,
                     'requirements': requirements if requirements else None,
-                    'experience': years_of_experience if years_of_experience else None
+                    'experience': years_of_experience if years_of_experience else None,
+                    'role': classification
                 }
                 job_post_row_data[row_id] = row_data
                 print(f'Processed job post {count["total"]}')

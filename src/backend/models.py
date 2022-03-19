@@ -12,10 +12,11 @@ class JobPost(Base):
     description = Column(Text)
     requirements = Column(ARRAY(String))
     experience = Column(ARRAY(Integer), nullable=True)
+    role = Column(String, nullable=True)
 
     def __repr__(self):
-        return '<JobPost id={} company={} title={} location={} description={} requirements={} experience={}>' \
-                .format(self.id, self.company, self.title, self.location, self.description, self.requirements, self.experience)
+        return '<JobPost id={} company={} title={} location={} description={} requirements={} experience={} role={}>' \
+                .format(self.id, self.company, self.title, self.location, self.description, self.requirements, self.experience, self.role)
 
 class Skill(Base):
     __tablename__ = 'skill'

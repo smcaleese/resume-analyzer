@@ -7,3 +7,5 @@ psycopg2-binary==2.9.3
 uvicorn==0.16.0
 python-multipart==0.0.5
 nltk==3.5
+gensim==4.1.2
+scikit-learn==1.0.2

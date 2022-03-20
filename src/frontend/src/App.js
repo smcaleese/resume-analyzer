@@ -13,14 +13,17 @@ export const AppContext = React.createContext()
 const initialState = {
     resume: null,
     resultsData: null,
+    reportsData: null,
 }
 
 const reducer = (state, action) => {
     switch(action.type) {
     case 'SET_RESUME':
-        return {...state, resume: action.payload}
+        return { ...state, resume: action.payload }
     case 'SET_RESULTS_DATA':
-        return {...state, resultsData: action.payload}
+        return { ...state, resultsData: action.payload }
+    case 'SET_REPORTS_DATA':
+        return { ...state, reportsData: action.payload }
     }
 }
 

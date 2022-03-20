@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import SkillsDisplayPanel from '../components/SkillsDisplayPanel'
 import SkillFrequenciesPanel from '../components/SkillFrequenciesPanel'
 import JobsDisplayPanel from '../components/JobsDisplayPanel'
-import YearsOfExperiencePanel from '../components/YearsOfExperiencePanel'
+import YearsOfExperiencePanel from '../components/report-components/YearsOfExperienceBarChart'
 import { Container, Col, Row, Card } from 'react-bootstrap'
 import { AppContext } from '../App'
 

@@ -7,8 +7,7 @@ import pdfplumber
 import spacy
 from database import engine, Base, Session
 import models as mdoels
-from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience
-from identifiers import vectorize_text
+from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience, get_location_counts
 import uvicorn
 import colorsys
 from math import floor
@@ -122,11 +121,13 @@ def get_report_data():
     db = Session()
     skill_counts = get_skill_counts(db)
     years_of_experience_counts = get_years_of_experience(db)
+    location_counts = get_location_counts(db)
     db.close()
 
     response = {
         'skill_counts': skill_counts,
-        'years_of_experience_counts': years_of_experience_counts
+        'years_of_experience_counts': years_of_experience_counts,
+        'location_counts': location_counts
     }
 
     return response

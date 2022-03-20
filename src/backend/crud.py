@@ -3,6 +3,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.sql import text
 from models import JobPost, Skill
 import schemas
+from collections import defaultdict
 
 def add_job_post(db: Session, new_job_post: schemas.JobPost):
     db.add(new_job_post)
@@ -85,3 +86,16 @@ def get_years_of_experience(db):
     print(years_counts)
 
     return years_counts
+
+def get_location_counts(db):
+    locations = [x[0] for x in db.query(JobPost.location).all()]
+    edited_locations = []
+    for location in locations:
+        edited_location = location.replace('County Dublin, ', '')
+        edited_locations.append(edited_location)
+
+    location_counts = defaultdict(int)
+    for location in edited_locations:
+        location_counts[location] += 1
+    sorted_location_counts = sorted(location_counts.items(), key=lambda x: x[1], reverse=True)
+    return sorted_location_counts 

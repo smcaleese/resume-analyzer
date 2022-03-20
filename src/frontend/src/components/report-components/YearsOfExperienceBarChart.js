@@ -1,9 +1,9 @@
 import React, {useEffect, useContext} from 'react'
-import DisplayCard from './DisplayCard'
+import DisplayCard from '../DisplayCard'
 import styled from 'styled-components'
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
-import { AppContext } from '../App'
+import { AppContext } from '../../App'
 
 const YearsOfExperiencePanel = ({ className }) => {
     const options = {
@@ -20,7 +20,7 @@ const YearsOfExperiencePanel = ({ className }) => {
     }
 
     const { appState } = useContext(AppContext)
-    const { years_of_experience_counts: yearsOfExperienceCounts } = appState.resultsData
+    const { years_of_experience_counts: yearsOfExperienceCounts } = appState.reportsData
 
     const labels = yearsOfExperienceCounts.map((value, index) => index)
     const values = yearsOfExperienceCounts

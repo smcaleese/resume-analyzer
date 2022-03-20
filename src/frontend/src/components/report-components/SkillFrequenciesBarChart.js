@@ -17,9 +17,12 @@ const YearsOfExperiencePanel = ({ className }) => {
                 display: false,
             },
         },
+        animation: {
+            duration: 0,
+        }
     }
     const { appState } = useContext(AppContext)
-    const { skills, skill_counts: skillCounts } = appState.resultsData
+    const { skills, skill_counts: skillCounts } = appState.reportsData
     const sortedSkillCounts = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 50)
 
     const labels = sortedSkillCounts.map(skill => skill[0])
@@ -39,7 +42,7 @@ const YearsOfExperiencePanel = ({ className }) => {
     const infoDescription = 'The number of job posts each keyword was found in.' 
 
     return (
-        <DisplayCard header='Skill frequencies' info={infoDescription} className={className}>
+        <DisplayCard header='Job Post Skill Frequencies' info={infoDescription} className={className}>
             <Bar options={options} data={data} />
         </DisplayCard>
     )

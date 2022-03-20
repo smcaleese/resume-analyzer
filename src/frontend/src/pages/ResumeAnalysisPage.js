@@ -7,13 +7,40 @@ import SkillFrequenciesPanel from '../components/SkillFrequenciesPanel'
 import JobsDisplayPanel from '../components/JobsDisplayPanel'
 import YearsOfExperiencePanel from '../components/report-components/YearsOfExperienceBarChart'
 import { Container, Col, Row, Card } from 'react-bootstrap'
+import classnames from 'classnames'
 import { AppContext } from '../App'
+
+const NoResumePage = ({ className }) => (
+    <div className={classnames(className, 'center')}>
+        <div className='no-resume-page center'>
+            <h1>No resume uploaded</h1>
+        </div>
+    </div>
+)
+
+const StyledNoResumePage = styled(NoResumePage)`
+    margin: 0px 10px 0px 110px;
+
+    .no-resume-page {
+        background-color: white;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 2rem;
+        font-size: 1.5rem;
+        width: 20rem;
+    }
+
+    .no-resume-page h1 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+`
 
 const FileDisplayPage = ({ className }) => {
     const {appState} = useContext(AppContext)
 
     if (!appState.resume) {
-        return null
+        return <StyledNoResumePage />
     }
 
     return (
@@ -26,9 +53,6 @@ const FileDisplayPage = ({ className }) => {
                                 <Row>
                                     <SkillsDisplayPanel />
                                 </Row>
-                                {/* <Row>
-                                    <YearsOfExperiencePanel />
-                                </Row> */}
                             </Col>
                             <Col lg={6} className='skillFreqPanel'>
                                 <SkillFrequenciesPanel />

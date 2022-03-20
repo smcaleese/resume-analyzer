@@ -16,6 +16,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import sklearn
 import pickle
+from identifiers import vectorize_text
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -102,7 +103,7 @@ def handle_upload(file: UploadFile = File(...)):
 
     #Classify users role
     lda_vec = vectorize_text(" ".join(pages)).reshape(1,-1)
-    with open(".\models\k-means-model\k-mean.pkl", "rb") as f:
+    with open('./models/k-means-model/k-mean.pkl', 'rb') as f:
         kmeans_model=pickle.load(f)
     role = int(kmeans_model.predict(lda_vec)[0])
 

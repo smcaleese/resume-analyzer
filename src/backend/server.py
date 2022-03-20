@@ -8,12 +8,15 @@ import spacy
 from database import engine, Base, Session
 import models as mdoels
 from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience
+from identifiers import vectorize_text
 import uvicorn
 import colorsys
 from math import floor
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+import sklearn
+import pickle
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -95,13 +98,21 @@ def handle_upload(file: UploadFile = File(...)):
         skill_names = [skill['name'] for skill in skills]
         jobs = get_ranked_job_posts(db, skill_names)
 
+
     db.close()
+
+    #Classify users role
+    lda_vec = vectorize_text(" ".join(pages)).reshape(1,-1)
+    with open(".\models\k-means-model\k-mean.pkl", "rb") as f:
+        kmeans_model=pickle.load(f)
+    role = int(kmeans_model.predict(lda_vec)[0])
 
     response = {
         'skills': skills,
         'skill_counts': skill_counts,
         'jobs': jobs,
-        'years_of_experience_counts': years_of_experience_counts
+        'years_of_experience_counts': years_of_experience_counts,
+        'role': role
     }
 
     return response

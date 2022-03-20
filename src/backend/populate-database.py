@@ -6,6 +6,7 @@ from identifiers import extract_requirements, get_years_of_experience, get_lda
 from collections import defaultdict
 from sklearn.cluster import KMeans
 import numpy as np
+import pickle
 
 # get the skills data from skills.csv
 def get_skills():
@@ -29,6 +30,10 @@ def computer_roles(db):
 
     #Train kmeans clustering model from LDA data
     kmeans = KMeans(n_clusters=20, random_state=0).fit(lda_vecs)
+
+    #Save the model
+    with open(".\models\k-means-model\k-mean.pkl", "wb") as f:
+        pickle.dump(kmeans, f)
 
     #Add the classification to the database
     for i in range(len(lda_data)):

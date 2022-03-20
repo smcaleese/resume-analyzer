@@ -79,6 +79,30 @@ def get_years_of_experience(description):
 
 # based on https://towardsdatascience.com/unsupervised-nlp-topic-models-as-a-supervised-learning-input-cf8ee9e5cf28
 # find the type of job posting using nlp and ml e.g. frontend, devops, qa
+def vectorize_text(text, lda_model=None ,corpus=None, id2word=None):
+    #Load models and data if not provided
+    if not lda_model:
+        lda_model =  gm.LdaModel.load('./models/lda-model/lda_train.model')
+    if not corpus:
+        with open('./models/lda-model/data/train_corpus.pkl', 'rb') as f:
+            corpus=pickle.load(f)
+    if not id2word:
+        with open('./models/lda-model/data/train_id2word.pkl', 'rb') as f:
+            id2word=pickle.load(f)
+    
+    processed_text = gensim.utils.simple_preprocess(str(text), deacc=True)
+    processed_text = [word for word in processed_text if word not in lda_stop_words]
+    token_text = id2word.doc2bow(processed_text)
+
+    #Vectorize description using lda model
+    top_topics = lda_model.get_document_topics(token_text, minimum_probability=0.0)
+    topic_vec = [top_topics[i][1] for i in range(17)]
+    topic_vec = np.array(topic_vec)
+
+    return topic_vec
+    
+
+
 def get_lda(id_descs):
     # Load corpus data
     with open('./models/lda-model/data/train_corpus.pkl', 'rb') as f:
@@ -91,16 +115,7 @@ def get_lda(id_descs):
 
     for i in range(len(id_descs)):
         ident, desc = id_descs[i]
-        #Tokenize description
-        processed_desc = gensim.utils.simple_preprocess(str(desc), deacc=True)
-        processed_desc = [word for word in processed_desc if word not in lda_stop_words]
-        token_desc = id2word.doc2bow(processed_desc)
-    
-        #Vectorize description using lda model
-        top_topics = lda_model.get_document_topics(token_desc, minimum_probability=0.0)
-        topic_vec = [top_topics[i][1] for i in range(17)]
-        topic_vec = np.array(topic_vec)
+        id_descs[i] = [id_descs[i][0], id_descs[i][1], vectorize_text(id_descs[i][1], lda_model=lda_model, corpus=corpus, id2word=id2word)]
 
-        id_descs[i] = [ident, desc, topic_vec]
     return id_descs
 

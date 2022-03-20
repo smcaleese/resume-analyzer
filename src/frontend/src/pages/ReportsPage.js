@@ -7,6 +7,7 @@ import SkillFrequenciesBarChart from '../components/report-components/SkillFrequ
 import LocationsBarChart from '../components/report-components/LocationsBarChart'
 import { Container, Row, Col, Form, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { AppContext } from '../App'
+import apiUrl from '../config.js'
 
 const allReports = [
     {
@@ -32,10 +33,9 @@ const ReportsPage = ({ className }) => {
     const { appState, dispatch } = useContext(AppContext)
     const [reports, setReports] = useState(allReports)
 
-    const localUrl = 'http://localhost:8000'
     useEffect(() => {
         if (!appState.reportsData) {
-            fetch(`${localUrl}/report-data`)
+            fetch(`${apiUrl}/report-data`)
                 .then(res => res.json())
                 .then(data => {
                     dispatch({ type: 'SET_REPORTS_DATA', payload: data })

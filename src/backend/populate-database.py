@@ -2,7 +2,7 @@ import csv
 from database import engine, Base, Session 
 from models import JobPost, Skill
 from crud import add_job_post, add_skill
-from identifiers import extract_requirements, get_years_of_experience, get_lda
+from identifiers import extract_requirements, get_years_of_experience, get_lda, get_roles
 from collections import defaultdict
 from sklearn.cluster import KMeans
 import numpy as np
@@ -22,23 +22,27 @@ def get_skills():
 
     return skills
 
-def computer_roles(db):
-    #TODO: Write function which works out tnad assigns a name to each cluster
+def compute_roles(db):
+    #TODO: Create Role table
     # Vectorize the job descriptions using the LDA model
-    lda_data = get_lda(db.query(JobPost.id, JobPost.description).all())
+    data = db.query(JobPost.id, JobPost.description, JobPost.title).all()
+    lda_data = get_lda(data[:])
     lda_vecs = np.array([x[2] for x in lda_data])
 
     #Train kmeans clustering model from LDA data
-    kmeans = KMeans(n_clusters=20, random_state=0).fit(lda_vecs)
+    kmeans = KMeans(n_clusters=19, random_state=0).fit(lda_vecs)
 
     #Save the model
     with open(".\models\k-means-model\k-mean.pkl", "wb") as f:
         pickle.dump(kmeans, f)
+    raw_clustered_data = [[data[i][0], data[i][1], data[i][2], kmeans.labels_[i]] for i in range(len(kmeans.labels_))]
+    
+    clustered_data, role_map = get_roles(raw_clustered_data)
 
     #Add the classification to the database
-    for i in range(len(lda_data)):
-        print("Adding Role Classifcations: {} / {} ".format(i, len(lda_data)))
-        db.query(JobPost).filter_by(id=lda_data[i][0]).first().role = str(kmeans.labels_[i])
+    for i in range(len(clustered_data)):
+        print("Adding Role Classifcations: {} / {} ".format(i, len(clustered_data)))
+        db.query(JobPost).filter_by(id=clustered_data[i][0]).first().role = clustered_data[i][3]
     # Add Batched Update
     db.commit()
 
@@ -125,7 +129,7 @@ def main():
     insert_skill_rows(db, skills, skill_counts)
 
     print("Pre-Computing Classifications")
-    computer_roles(db)
+    compute_roles(db)
 
     print('\nInserted {} rows into job_post\n'.format(db.query(JobPost).count()))
     print('\nInserted {} rows into skill\n'.format(db.query(Skill).count()))

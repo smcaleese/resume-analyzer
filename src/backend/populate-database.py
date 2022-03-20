@@ -2,8 +2,10 @@ import csv
 from database import engine, Base, Session 
 from models import JobPost, Skill
 from crud import add_job_post, add_skill
-from identifiers import extract_requirements, get_years_of_experience, get_classification
+from identifiers import extract_requirements, get_years_of_experience, get_lda
 from collections import defaultdict
+from sklearn.cluster import KMeans
+import numpy as np
 
 # get the skills data from skills.csv
 def get_skills():
@@ -18,6 +20,23 @@ def get_skills():
             skills[skill_name] = altnames if altnames[0] != '' else None
 
     return skills
+
+def computer_roles(db):
+    #TODO: Write function which works out tnad assigns a name to each cluster
+    # Vectorize the job descriptions using the LDA model
+    lda_data = get_lda(db.query(JobPost.id, JobPost.description).all())
+    lda_vecs = np.array([x[2] for x in lda_data])
+
+    #Train kmeans clustering model from LDA data
+    kmeans = KMeans(n_clusters=20, random_state=0).fit(lda_vecs)
+
+    #Add the classification to the database
+    for i in range(len(lda_data)):
+        print("Adding Role Classifcations: {} / {} ".format(i, len(lda_data)))
+        db.query(JobPost).filter_by(id=lda_data[i][0]).first().role = str(kmeans.labels_[i])
+    # Add Batched Update
+    db.commit()
+
 
 def gather_data(filename, job_post_row_data, skill_counts, skills, count):
     with open(f'../data/{filename}', newline='') as csvfile:
@@ -38,8 +57,6 @@ def gather_data(filename, job_post_row_data, skill_counts, skills, count):
 
                 years_of_experience = get_years_of_experience(description)
 
-                classification = get_classification(description)
-
                 row_data = {
                     'id': row_id,
                     'company': company,
@@ -48,7 +65,7 @@ def gather_data(filename, job_post_row_data, skill_counts, skills, count):
                     'description': description,
                     'requirements': requirements if requirements else None,
                     'experience': years_of_experience if years_of_experience else None,
-                    'role': classification
+                    'role': 'n/a'
                 }
                 job_post_row_data[row_id] = row_data
                 print(f'Processed job post {count["total"]}')
@@ -101,6 +118,9 @@ def main():
 
     insert_job_post_rows(db, job_post_row_data)
     insert_skill_rows(db, skills, skill_counts)
+
+    print("Pre-Computing Classifications")
+    computer_roles(db)
 
     print('\nInserted {} rows into job_post\n'.format(db.query(JobPost).count()))
     print('\nInserted {} rows into skill\n'.format(db.query(Skill).count()))

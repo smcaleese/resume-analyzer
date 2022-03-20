@@ -78,57 +78,29 @@ def get_years_of_experience(description):
     return years
 
 # based on https://towardsdatascience.com/unsupervised-nlp-topic-models-as-a-supervised-learning-input-cf8ee9e5cf28
-# Remove stopwords for LDA processing
-def remove_stopwords(words):
-    return [word for word in words if word not in lda_stop_words]
-
 # find the type of job posting using nlp and ml e.g. frontend, devops, qa
-def get_classification(description):
-    # TODO: Make it so all the models and data is only loaded once
-
+def get_lda(id_descs):
     # Load corpus data
     with open('./models/lda-model/data/train_corpus.pkl', 'rb') as f:
         corpus=pickle.load(f)
     with open('./models/lda-model/data/train_id2word.pkl', 'rb') as f:
         id2word=pickle.load(f)
     
+    #Load LDA Model
     lda_model =  gm.LdaModel.load('./models/lda-model/lda_train.model')
-    #Load classification model
-    with open('./models/classifier-model/classifier_model.pickle', 'rb') as f:
-        classifier_model=pickle.load(f)
 
-    #Tokenize description
-    processed_desc = gensim.utils.simple_preprocess(str(description), deacc=True)
-    processed_desc = [word for word in processed_desc if word not in lda_stop_words]
-    token_desc = id2word.doc2bow(processed_desc)
+    for i in range(len(id_descs)):
+        ident, desc = id_descs[i]
+        #Tokenize description
+        processed_desc = gensim.utils.simple_preprocess(str(desc), deacc=True)
+        processed_desc = [word for word in processed_desc if word not in lda_stop_words]
+        token_desc = id2word.doc2bow(processed_desc)
     
-    #Vectorize description using lda model
-    top_topics = lda_model.get_document_topics(token_desc, minimum_probability=0.0)
-    topic_vec = [top_topics[i][1] for i in range(17)]
-    topic_vec.extend([len(description)])
-    topic_vec = np.array(topic_vec[:17]).reshape(1, -1)
-    value = classifier_model.predict(topic_vec)[0]
-    
-    value_map = {0: 'QA Engineer',
-    1: 'Junior Frontend Developer',
-    2: 'Junior Full Stack Developer',
-    3: 'Junior Backend Developer', 
-    4: 'Senior QA Engineer',
-    5: 'Business Analyst',
-    6: 'Senior Frontend Developer',
-    7: 'Senior Full Stack Developer',
-    8: 'Senior Backend Developer',
-    9: 'Test Lead',
-    10: 'Scrum Master',
-    11: 'Development Lead',
-    12: 'Software Architect',
-    13: 'Product Owner',
-    14: 'Project Manager',
-    15: 'Devops',
-    16: 'Senior Devops',
-    17: 'Automation Engineer',
-    18: 'Cloud Engineer',
-    19: 'Full Stack Dev',
-    20: 'Technical Writer',
-    21: 'DBA'}
-    return value_map[value]
+        #Vectorize description using lda model
+        top_topics = lda_model.get_document_topics(token_desc, minimum_probability=0.0)
+        topic_vec = [top_topics[i][1] for i in range(17)]
+        topic_vec = np.array(topic_vec)
+
+        id_descs[i] = [ident, desc, topic_vec]
+    return id_descs
+

@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
 import { AppContext } from '../App'
+import apiUrl from '../config.js'
 
 const postResume = async (file) => {
     const formData = new FormData()
@@ -12,9 +13,7 @@ const postResume = async (file) => {
         'file',
         file,
     )
-    const localUrl = 'http://localhost:8000'
-    const serverUrl = 'https://fourth-year-project-api.herokuapp.com'
-    const response = await fetch(`${localUrl}/resume-upload`, {
+    const response = await fetch(`${apiUrl}/resume-upload`, {
         method: 'POST',
         mode: 'cors',
         body: formData,

@@ -99,3 +99,7 @@ def get_location_counts(db):
         location_counts[location] += 1
     sorted_location_counts = sorted(location_counts.items(), key=lambda x: x[1], reverse=True)
     return sorted_location_counts 
+
+def get_role_skills(db, role):
+    jobposts =list(set([skill[0] for job in db.query(JobPost.requirements).filter_by(role=role).all() for skill in job if (skill and len(skill) > 3)]))
+    return jobposts

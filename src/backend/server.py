@@ -7,7 +7,7 @@ import pdfplumber
 import spacy
 from database import engine, Base, Session
 import models as mdoels
-from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience, get_location_counts
+from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience, get_location_counts, get_role_skills
 import uvicorn
 import colorsys
 from math import floor
@@ -101,18 +101,48 @@ def handle_upload(file: UploadFile = File(...)):
 
     db.close()
 
-    #Classify users role
-    lda_vec = vectorize_text(" ".join(pages)).reshape(1,-1)
-    with open('./models/k-means-model/k-mean.pkl', 'rb') as f:
-        kmeans_model=pickle.load(f)
-    role = int(kmeans_model.predict(lda_vec)[0])
 
     response = {
         'skills': skills,
         'skill_counts': skill_counts,
         'jobs': jobs,
-        'years_of_experience_counts': years_of_experience_counts,
-        'role': role
+        'years_of_experience_counts': years_of_experience_counts
+    }
+
+    return response
+
+@app.get('/path-data')
+def get_path_data():
+    db = Session()
+
+    #Classify users role
+    # lda_vec = vectorize_text(" ".join(pages)).reshape(1,-1)
+    # with open('./models/k-means-model/k-mean.pkl', 'rb') as f:
+    #     kmeans_model=pickle.load(f)
+    # role = int(kmeans_model.predict(lda_vec)[0])
+
+    db.close()
+
+    response = {
+        'Junior Frontend Developer':   get_role_skills(db, 'Junior Frontend Developer'),
+        'Senior Frontend Developer':   get_role_skills(db, 'Senior Frontend Developer'),
+        'Junior Backend Developer':    get_role_skills(db, 'Junior Backend Developer'),
+        'Senior Backend Developer':    get_role_skills(db, 'Senior Backend Developer'),
+        'Junior Full Stack Developer': get_role_skills(db, 'Junior Full Stack Developer'),
+        'Full Stack Developer':        get_role_skills(db, 'Full Stack Developer'),
+        'Senior Full Stack Developer': get_role_skills(db, 'Senior Full Stack Developer'),
+        'QA Enigneer':                 get_role_skills(db, 'QA Enigneer'),
+        'Senior QA Enigneer':          get_role_skills(db, 'Senior QA Enigneer'),
+        'Business Anaylst':            get_role_skills(db, 'Business Anaylst'),
+        'Development Lead':            get_role_skills(db, 'Development Lead'),
+        'Software Architect':          get_role_skills(db, 'Software Architect'),
+        'Product Owner':               get_role_skills(db, 'Product Owner'),
+        'Project Manager':             get_role_skills(db, 'Project Manager'),
+        'Devops':                      get_role_skills(db, 'Devops'),
+        'Senior Devops':               get_role_skills(db, 'Senior Devops'),
+        'Automation Engineer':         get_role_skills(db, 'Automation Engineer'),
+        'Cloud Engineer':              get_role_skills(db, 'Cloud Engineer'),
+        'Database Admin (DBA)':        get_role_skills(db, 'Database Admin (DBA)'),
     }
 
     return response

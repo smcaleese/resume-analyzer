@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, {useEffect, useContext} from 'react'
 import styled from 'styled-components'
 import ReactFlow, {
     addEdge,
-    MiniMap,
     Controls,
     Background,
     useNodesState,
@@ -10,9 +9,11 @@ import ReactFlow, {
 } from 'react-flow-renderer'
 import { getNodes as initialNodes, edges as initialEdges } from './TreeNodeData'
 import { apiUrl } from '../../config'
+import { AppContext } from '../../App'
 
 const CareerPathTree = ({ className }) => {
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes(null))
+    const { appState, dispatch } = useContext(AppContext)
+    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes(appState.treeData))
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
     const onConnect = (params) => setEdges((eds) => addEdge(params, eds))
     
@@ -22,9 +23,10 @@ const CareerPathTree = ({ className }) => {
                 .then(res => res.json())
                 .then(data => {
                     setNodes(initialNodes(data))
+                    dispatch({ type: 'SET_TREE_DATA', payload: data })
                 })
         }
-    }, [nodes])
+    }, [nodes, appState])
 
     return (
         <ReactFlow

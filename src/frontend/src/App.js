@@ -14,6 +14,7 @@ const initialState = {
     resume: null,
     resultsData: null,
     reportsData: null,
+    treeData: null
 }
 
 const reducer = (state, action) => {
@@ -24,7 +25,10 @@ const reducer = (state, action) => {
         return { ...state, resultsData: action.payload }
     case 'SET_REPORTS_DATA':
         return { ...state, reportsData: action.payload }
+    case 'SET_TREE_DATA':
+        return { ...state, treeData: action.payload }
     }
+    
 }
 
 const App = ({ className }) => {

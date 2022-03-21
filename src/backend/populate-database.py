@@ -23,7 +23,6 @@ def get_skills():
     return skills
 
 def compute_roles(db):
-    #TODO: Create Role table
     # Vectorize the job descriptions using the LDA model
     data = db.query(JobPost.id, JobPost.description, JobPost.title).all()
     lda_data = get_lda(data[:])

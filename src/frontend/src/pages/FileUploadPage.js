@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
 import { AppContext } from '../App'
-import apiUrl from '../config.js'
+import {apiUrl} from '../config.js'
 
 const postResume = async (file) => {
     const formData = new FormData()

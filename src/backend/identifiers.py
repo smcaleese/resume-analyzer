@@ -130,9 +130,9 @@ def get_roles(dataset):
         'Junior Full Stack Developer': [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
         'Full Stack Developer':        [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
         'Senior Full Stack Developer': [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'QA Enigneer':                 [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Senior QA Enigneer':          [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Business Anaylst':            [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
+        'QA Engineer':                 [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
+        'Senior QA Engineer':          [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
+        'Business Analyst':            [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
         'Development Lead':            [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
         'Software Architect':          [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
         'Product Owner':               [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
@@ -203,12 +203,12 @@ def get_roles(dataset):
             #Check QA 
             if re.search(qa_p, text, re.IGNORECASE):
                 if re.search(s_p, text, re.IGNORECASE):
-                    roles['Senior QA Enigneer'][cluster] += 1
+                    roles['Senior QA Engineer'][cluster] += 1
                 else:
-                    roles['QA Enigneer'][cluster] += 1
+                    roles['QA Engineer'][cluster] += 1
             #Check BA
             if re.search(ba_p, text, re.IGNORECASE):
-                roles['Business Anaylst'][cluster] += 1
+                roles['Business Analyst'][cluster] += 1
             #Check Dev Lead
             if re.search(dl_p, text, re.IGNORECASE):
                 roles['Development Lead'][cluster] += 1

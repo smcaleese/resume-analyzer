@@ -6,9 +6,10 @@ import DisplayCard from './DisplayCard'
 import JobRequirementsIndicator from './JobRequirementsIndicator'
 import { AppContext } from '../App'
 
-const JobsTable = ({ jobs, skills, numJobs }) => {
+const JobsTable = ({ className, jobs, skills, numJobs }) => {
+    console.log(jobs, skills, numJobs)
     return (
-        <Accordion>
+        <Accordion className={className}>
             <Accordion.Item>
                 <Row className='accordion-title'>
                     <Col xs={2}>Company</Col>
@@ -22,7 +23,7 @@ const JobsTable = ({ jobs, skills, numJobs }) => {
                         <Row className='accordion-header'>
                             <Col xs={2}>{job.company}</Col>
                             <Col xs={5}>{job.title}</Col>
-                            <Col xs={2}><JobRequirementsIndicator skills={skills} requirements={job.requirements} /></Col>
+                            <Col xs={2}><JobRequirementsIndicator skills={skills} reqs={job.requirements} /></Col>
                         </Row>
                     </Accordion.Header>
                     <Accordion.Body>
@@ -34,22 +35,9 @@ const JobsTable = ({ jobs, skills, numJobs }) => {
     )
 }
 
-const StyledJobsTable = styled(JobsTable)`
+export const StyledJobsTable = styled(JobsTable)`
     font-size: 12px;
-`
 
-const JobsDisplayPanel = ({ className }) => {
-    const { appState } = useContext(AppContext)
-    const { skills, jobs } = appState.resultsData
-
-    return (
-        <DisplayCard header='Matching Jobs' className={className} height='50vh'>
-            <StyledJobsTable jobs={jobs} skills={skills} numJobs={20} />
-        </DisplayCard>
-    )
-}
-
-export default styled(JobsDisplayPanel)`
     .accordion-title {
         width: 100%;
         font-size: 1.1rem;
@@ -77,6 +65,21 @@ export default styled(JobsDisplayPanel)`
     }
 
     .description {
-        font-size: 0.5em;
+        font-size: 1em;
     }
+`
+
+const JobsDisplayPanel = ({ className }) => {
+    const { appState } = useContext(AppContext)
+    const { skills, jobs } = appState.resultsData
+
+    return (
+        <DisplayCard header='Matching Jobs' className={className} height='50vh'>
+            <StyledJobsTable jobs={jobs} skills={skills} numJobs={20} />
+        </DisplayCard>
+    )
+}
+
+export default styled(JobsDisplayPanel)`
+    
 `

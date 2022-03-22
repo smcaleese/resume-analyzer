@@ -13,7 +13,7 @@ const SkillBadge = ({ className, skill }) => {
     )
 }
 
-const StyledSkillBadge = styled(SkillBadge)`
+export const StyledSkillBadge = styled(SkillBadge)`
     display: inline-block;
     color: white;
     background-color: rgb(${props => props.color});

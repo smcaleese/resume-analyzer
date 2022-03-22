@@ -7,7 +7,7 @@ import pdfplumber
 import spacy
 from database import engine, Base, Session
 import models as mdoels
-from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience, get_location_counts, get_role_skills
+from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role
 import uvicorn
 import colorsys
 from math import floor
@@ -144,6 +144,16 @@ def get_path_data():
         'Cloud Engineer':              get_role_skills(db, 'Cloud Engineer'),
         'Database Admin (DBA)':        get_role_skills(db, 'Database Admin (DBA)'),
     }
+
+    return response
+
+@app.get('/job-data-by-role')
+async def get_path_data(role_type: str = ""):
+    db = Session()
+    response={
+        'jobs': get_jobs_by_role(db, role_type)
+    }
+    db.close()
 
     return response
 

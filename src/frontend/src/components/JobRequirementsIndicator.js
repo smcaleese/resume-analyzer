@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import styled from 'styled-components'
 
-const JobRequirementsIndicator = ({className, skills, requirements, size}) => {
+const JobRequirementsIndicator = ({className, skills, reqs, size}) => {
     const [circleState, setCircleState] = useState([])
+    var requirements = reqs ? reqs :[]
 
     const circleSize = size ? `${size}px` : '15px'
 

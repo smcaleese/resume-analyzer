@@ -103,3 +103,7 @@ def get_location_counts(db):
 def get_role_skills(db, role):
     jobposts =list(set([skill[0] for job in db.query(JobPost.requirements).filter_by(role=role).all() for skill in job if (skill and len(skill) > 3)]))
     return jobposts
+
+def get_jobs_by_role(db, role):
+    jobposts = db.query(JobPost).filter_by(role=role).all()
+    return jobposts

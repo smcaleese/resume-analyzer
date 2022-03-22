@@ -80,7 +80,7 @@ def main():
     login(browser)
 
     search_job_title = 'software engineer'
-    search_location = 'dublin'
+    search_location = 'ireland'
 
     url_root = 'https://www.linkedin.com/jobs/search?geoId='
     job_posts_url = urllib.parse.quote(url_root

@@ -122,7 +122,7 @@ def main():
     skills = get_skills()
     count = {'total': 1}
     gather_data('indeed-scraped-data.csv', job_post_row_data, skill_counts, skills, count)
-    gather_data('linkedin-scraped-data.csv', job_post_row_data, skill_counts, skills, count)
+    gather_data('linkedin-scraped-data-software-engineer-ireland.csv', job_post_row_data, skill_counts, skills, count)
 
     insert_job_post_rows(db, job_post_row_data)
     insert_skill_rows(db, skills, skill_counts)

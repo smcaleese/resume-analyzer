@@ -1,20 +1,26 @@
 import React from 'react'
 import { MarkerType } from 'react-flow-renderer'
+import JobRequirementsIndicator from '../JobRequirementsIndicator'
 
-const TreeNode = ({ title, data }) => {
-    const skill = data[title]
-    console.log(title)
-    console.log(skill)
+const TreeNode = ({ title, data, skills }) => {
+    const requirements = data[title]
     return (
-        <>{title}</>
+        <>
+            {title}
+            <JobRequirementsIndicator onClick={() => { console.log('test') }} skills={skills} requirements={requirements} size={10}/>
+        </>
+
     )
 }
 
-export const getNodes = (data) => {
-    if (!data){
-        return[]
+export const getNodes = (data, cvData) => {
+    var skills = []
+    if (cvData){
+        skills = cvData.skills
     }
-    console.log(data)
+    if (!data) {
+        return []
+    }
     return [
         {
             // QA Engineer
@@ -22,7 +28,7 @@ export const getNodes = (data) => {
             type: 'input',
             data: {
                 label: (
-                    <TreeNode title='QA Engineer' data={data} />
+                    <TreeNode title='QA Engineer' data={data} skills={skills} />
                 ),
             },
             position: { x: 600, y: 0 },
@@ -33,7 +39,7 @@ export const getNodes = (data) => {
             type: 'input',
             data: {
                 label: (
-                    <TreeNode title='Devops' data={data} />
+                    <TreeNode title='Devops' data={data} skills={skills}/>
                 ),
             },
             position: { x: 1000, y: 0 },
@@ -43,7 +49,7 @@ export const getNodes = (data) => {
             id: '3',
             data: {
                 label: (
-                    <TreeNode title='Junior Frontend Developer' data={data} />
+                    <TreeNode title='Junior Frontend Developer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 0, y: 100 },
@@ -53,7 +59,7 @@ export const getNodes = (data) => {
             id: '4',
             data: {
                 label: (
-                    <TreeNode title='Junior Full Stack Developer' data={data} />
+                    <TreeNode title='Junior Full Stack Developer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 200, y: 100 },
@@ -63,7 +69,7 @@ export const getNodes = (data) => {
             id: '5',
             data: {
                 label: (
-                    <TreeNode title='Junior Backend Developer' data={data} />
+                    <TreeNode title='Junior Backend Developer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 400, y: 100 },
@@ -74,7 +80,7 @@ export const getNodes = (data) => {
             type: 'input',
             data: {
                 label: (
-                    <TreeNode title='Business Analyst' data={data} />
+                    <TreeNode title='Business Analyst' data={data} skills={skills}/>
                 ),
             },
             position: { x: 800, y: 100 },
@@ -85,7 +91,7 @@ export const getNodes = (data) => {
             type: 'output',
             data: {
                 label: (
-                    <TreeNode title='Senior Devops' data={data} />
+                    <TreeNode title='Senior Devops' data={data} skills={skills}/>
                 ),
             },
             position: { x: 1000, y: 100 },
@@ -96,7 +102,7 @@ export const getNodes = (data) => {
             type: 'output',
             data: {
                 label: (
-                    <TreeNode title='Cloud Engineer' data={data} />
+                    <TreeNode title='Cloud Engineer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 1200, y: 100 },
@@ -107,7 +113,7 @@ export const getNodes = (data) => {
             type: 'output',
             data: {
                 label: (
-                    <TreeNode title='Automation Engineer' data={data} />
+                    <TreeNode title='Automation Engineer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 1400, y: 100 },
@@ -117,7 +123,7 @@ export const getNodes = (data) => {
             id: '10',
             data: {
                 label: (
-                    <TreeNode title='Senior Frontend Developer' data={data} />
+                    <TreeNode title='Senior Frontend Developer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 0, y: 200 },
@@ -127,7 +133,7 @@ export const getNodes = (data) => {
             id: '11',
             data: {
                 label: (
-                    <TreeNode title='Full Stack Developer' data={data} />
+                    <TreeNode title='Full Stack Developer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 200, y: 200 },
@@ -137,7 +143,7 @@ export const getNodes = (data) => {
             id: '12',
             data: {
                 label: (
-                    <TreeNode title='Senior Backend Developer' data={data} />
+                    <TreeNode title='Senior Backend Developer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 400, y: 200 },
@@ -148,7 +154,7 @@ export const getNodes = (data) => {
             type: 'output',
             data: {
                 label: (
-                    <TreeNode title='Senior QA Engineer' data={data} />
+                    <TreeNode title='Senior QA Engineer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 600, y: 200 },
@@ -158,7 +164,7 @@ export const getNodes = (data) => {
             id: '14',
             data: {
                 label: (
-                    <TreeNode title='Senior Full Stack Developer' data={data} />
+                    <TreeNode title='Senior Full Stack Developer' data={data} skills={skills}/>
                 ),
             },
             position: { x: 200, y: 300 },
@@ -168,7 +174,7 @@ export const getNodes = (data) => {
             id: '15',
             data: {
                 label: (
-                    <TreeNode title='Development Lead' data={data} />
+                    <TreeNode title='Development Lead' data={data} skills={skills}/>
                 ),
             },
             position: { x: 0, y: 400 },
@@ -178,7 +184,7 @@ export const getNodes = (data) => {
             id: '16',
             data: {
                 label: (
-                    <TreeNode title='Software Architect' data={data} />
+                    <TreeNode title='Software Architect' data={data} skills={skills}/>
                 ),
             },
             position: { x: 200, y: 400 },
@@ -189,7 +195,7 @@ export const getNodes = (data) => {
             type: 'output',
             data: {
                 label: (
-                    <TreeNode title='Database Admin (DBA)' data={data}/>
+                    <TreeNode title='Database Admin (DBA)' data={data} skills={skills}/>
                 ),
             },
             position: { x: 400, y: 400 },
@@ -199,7 +205,7 @@ export const getNodes = (data) => {
             id: '18',
             data: {
                 label: (
-                    <TreeNode title='Product Owner' data={data}/>
+                    <TreeNode title='Product Owner' data={data} skills={skills}/>
                 ),
             },
             position: { x: 800, y: 400 },
@@ -210,7 +216,7 @@ export const getNodes = (data) => {
             type: 'output',
             data: {
                 label: (
-                    <TreeNode title='Project Manager' data={data}/>
+                    <TreeNode title='Project Manager' data={data} skills={skills}/>
                 ),
             },
             position: { x: 800, y: 500 },

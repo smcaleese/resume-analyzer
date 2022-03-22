@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import styled from 'styled-components'
 
-const JobRequirementsIndicator = ({className, skills, requirements}) => {
+const JobRequirementsIndicator = ({className, skills, requirements, size}) => {
     const [circleState, setCircleState] = useState([])
+
+    const circleSize = size ? `${size}px` : '15px'
 
     useEffect(() => {
         var matchedSkills=[]
@@ -25,10 +27,14 @@ const JobRequirementsIndicator = ({className, skills, requirements}) => {
         if(skill.match) {
             return {
                 backgroundColor: `rgb(${skill.color})`,
+                height: circleSize,
+                width: circleSize
             }
         }
         return {
             border: `3px solid rgb(${skill.color})`,
+            height: circleSize,
+            width: circleSize
         }
     }
 
@@ -56,8 +62,6 @@ export default styled(JobRequirementsIndicator)`
 
         .circle {
             border-radius: 50%;
-            height: 15px;
-            width: 15px;
         }
     }
 `

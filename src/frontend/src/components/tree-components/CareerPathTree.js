@@ -13,7 +13,7 @@ import { AppContext } from '../../App'
 
 const CareerPathTree = ({ className }) => {
     const { appState, dispatch } = useContext(AppContext)
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes(appState.treeData))
+    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes(appState.treeData, appState.resultsData))
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
     const onConnect = (params) => setEdges((eds) => addEdge(params, eds))
     

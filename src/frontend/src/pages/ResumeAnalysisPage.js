@@ -110,6 +110,10 @@ const StyledFileDisplayPage = styled(FileDisplayPage)`
         padding-right: 0;
         margin-bottom: 10px;
     }
+
+    .card-heading {
+        cursor: move;
+    }
 `
 
 export default StyledFileDisplayPage

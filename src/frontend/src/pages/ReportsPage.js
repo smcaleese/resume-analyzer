@@ -11,20 +11,24 @@ import {apiUrl} from '../config.js'
 
 const allReports = [
     {
-        title: 'experience distribution bar chart',
-        component: <YearsOfExperiencePanel />
+        title: 'years of experience required bar chart',
+        component: <YearsOfExperiencePanel />,
+        width: 1,
     },
     {
-        title: 'skill frequencies table',
-        component: <SkillFrequenciesTable />
-    },
-    {
-        title: 'skill frequencies bar chart',
-        component: <SkillFrequenciesBarChart />
+        title: 'job post skill frequencies table',
+        component: <SkillFrequenciesTable />,
+        width: 1,
     },
     {
         title: 'job post locations bar chart',
-        component: <LocationsBarChart />
+        component: <LocationsBarChart />,
+        width: 1,
+    },
+    {
+        title: 'job post skill frequencies distribution bar chart',
+        component: <SkillFrequenciesBarChart />,
+        width: 2,
     },
 ]
 
@@ -45,15 +49,32 @@ const ReportsPage = ({ className }) => {
 
     const filterReports = (text) => {
         setInputText(text)
-        const filteredReports = allReports.filter((report) => {
-            return report.title.toLowerCase().includes(text.toLowerCase())
-        })
+        const filteredReports = allReports.filter((report) =>
+            report.title.toLowerCase().includes(text.toLowerCase()))
         setReports(filteredReports)
     }
 
     if(!appState.reportsData) {
         return null
     }
+
+    const reportRows = reports.reduce((acc, report, index) => {
+        if (report.width === 1) {
+            if (acc[acc.length - 1].length === 2) {
+                acc.push([])
+            }
+            acc[acc.length - 1].push(report)
+        }
+        if (report.width === 2) {
+            if (acc[acc.length - 1].length) {
+                acc.push([])
+            }
+            acc[acc.length - 1].push(report)
+            acc.push([])
+        }
+        return acc
+
+    }, [[]])
 
     return (
         <div className={className}>
@@ -65,12 +86,26 @@ const ReportsPage = ({ className }) => {
                         <Button variant='dark'>Search</Button>
                     </InputGroup>
                 </Row>
-                {reports.map((report, index) => {
+                {reportRows.map((reportRow, index) => {
+                    if (reportRow.length === 1 && reportRow[0].width == 2) {
+                        return (
+                            <Row key={index}>
+                                <Col xxl={12}>
+                                    { reportRow[0] ? reportRow[0].component : null }
+                                </Col>
+                            </Row>
+                        )
+                    }
                     return (
                         <Row key={index}>
-                            {report.component}
+                            <Col xxl={6}>
+                                { reportRow[0] ? reportRow[0].component : null }
+                            </Col>
+                            <Col xxl={6}>
+                                { reportRow[1] ? reportRow[1].component : null }
+                            </Col>
                         </Row>
-                    ) 
+                    )
                 })}
             </Container>
         </div>

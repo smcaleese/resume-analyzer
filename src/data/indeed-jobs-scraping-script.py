@@ -31,7 +31,7 @@ def getJobData(page, dataList):
     for tag in descriptionTags:
         descriptionStrings.append(tag.get_text())
 
-    description = (" ".join(descriptionStrings)).replace('\n', ' ').replace('\r', '')
+    description = (" ".join(descriptionStrings))
     print(dataList + [company, job_title, location, description])
 
     return dataList + [company, job_title, location, description]

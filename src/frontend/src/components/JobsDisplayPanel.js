@@ -27,7 +27,9 @@ const JobsTable = ({ className, jobs, skills, numJobs }) => {
                         </Row>
                     </Accordion.Header>
                     <Accordion.Body>
-                        <p className='description'>{job.description}</p>
+                        <pre>
+                            <p className='description'>{job.description}</p>
+                        </pre>
                     </Accordion.Body>
                 </Accordion.Item>
             ))}
@@ -65,7 +67,8 @@ export const StyledJobsTable = styled(JobsTable)`
     }
 
     .description {
-        font-size: 1em;
+        font-size: 0.7em;
+        font-family: 'Roboto', sans-serif;
     }
 `
 

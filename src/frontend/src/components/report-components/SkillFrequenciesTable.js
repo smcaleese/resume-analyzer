@@ -14,7 +14,7 @@ const SkillFrequenciesPanel = ({ className }) => {
     const infoDescription = 'Keyword counts from job posts.'
 
     return (
-        <DisplayCard className={className} header='Job Post Skill Frequencies' info={infoDescription}>
+        <DisplayCard className={className} header='Job Post Skill Frequencies' info={infoDescription} height='max(600px, 40vh)'>
             <div className='count-table'>
                 <Table responsive='sm' size='sm'>
                     <thead>
@@ -40,8 +40,6 @@ const SkillFrequenciesPanel = ({ className }) => {
 }
 
 export default styled(SkillFrequenciesPanel)`
-    height: 500px;
-
     .count-table {
         overflow-y: auto;
         padding: 10px 40px;

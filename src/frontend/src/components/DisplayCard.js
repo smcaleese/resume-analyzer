@@ -33,7 +33,7 @@ const StyledInfoToolTip = styled(InfoToolTip)`
 const DisplayCard = ({ header, children, info, className }) => {
     return (
         <Card className={className} as='h3'>
-            <Card.Header className='card-heading'>
+            <Card.Header className='card-heading draggable-handle'>
                 <Row>
                     <Col xs={11}>
                         <span className='card-title'>
@@ -64,6 +64,7 @@ export default styled(DisplayCard)`
     border-radius: 10px;
 
     .card-heading {
+        cursor: move;
         background-color: transparent;
         border-bottom: 0px;
         padding: 1rem 2rem;

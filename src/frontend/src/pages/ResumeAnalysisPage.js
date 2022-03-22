@@ -48,22 +48,28 @@ const FileDisplayPage = ({ className }) => {
 
     const layouts = {
         lg: [
-            {i: 'skills', x: 0, y: 0, w: 4, h: 18},
-            {i: 'skill-frequencies', x: 4, y: 0, w: 4, h: 32},
-            {i: 'pdf-viewer', x: 8, y: 0, w: 4, h: 40},
-            {i: 'matching-jobs', x: 0, y: 2, w: 8, h: 25},
+            {i: 'skills', x: 0, y: 0, w: 4, h: 12},
+            {i: 'skill-frequencies', x: 4, y: 0, w: 4, h: 38},
+            {i: 'pdf-viewer', x: 8, y: 0, w: 4, h: 54},
+            {i: 'matching-jobs', x: 0, y: 2, w: 8, h: 52},
         ],
         md: [
             {i: 'skills', x: 0, y: 0, w: 3, h: 15},
-            {i: 'skill-frequencies', x: 3, y: 0, w: 3, h: 32},
+            {i: 'skill-frequencies', x: 3, y: 0, w: 3, h: 38},
             {i: 'pdf-viewer', x: 3, y: 2, w: 3, h: 44},
             {i: 'matching-jobs', x: 0, y: 2, w: 3, h: 26},
         ],
         sm: [
             {i: 'skills', x: 0, y: 0, w: 2, h: 12},
-            {i: 'skill-frequencies', x: 0, y: 1, w: 2, h: 32},
-            {i: 'pdf-viewer', x: 0, y: 2, w: 2, h: 50},
-            {i: 'matching-jobs', x: 0, y: 6, w: 2, h: 26},
+            {i: 'skill-frequencies', x: 0, y: 1, w: 2, h: 38},
+            {i: 'pdf-viewer', x: 0, y: 2, w: 2, h: 70},
+            {i: 'matching-jobs', x: 0, y: 6, w: 2, h: 50},
+        ],
+        xs: [
+            {i: 'skills', x: 0, y: 0, w: 2, h: 25},
+            {i: 'skill-frequencies', x: 0, y: 1, w: 2, h: 42},
+            {i: 'pdf-viewer', x: 0, y: 2, w: 2, h: 30},
+            {i: 'matching-jobs', x: 0, y: 6, w: 2, h: 50},
         ]
     }
 
@@ -72,9 +78,10 @@ const FileDisplayPage = ({ className }) => {
             className={className}
             layouts={layouts}
             rowHeight={10}
-            breakpoints={{ lg: 1200, md: 1000, sm: 800 }}
-            cols={{ lg: 12, md: 6, sm: 2 }}
-            style={{ height: '850px' }}
+            breakpoints={{ lg: 1200, md: 1000, sm: 800, xs: 600 }}
+            cols={{ lg: 12, md: 6, sm: 2, xs: 2 }}
+            style={{ height: '100vh' }}
+            draggableHandle='.draggable-handle'
         >
             <div key='skills'>
                 <SkillsDisplayPanel />

@@ -4,20 +4,17 @@ import { Modal } from 'react-bootstrap'
 import { StyledSkillBadge } from '../SkillsDisplayPanel'
 import { apiUrl } from '../../config'
 import { StyledJobsTable } from '../JobsDisplayPanel'
-
+// TODO Bug in modal requirements where requirements indicators dont update unless you close and reopen the modal
 const RoleModal = ({ className, show, handleClose, title, skills }) => {
     const [jobsState, setJobsState] = useState([])
     const userSkills = skills ? skills : []
 
     useEffect(() => {
-        if (jobsState.length == 0) {
-            fetch(`${apiUrl}/job-data-by-role?role_type=${encodeURIComponent(title.trim())}`)
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                    setJobsState(data.jobs)
-                })
-        }
+        fetch(`${apiUrl}/job-data-by-role?role_type=${encodeURIComponent(title.trim())}`)
+            .then(res => res.json())
+            .then(data => {
+                setJobsState(data.jobs)
+            })
     }, [title])
     return (
         <Modal className={className} size='xl' show={show} onHide={handleClose}>

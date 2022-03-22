@@ -7,7 +7,6 @@ import JobRequirementsIndicator from './JobRequirementsIndicator'
 import { AppContext } from '../App'
 
 const JobsTable = ({ className, jobs, skills, numJobs }) => {
-    console.log(jobs, skills, numJobs)
     return (
         <Accordion className={className}>
             <Accordion.Item>

@@ -10,14 +10,11 @@ const RoleModal = ({ className, show, handleClose, title, skills }) => {
     const userSkills = skills ? skills : []
 
     useEffect(() => {
-        if (jobsState.length == 0) {
-            fetch(`${apiUrl}/job-data-by-role?role_type=${encodeURIComponent(title.trim())}`)
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                    setJobsState(data.jobs)
-                })
-        }
+        fetch(`${apiUrl}/job-data-by-role?role_type=${encodeURIComponent(title.trim())}`)
+            .then(res => res.json())
+            .then(data => {
+                setJobsState(data.jobs)
+            })
     }, [title])
     return (
         <Modal className={className} size='xl' show={show} onHide={handleClose}>

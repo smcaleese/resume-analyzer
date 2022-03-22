@@ -4,6 +4,7 @@ from sqlalchemy.sql import text
 from models import JobPost, Skill
 import schemas
 from collections import defaultdict
+from collections import Counter
 
 def add_job_post(db: Session, new_job_post: schemas.JobPost):
     db.add(new_job_post)
@@ -101,8 +102,11 @@ def get_location_counts(db):
     return sorted_location_counts 
 
 def get_role_skills(db, role):
-    jobposts =list(set([skill[0] for job in db.query(JobPost.requirements).filter_by(role=role).all() for skill in job if (skill and len(skill) > 3)]))
-    return jobposts
+    reqs = []
+    for job in db.query(JobPost.requirements).filter_by(role=role).all():
+        if job[0]:
+            reqs += job[0]
+    return Counter(reqs)
 
 def get_jobs_by_role(db, role):
     jobposts = db.query(JobPost).filter_by(role=role).all()

@@ -33,7 +33,7 @@ const StyledInfoToolTip = styled(InfoToolTip)`
 const DisplayCard = ({ header, children, info, className }) => {
     return (
         <Card className={className} as='h3'>
-            <Card.Header className='card-heading draggable-handle'>
+            <Card.Header className='card-heading'>
                 <Row>
                     <Col xs={11}>
                         <span className='card-title'>

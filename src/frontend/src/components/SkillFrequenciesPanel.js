@@ -101,15 +101,22 @@ const SkillFrequenciesPanel = ({ className }) => {
 }
 
 export default styled(SkillFrequenciesPanel)`
+    height: 600px;
     width: calc(100% - 10px);
     overflow-y: auto;
 
+    @media (max-width: 991px) {
+        position: relative;
+        height: 30rem;
+        width: 100%;
+    }
+
     .doughnut-chart {
-        height: 20rem;
+        height: 50%;
     }
 
     .count-table {
-        height: 20rem;
+        height: 50%;
         overflow-y: auto;
         padding: 10px 40px;
 

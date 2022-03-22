@@ -64,7 +64,6 @@ export default styled(DisplayCard)`
     border-radius: 10px;
 
     .card-heading {
-        cursor: move;
         background-color: transparent;
         border-bottom: 0px;
         padding: 1rem 2rem;

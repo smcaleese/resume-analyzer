@@ -4,7 +4,8 @@ from sqlalchemy.orm import sessionmaker
 
 # format: 'postgresql://user:password@localhost:5432/db_name'
 POSTGRESQL_DATABASE_URL = 'postgresql://postgres:password@localhost:5432/postgres'
-# POSTGRESQL_DATABASE_URL = 'postgresql://bawccvbcevmoac:9e3e02dc3d6b4cb25212d14439d0bca163f854a3ce077ff05b960b2ec23b51b0@ec2-34-250-92-138.eu-west-1.compute.amazonaws.com:5432/d8ag0rnn6stb8o'
+# POSTGRESQL_DATABASE_URL = 'postgres://yetzczffezlcxr:bd02857349481b044d722ca72edceeec94129ee442e19ed4349ef1d34f7dae19@ec2-54-73-178-126.eu-west-1.compute.amazonaws.com:5432/dfvglduvium1j2'
+
 engine = create_engine(POSTGRESQL_DATABASE_URL, echo=True)
 
 Session = sessionmaker(bind=engine)

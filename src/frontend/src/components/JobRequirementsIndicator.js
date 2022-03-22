@@ -4,7 +4,8 @@ import styled from 'styled-components'
 
 const JobRequirementsIndicator = ({className, skills, reqs, size}) => {
     const [circleState, setCircleState] = useState([])
-    var requirements = reqs ? reqs : []
+    var requirements = reqs ? reqs :[]
+
     const circleSize = size ? `${size}px` : '15px'
 
     useEffect(() => {

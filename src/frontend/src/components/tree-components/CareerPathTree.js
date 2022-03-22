@@ -51,6 +51,7 @@ const CareerPathTree = ({ className }) => {
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 onNodeClick={(_, node) => {
+                    console.log(node)
                     setModalState({
                         title: node.data.label.props.title,
                         skills: node.data.label.props.skills

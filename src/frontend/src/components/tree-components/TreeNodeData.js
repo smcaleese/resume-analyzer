@@ -2,29 +2,8 @@ import React from 'react'
 import { MarkerType } from 'react-flow-renderer'
 import JobRequirementsIndicator from '../JobRequirementsIndicator'
 
-//https://www.tutorialspoint.com/find-n-highest-values-in-an-object-javascript
-const getReqs = (counts) => {
-    var reqs = []
-    var keys = Object.keys(counts)
-    for (var x in keys) {
-        if (counts[keys[x]] > 3) {
-            reqs.push(keys[x])
-        }
-    }
-    if (reqs.length > 12) {
-        reqs = []
-        Object.keys(counts).sort((a, b) => counts[b] - counts[a]).forEach((key, ind) => {
-            if (ind < 12) {
-                reqs.push(key)
-            }
-        })
-    }
-    return reqs
-}
-
 const TreeNode = ({ title, data, skills }) => {
-    var requirements = data[title] ? getReqs(data[title], 1) : []
-    console.log(title, requirements, data[title])
+    const requirements = data[title]
     return (
         <>
             {title}

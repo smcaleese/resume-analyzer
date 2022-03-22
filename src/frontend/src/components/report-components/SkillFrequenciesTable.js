@@ -40,7 +40,7 @@ const SkillFrequenciesPanel = ({ className }) => {
 }
 
 export default styled(SkillFrequenciesPanel)`
-    height: 500px;
+    height: 30vh;
 
     .count-table {
         overflow-y: auto;

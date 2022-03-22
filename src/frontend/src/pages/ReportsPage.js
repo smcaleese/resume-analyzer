@@ -45,15 +45,22 @@ const ReportsPage = ({ className }) => {
 
     const filterReports = (text) => {
         setInputText(text)
-        const filteredReports = allReports.filter((report) => {
-            return report.title.toLowerCase().includes(text.toLowerCase())
-        })
+        const filteredReports = allReports.filter((report) =>
+            report.title.toLowerCase().includes(text.toLowerCase()))
         setReports(filteredReports)
     }
 
     if(!appState.reportsData) {
         return null
     }
+
+    const reportRows = reports.reduce((acc, report, index) => {
+        if (index % 2 === 0) {
+            acc.push([])
+        }
+        acc[acc.length - 1].push(report)
+        return acc
+    }, [])
 
     return (
         <div className={className}>
@@ -65,13 +72,16 @@ const ReportsPage = ({ className }) => {
                         <Button variant='dark'>Search</Button>
                     </InputGroup>
                 </Row>
-                {reports.map((report, index) => {
-                    return (
-                        <Row key={index}>
-                            {report.component}
-                        </Row>
-                    ) 
-                })}
+                {reportRows.map((reportRow, index) => (
+                    <Row key={index}>
+                        <Col xxl={6}>
+                            { reportRow[0] ? reportRow[0].component : null }
+                        </Col>
+                        <Col xxl={6}>
+                            { reportRow[1] ? reportRow[1].component : null }
+                        </Col>
+                    </Row>
+                ))}
             </Container>
         </div>
     )

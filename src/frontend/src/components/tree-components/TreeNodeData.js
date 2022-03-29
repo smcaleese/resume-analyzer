@@ -22,8 +22,63 @@ const getReqs = (counts) => {
     return reqs
 }
 
-const getStyle = (reqs, skills) => {
+const checkParents = (id, skills, reqs_map) => {
+    const parentEdges = edges.filter(edge => edge.target == id)
+    if (parentEdges.length == 0) {
+        return true
+    }
+    const parentIds = parentEdges.map(edge => {
+        return edge.source
+    })
 
+    var validParentFlag = false
+    parentIds.forEach(pid => {
+        if (checkParents(pid, skills, reqs_map)) {
+            var skillMatchCount = 0
+            const reqs = reqs_map[Object.keys(reqs_map)[parseInt(pid) - 1]]
+            skills.forEach(skill => {
+                if (reqs.includes(skill.name)) {
+                    skillMatchCount++
+                }
+            })
+            if ((skillMatchCount / reqs.length) > 0.5 || (reqs.length == 0 && skills.length > 0)) {
+                validParentFlag = true
+            }
+        }
+    })
+    if (!validParentFlag) {
+        return false
+    }
+    return true
+}
+
+const getStyle = (id, reqs, skills, reqs_map) => {
+    if (checkParents(id, skills, reqs_map)) {
+        var skillMatchCount = 0
+        skills.forEach(skill => {
+            if (reqs.includes(skill.name)) {
+                skillMatchCount++
+            }
+        })
+
+        const score = skillMatchCount / reqs.length
+        if (score > 0.5 || (reqs.length == 0 && skills.length > 0)) {
+            return {
+                backgroundColor: '#33DAC1'
+            }
+        }
+        else {
+            return {
+                background: `linear-gradient(90deg, #33DAC1 ${(score * 150) - 25}%, rgba(255,255,255,0) ${score * 150}%, rgba(255,255,255,0) 100%)`
+            }
+        }
+    }
+    else {
+        return {
+            // Have to set background color so that update are detected
+            backgroundColor: 'rgba(255,255,255,1)'
+        }
+    }
 }
 
 
@@ -47,7 +102,7 @@ export const getNodes = (data, cvData) => {
     }
 
     const reqs = {
-        'QA Enginner': data['QA Engineer'] ? getReqs(data['QA Engineer']) : [],
+        'QA Engineer': data['QA Engineer'] ? getReqs(data['QA Engineer']) : [],
         'Devops': data['Devops'] ? getReqs(data['Devops']) : [],
         'Junior Frontend Developer': data['Junior Frontend Developer'] ? getReqs(data['Junior Frontend Developer']) : [],
         'Junior Full Stack Developer': data['Junior Full Stack Developer'] ? getReqs(data['Junior Full Stack Developer']) : [],
@@ -72,7 +127,7 @@ export const getNodes = (data, cvData) => {
             // QA Engineer
             id: '1',
             type: 'input',
-            style: getStyle(reqs['QA Engineer'], skills),
+            style: getStyle('1', reqs['QA Engineer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='QA Engineer' reqs={reqs['QA Engineer']} skills={skills} />
@@ -84,7 +139,7 @@ export const getNodes = (data, cvData) => {
             // Devops
             id: '2',
             type: 'input',
-            onClick: () => { console.log('test') },
+            style: getStyle('2', reqs['Devops'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Devops' data={reqs['Devops']} skills={skills} />
@@ -95,6 +150,7 @@ export const getNodes = (data, cvData) => {
         {
             // Junior Frontend
             id: '3',
+            style: getStyle('3', reqs['Junior Frontend Developer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Junior Frontend Developer' data={reqs['Junior Frontend Developer']} skills={skills} />
@@ -105,6 +161,7 @@ export const getNodes = (data, cvData) => {
         {
             // Junior Full Stack
             id: '4',
+            style: getStyle('4', reqs['Junior Full Stack Developer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Junior Full Stack Developer' data={reqs['Junior Full Stack Developer']} skills={skills} />
@@ -115,6 +172,7 @@ export const getNodes = (data, cvData) => {
         {
             // Junior Backend
             id: '5',
+            style: getStyle('5', reqs['Junior Backend Developer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Junior Backend Developer' data={reqs['Junior Backend Developer']} skills={skills} />
@@ -126,6 +184,7 @@ export const getNodes = (data, cvData) => {
             // Business Analyst
             id: '6',
             type: 'input',
+            style: getStyle('6', reqs['Business Analyst'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Business Analyst' data={reqs['Business Analyst']} skills={skills} />
@@ -137,6 +196,7 @@ export const getNodes = (data, cvData) => {
             // Senior Devops
             id: '7',
             type: 'output',
+            style: getStyle('7', reqs['Senior Devops'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Senior Devops' data={reqs['Senior Devops']} skills={skills} />
@@ -148,6 +208,7 @@ export const getNodes = (data, cvData) => {
             // Cloud Engineer
             id: '8',
             type: 'output',
+            style: getStyle('8', reqs['Cloud Engineer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Cloud Engineer' data={reqs['Cloud Engineer']} skills={skills} />
@@ -159,6 +220,7 @@ export const getNodes = (data, cvData) => {
             // Automation Engineer
             id: '9',
             type: 'output',
+            style: getStyle('9', reqs['Automation Engineer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Automation Engineer' data={reqs['Automation Engineer']} skills={skills} />
@@ -169,6 +231,7 @@ export const getNodes = (data, cvData) => {
         {
             // Senior Frontend
             id: '10',
+            style: getStyle('10', reqs['Senior Frontend Developer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Senior Frontend Developer' data={reqs['Senior Frontend Developer']} skills={skills} />
@@ -179,6 +242,7 @@ export const getNodes = (data, cvData) => {
         {
             // Full Stack
             id: '11',
+            style: getStyle('11', reqs['Full Stack Developer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Full Stack Developer' data={reqs['Full Stack Developer']} skills={skills} />
@@ -189,6 +253,7 @@ export const getNodes = (data, cvData) => {
         {
             // Senior backend
             id: '12',
+            style: getStyle('12', reqs['Senior Backend Developer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Senior Backend Developer' data={reqs['Senior Backend Developer']} skills={skills} />
@@ -200,6 +265,7 @@ export const getNodes = (data, cvData) => {
             // Senior QA
             id: '13',
             type: 'output',
+            style: getStyle('13', reqs['Senior QA Engineer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Senior QA Engineer' data={reqs['Senior QA Engineer']} skills={skills} />
@@ -210,6 +276,7 @@ export const getNodes = (data, cvData) => {
         {
             // Senior Full Stack
             id: '14',
+            style: getStyle('14', reqs['Senior Full Stack Developer'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Senior Full Stack Developer' data={reqs['Senior Full Stack Developer']} skills={skills} />
@@ -220,6 +287,7 @@ export const getNodes = (data, cvData) => {
         {
             // Development Lead
             id: '15',
+            style: getStyle('15', reqs['Development Lead'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Development Lead' data={reqs['Development Lead']} skills={skills} />
@@ -230,6 +298,7 @@ export const getNodes = (data, cvData) => {
         {
             // Software Architect
             id: '16',
+            style: getStyle('16', reqs['Software Architect'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Software Architect' data={reqs['Software Architect']} skills={skills} />
@@ -241,6 +310,7 @@ export const getNodes = (data, cvData) => {
             //DBA
             id: '17',
             type: 'output',
+            style: getStyle('17', reqs['Database Admin (DBA)'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Database Admin (DBA)' data={reqs['Database Admin (DBA)']} skills={skills} />
@@ -251,6 +321,7 @@ export const getNodes = (data, cvData) => {
         {
             // Product Owner
             id: '18',
+            style: getStyle('18', reqs['Product Owner'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Product Owner' data={reqs['Product Owner']} skills={skills} />
@@ -262,6 +333,7 @@ export const getNodes = (data, cvData) => {
             // Project Manager
             id: '19',
             type: 'output',
+            style: getStyle('19', reqs['Project Manager'], skills, reqs),
             data: {
                 label: (
                     <TreeNode title='Project Manager' data={reqs['Project Manager']} skills={skills} />

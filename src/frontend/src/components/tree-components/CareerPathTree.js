@@ -24,7 +24,7 @@ const CareerPathTree = ({ className }) => {
         skills: []
     })
 
-    const handleClose = () => setShow(false)
+    const handleClose = () => { setShow(false), setModalState({ title: '', skills: [] }) }
     const handleShow = () => setShow(true)
 
     useEffect(() => {
@@ -32,11 +32,11 @@ const CareerPathTree = ({ className }) => {
             fetch(`${apiUrl}/path-data`)
                 .then(res => res.json())
                 .then(data => {
-                    setNodes(initialNodes(data))
+                    setNodes(initialNodes(data, appState.resultsData))
                     dispatch({ type: 'SET_TREE_DATA', payload: data })
                 })
         }
-    }, [nodes, appState])
+    }, [nodes])
 
     return (
         <>

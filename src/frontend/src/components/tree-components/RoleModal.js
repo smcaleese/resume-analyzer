@@ -5,6 +5,34 @@ import { StyledSkillBadge } from '../SkillsDisplayPanel'
 import { apiUrl } from '../../config'
 import { StyledJobsTable } from '../JobsDisplayPanel'
 
+// Sort jobs on similarity to role title
+const sortJobs = (jobs, title) => {
+    return jobs.sort((a, b) => {
+        var aCount = 0
+        var bCount = 0
+
+        a.title.split(' ').forEach(word =>{
+            if (title.includes(word)){
+                aCount++
+
+            }
+        })
+
+        b.title.split(' ').forEach(word =>{
+            if (title.includes(word)){
+                bCount++
+            }
+        })
+        if (aCount > bCount){
+            return -1
+        }
+        else if (bCount > aCount){
+            return 1
+        }
+        return 0
+    })
+}
+
 const RoleModal = ({ className, show, handleClose, title, skills }) => {
     const [jobsState, setJobsState] = useState([])
     const userSkills = skills ? skills : []
@@ -13,7 +41,7 @@ const RoleModal = ({ className, show, handleClose, title, skills }) => {
         fetch(`${apiUrl}/job-data-by-role?role_type=${encodeURIComponent(title.trim())}`)
             .then(res => res.json())
             .then(data => {
-                setJobsState(data.jobs)
+                setJobsState(sortJobs(data.jobs, title))
             })
     }, [title])
     return (

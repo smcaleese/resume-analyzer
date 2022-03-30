@@ -5,14 +5,14 @@ from database import Base
 
 class JobPost(Base):
     __tablename__ = 'job_post'
-    id = Column(BigInteger, primary_key=True)
+    id = Column(BigInteger, primary_key=True, nullable=False)
     company = Column(String, nullable=False)
     title = Column(String, nullable=False)
     location = Column(String, nullable=False)
     description = Column(Text)
     requirements = Column(ARRAY(String))
-    experience = Column(ARRAY(Integer), nullable=True)
-    role = Column(String, nullable=True)
+    experience = Column(ARRAY(Integer))
+    role = Column(String)
 
     def __repr__(self):
         return '<JobPost id={} company={} title={} location={} description={} requirements={} experience={} role={}>' \
@@ -20,7 +20,7 @@ class JobPost(Base):
 
 class Skill(Base):
     __tablename__ = 'skill'
-    id = Column(BigInteger, primary_key=True)
+    id = Column(BigInteger, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
     altnames = Column(ARRAY(String))
     count = Column(Integer, nullable=False)

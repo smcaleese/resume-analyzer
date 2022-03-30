@@ -86,7 +86,7 @@ const FileUploadPage = ({ className, setPage }) => {
             <form className='card upload-form center'>
                 <h1 className='title'>Upload a resume (PDF)</h1>
                 <div {...getRootProps()} className='drag-drop-box center'>
-                    <input {...getInputProps()} />
+                    <input {...getInputProps()} alt='file upload' />
                     <div className='drag-drop-box-content center'>
                         <p className='drag-drop-box-text'>{file ? file.name : 'Drag and Drop a File'}</p>
                         <p style={{'padding': '0.5rem'}}>{file ? '' : 'or'}</p>

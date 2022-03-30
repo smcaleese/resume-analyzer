@@ -123,27 +123,31 @@ def get_path_data():
 
     db.close()
 
-    response = {
-        'Junior Frontend Developer':   get_role_skills(db, 'Junior Frontend Developer'),
-        'Senior Frontend Developer':   get_role_skills(db, 'Senior Frontend Developer'),
-        'Junior Backend Developer':    get_role_skills(db, 'Junior Backend Developer'),
-        'Senior Backend Developer':    get_role_skills(db, 'Senior Backend Developer'),
-        'Junior Full Stack Developer': get_role_skills(db, 'Junior Full Stack Developer'),
-        'Full Stack Developer':        get_role_skills(db, 'Full Stack Developer'),
-        'Senior Full Stack Developer': get_role_skills(db, 'Senior Full Stack Developer'),
-        'QA Engineer':                 get_role_skills(db, 'QA Engineer'),
-        'Senior QA Engineer':          get_role_skills(db, 'Senior QA Engineer'),
-        'Business Analyst':            get_role_skills(db, 'Business Analyst'),
-        'Development Lead':            get_role_skills(db, 'Development Lead'),
-        'Software Architect':          get_role_skills(db, 'Software Architect'),
-        'Product Owner':               get_role_skills(db, 'Product Owner'),
-        'Project Manager':             get_role_skills(db, 'Project Manager'),
-        'Devops':                      get_role_skills(db, 'Devops'),
-        'Senior Devops':               get_role_skills(db, 'Senior Devops'),
-        'Automation Engineer':         get_role_skills(db, 'Automation Engineer'),
-        'Cloud Engineer':              get_role_skills(db, 'Cloud Engineer'),
-        'Database Admin (DBA)':        get_role_skills(db, 'Database Admin (DBA)'),
-    }
+    roles = [
+        'Junior Frontend Developer',
+        'Senior Frontend Developer',
+        'Junior Backend Developer',
+        'Senior Backend Developer',
+        'Junior Full Stack Developer',
+        'Full Stack Developer',
+        'Senior Full Stack Developer',
+        'QA Engineer',              
+        'Senior QA Engineer',
+        'Business Analyst',      
+        'Development Lead',  
+        'Software Architect',
+        'Product Owner',              
+        'Project Manager',    
+        'Devops',              
+        'Senior Devops',              
+        'Automation Engineer',
+        'Cloud Engineer',              
+        'Database Admin (DBA)'
+    ]
+
+    response = {}
+    for role in roles:
+        response[role] = get_jobs_by_role(db, role)
 
     return response
 

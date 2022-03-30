@@ -29,7 +29,6 @@ const Sidebar = ({ className, page, setPage }) => {
             activeKey={page}
             onSelect={selectedKey => { changePage(selectedKey) }}
         >
-            <div className='sidebar-items'></div>
             <Nav.Item>
                 <Nav.Link className='logo-container center' eventKey='home'>
                     <img
@@ -64,7 +63,7 @@ const Sidebar = ({ className, page, setPage }) => {
             <Nav.Item>
                 <Nav.Link className='icon-container center' style={getStyle('reports')} eventKey='reports'>
                     <img
-                        alt='Chart Icon'
+                        alt='Reports Icon'
                         src={page === 'reports' ? selected_reports_icon : unselected_reports_icon}
                         width='50'
                         className='icon'
@@ -74,7 +73,7 @@ const Sidebar = ({ className, page, setPage }) => {
             <Nav.Item>
                 <Nav.Link className='icon-container center' style={getStyle('tree')} eventKey='tree'>
                     <img
-                        alt='Chart Icon'
+                        alt='Tree Icon'
                         src={page === 'tree' ? selected_tree_icon : unselected_tree_icon}
                         width='50'
                         className='icon'

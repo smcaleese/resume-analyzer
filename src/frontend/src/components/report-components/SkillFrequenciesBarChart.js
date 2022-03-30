@@ -5,6 +5,7 @@ import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
 import { AppContext } from '../../App'
 import classnames from 'classnames'
+import LoadingSpinner from '../LoadingSpinner'
 
 const YearsOfExperiencePanel = ({ className }) => {
     const options = {
@@ -34,6 +35,10 @@ const YearsOfExperiencePanel = ({ className }) => {
         }
     }, [])
 
+    if (!skillCounts) {
+        return <LoadingSpinner />
+    }
+
     const sortedSkillCounts = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, colsToShow)
 
     const labels = sortedSkillCounts.map(skill => skill[0])
@@ -60,4 +65,3 @@ const YearsOfExperiencePanel = ({ className }) => {
 }
 
 export default YearsOfExperiencePanel
-

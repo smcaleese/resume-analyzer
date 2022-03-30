@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
-import { Spinner } from 'react-bootstrap'
 import { AppContext } from '../App'
+import LoadingSpinner from '../components/LoadingSpinner'
 import {apiUrl} from '../config.js'
 
 const postResume = async (file) => {
@@ -73,13 +73,7 @@ const FileUploadPage = ({ className, setPage }) => {
     const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
     if (loading) {
-        return (
-            <div className={classnames(className, 'center')}>
-                <Spinner animation='border' role='status'>
-                    <span className='visually-hidden'>Loading</span>
-                </Spinner>
-            </div>
-        )
+        return <LoadingSpinner />
     }
 
     return (

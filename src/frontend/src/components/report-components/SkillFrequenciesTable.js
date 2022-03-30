@@ -4,10 +4,15 @@ import styled from 'styled-components'
 import DisplayCard from '../DisplayCard'
 import { Table } from 'react-bootstrap'
 import { AppContext } from '../../App'
+import LoadingSpinner from '../LoadingSpinner'
 
 const SkillFrequenciesPanel = ({ className }) => {
     const { appState } = useContext(AppContext)
     const { skill_counts: skillCounts } = appState.reportsData
+
+    if (!skillCounts) {
+        return <LoadingSpinner />
+    }
 
     const sortedRequirementsDesc = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 50)
 

@@ -4,6 +4,7 @@ import DisplayCard from '../components/DisplayCard'
 import YearsOfExperiencePanel from '../components/report-components/YearsOfExperienceBarChart'
 import SkillFrequenciesTable from '../components/report-components/SkillFrequenciesTable'
 import SkillFrequenciesBarChart from '../components/report-components/SkillFrequenciesBarChart'
+import LoadingSpinner from '../components/LoadingSpinner'
 import LocationsBarChart from '../components/report-components/LocationsBarChart'
 import { Container, Row, Col, Form, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { AppContext } from '../App'
@@ -36,26 +37,30 @@ const ReportsPage = ({ className }) => {
     const [inputText, setInputText] = useState('')
     const { appState, dispatch } = useContext(AppContext)
     const [reports, setReports] = useState(allReports)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (!appState.reportsData) {
+            setLoading(true)
             fetch(`${apiUrl}/report-data`)
                 .then(res => res.json())
                 .then(data => {
                     dispatch({ type: 'SET_REPORTS_DATA', payload: data })
                 })
+        } else {
+            setLoading(false)
         }
-    }, [appState])
+    })
+
+    if(loading) {
+        return <LoadingSpinner />
+    }
 
     const filterReports = (text) => {
         setInputText(text)
         const filteredReports = allReports.filter((report) =>
             report.title.toLowerCase().includes(text.toLowerCase()))
         setReports(filteredReports)
-    }
-
-    if(!appState.reportsData) {
-        return null
     }
 
     const reportRows = reports.reduce((acc, report, index) => {
@@ -116,6 +121,6 @@ export default styled(ReportsPage)`
     margin: 0 20px 0 110px;
 
     .row {
-        padding: 10px;
+        padding: 20px;
     }
 `

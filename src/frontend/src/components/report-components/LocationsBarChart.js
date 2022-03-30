@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
 import { AppContext } from '../../App'
+import LoadingSpinner from '../LoadingSpinner'
 
 const LocationsBarChart = ({ className }) => {
     const options = {
@@ -16,6 +17,11 @@ const LocationsBarChart = ({ className }) => {
     }
     const { appState } = useContext(AppContext)
     let { location_counts: locationCounts } = appState.reportsData
+
+    if (!locationCounts) {
+        return <LoadingSpinner />
+    }
+
     locationCounts = locationCounts.slice(0, 10)
     const labels = locationCounts.map(([location, count]) => location)
     const values = locationCounts.map(([location, count]) => count)

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
 import { AppContext } from '../../App'
+import LoadingSpinner from '../LoadingSpinner'
 
 const YearsOfExperiencePanel = ({ className }) => {
     const options = {
@@ -21,6 +22,10 @@ const YearsOfExperiencePanel = ({ className }) => {
 
     const { appState } = useContext(AppContext)
     const { years_of_experience_counts: yearsOfExperienceCounts } = appState.reportsData
+
+    if (!yearsOfExperienceCounts) {
+        return <LoadingSpinner />
+    }
 
     const labels = yearsOfExperienceCounts.map((value, index) => index)
     const values = yearsOfExperienceCounts

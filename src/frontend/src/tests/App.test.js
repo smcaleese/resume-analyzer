@@ -1,6 +1,7 @@
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
+import { jest, describe, expect, test } from '@jest/globals'
 import App from '../App'
 
 jest.mock('react-chartjs-2', () => ({
@@ -48,29 +49,32 @@ describe('Test resume upload', () => {
         const submitButton = await screen.findByText(/submit/i)
         clickButton(submitButton)
 
-        await waitFor(() => {
-            screen.getByText('Resume')
-        }) 
-        const panels = ['Skills', 'Skill Frequencies', 'Resume', 'Matching Jobs']
+        const panelNames = ['Skills', 'Skill Frequencies', 'Resume', 'Matching Jobs']
 
-        for (const panelName of panels) {
-            expect(screen.getByText(panelName)).toBeInTheDocument()
+        for (const panelName of panelNames) {
+            const panel = await screen.findByText(panelName)
+            expect(panel).toBeInTheDocument()
         }
     })
 })
 
-describe('Test reports page', () => {
-    test('When the reports page is clicked in the sidebar, the reports page should be shown', () => {
+const clickSidebarLink = (altText) => screen.getByAltText(altText).click()
 
-    })
-
-    test('When a search query is added to the search bar, the reports should be filtered', () => {
-
+describe('Test changing the page using the sidebar', () => {
+    test('When the reports page icon is clicked, the reports page should be shown', async () => {
+        render(<App />)
+        act(() => clickSidebarLink('Reports Icon'))
+        const searchText = await screen.findByText('Search')
+        expect(searchText).toBeInTheDocument()
     })
 })
 
-describe('Test tree page', () => {
-    test('When the tree page is clicked in the sidebar, the tree page should be shown', () => {
-
-    }) 
-})
+// describe.only('Test changing to tree page using sidebar', () => {
+//     test('When the tree page icon is clicked, the tree page should be shown', async () => {
+//         render(<App />)
+//         act(() => clickSidebarLink('Tree Icon'))
+//         const treePage = await screen.findByAltText('tree page')
+//         screen.debug()
+//         expect(treePage).toBeInTheDocument()
+//     }) 
+// })

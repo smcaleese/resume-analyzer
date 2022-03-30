@@ -6,5 +6,8 @@ module.exports = {
     },
     transformIgnorePatterns: [
         'node_modules/?!(react-flow-renderer)'
+    ],
+    setupFilesAfterEnv: [
+        './src/setupTests.js',
     ]
 }

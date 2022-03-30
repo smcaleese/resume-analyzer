@@ -150,7 +150,7 @@ def get_path_data():
 @app.get('/job-data-by-role')
 async def get_path_data(role_type: str = ""):
     db = Session()
-    response={
+    response = {
         'jobs': get_jobs_by_role(db, role_type)
     }
     db.close()

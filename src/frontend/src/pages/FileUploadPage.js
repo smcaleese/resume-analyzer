@@ -19,7 +19,8 @@ const postResume = async (file) => {
         body: formData,
     })
     const json = await response.json()
-    console.log('json response:', json)
+    console.log('json response:')
+    console.log(json)
     return json
 }
 

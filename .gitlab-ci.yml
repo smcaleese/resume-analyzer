@@ -18,6 +18,8 @@ test:
   script:
     - cd src/backend
     - pip install -r requirements.txt
+    - pip uninstall click -y \
+    - pip install "click<8"
     - npm install -g newman
     - newman --version
     - uvicorn server:app &

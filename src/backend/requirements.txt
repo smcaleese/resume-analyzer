@@ -9,3 +9,4 @@ python-multipart==0.0.5
 nltk==3.5
 gensim==4.1.2
 scikit-learn==1.0.2
+click==8.0.4

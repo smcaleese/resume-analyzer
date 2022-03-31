@@ -4,7 +4,6 @@ sys.path.append('../../')
 from server import gen_skill_colors
 from server import extract_skills
 import pdfplumber
-from database import Session
 import os
 
 class TestServer(unittest.TestCase):
@@ -15,13 +14,12 @@ class TestServer(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_extract_skills(self):
-        db = Session()
         os.chdir('tests/unit-tests')
         with pdfplumber.open('../test-resume.pdf') as pdf:
             pages = [page.extract_text() for page in pdf.pages]
-            skills = extract_skills(' '.join(pages), db)
-        db.close()
-        actual_skill_names = [skill['name'] for skill in skills]
+        os.chdir('../../')
+        skill_items = extract_skills(' '.join(pages))
+        actual_skill_names = [skill['name'] for skill in skill_items]
         expected_skill_names = ['Python', 'JavaScript', 'ReactJS', 'Java']
         self.assertEqual(set(expected_skill_names), set(actual_skill_names))
 

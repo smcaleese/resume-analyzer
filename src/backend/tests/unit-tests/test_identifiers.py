@@ -10,7 +10,7 @@ import json
 with open('./test_data.json') as json_file:
     test_data = json.load(json_file)['test_data']
 
-class TestServer(unittest.TestCase):
+class TestIdentifiers(unittest.TestCase):
     def test_extract_requirements(self):
         os.chdir('../../')
         skills = get_skills()

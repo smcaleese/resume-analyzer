@@ -38,3 +38,10 @@ unit-tests:
     - pip install -r requirements.txt
     - cd tests/unit-tests
     - python3 -m unittest
+
+integration-tests:
+  stage: test
+  script:
+  - cd src/frontend
+  - yarn
+  - yarn test

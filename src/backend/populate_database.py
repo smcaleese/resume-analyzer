@@ -22,29 +22,31 @@ def get_skills():
 
     return skills
 
-def compute_roles(db):
+def compute_roles(job_post_row_data):
     # Vectorize the job descriptions using the LDA model
-    data = db.query(JobPost.id, JobPost.description, JobPost.title).all()
+    data = []
+    for key in job_post_row_data.keys():
+        id, description, title = job_post_row_data[key]['id'], job_post_row_data[key]['description'], job_post_row_data[key]['title']
+        data.append((id, description, title))
+
     lda_data = get_lda(data[:])
+
+    # an array of descriptions
     lda_vecs = np.array([x[2] for x in lda_data])
 
     #Train kmeans clustering model from LDA data
     kmeans = KMeans(n_clusters=19, random_state=0).fit(lda_vecs)
 
     #Save the model
-    with open(".\models\k-means-model\k-mean.pkl", "wb") as f:
+    with open('./models/k-means-model/k-mean.pkl', 'wb') as f:
         pickle.dump(kmeans, f)
     raw_clustered_data = [[data[i][0], data[i][1], data[i][2], kmeans.labels_[i]] for i in range(len(kmeans.labels_))]
     
     clustered_data, role_map = get_roles(raw_clustered_data)
 
-    #Add the classification to the database
-    for i in range(len(clustered_data)):
-        print("Adding Role Classifcations: {} / {} ".format(i, len(clustered_data)))
-        db.query(JobPost).filter_by(id=clustered_data[i][0]).first().role = clustered_data[i][3]
-    # Add Batched Update
-    db.commit()
-
+    for arr in clustered_data:
+        id, description, title, role = arr
+        job_post_row_data[id]['role'] = role
 
 def gather_data(filename, job_post_row_data, skill_counts, skills, count):
     with open(f'../data/{filename}', newline='') as csvfile:
@@ -124,11 +126,12 @@ def main():
     gather_data('indeed-scraped-data-formatted.csv', job_post_row_data, skill_counts, skills, count)
     gather_data('linkedin-scraped-data-software-engineer-ireland-formatted.csv', job_post_row_data, skill_counts, skills, count)
 
+    print('Pre-computing classifications')
+    compute_roles(job_post_row_data)
+
+    print('Inserting job posts into database')
     insert_job_post_rows(db, job_post_row_data)
     insert_skill_rows(db, skills, skill_counts)
-
-    print("Pre-Computing Classifications")
-    compute_roles(db)
 
     print('\nInserted {} rows into job_post\n'.format(db.query(JobPost).count()))
     print('\nInserted {} rows into skill\n'.format(db.query(Skill).count()))

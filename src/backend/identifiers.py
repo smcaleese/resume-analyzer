@@ -24,7 +24,7 @@ nltk.download('punkt')
 lda_stop_words = stopwords.words('english')
 lda_stop_words.extend(['from', 'subject', 're', 'edu', 'use', 'experience', 'team', 'software', 'development', 'work', 'environment', 'working', 'opportunity'])
 
-# extract all requirements from each job post and increment the skill counts in the skill table
+# extract all requirements from each job post
 def extract_requirements(description, skills):
     stop_words = set(stopwords.words('english'))
     words = word_tokenize(description)
@@ -42,11 +42,18 @@ def extract_requirements(description, skills):
         if bigram not in stop_words:
             potential_skill_words.append(bigram)
 
+    all_skills = {}
+    for skill, altnames in skills.items():
+        all_skills[skill] = skill
+        if altnames:
+            for name in altnames:
+                all_skills[name] = skill
+
     requirements = set()
     for word in potential_skill_words:
-        for skill, altnames in skills.items():
-            if word.lower() == skill.lower() or (altnames and word.lower() in altnames):
-                requirements.add(skill)
+        if word.lower() in all_skills:
+            skill_name = all_skills[word.lower()]
+            requirements.add(skill_name)
 
     return list(requirements)
 

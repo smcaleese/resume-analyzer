@@ -13,7 +13,7 @@ build_project:
     - uvicorn server:app &
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
 
-test:
+api-tests:
   stage: test
   script:
     - cd src/backend
@@ -28,3 +28,13 @@ test:
     - cd ./tests/postman
     - newman run fyp-status.postman_collection.json
     - ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
+    - cd ../unit-tests
+
+unit-tests:
+  stage: test
+  script:
+    - cd src/backend
+    - python -V
+    - pip install -r requirements.txt
+    - cd tests/unit-tests
+    - python3 -m unittest

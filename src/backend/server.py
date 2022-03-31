@@ -1,12 +1,8 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from numpy import extract
-from pydantic import BaseModel
-from typing import Optional
 import pdfplumber
 import spacy
 from database import engine, Base, Session
-import models as mdoels
 from crud import get_skill_counts, get_ranked_job_posts, get_all_skills, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role
 import uvicorn
 import colorsys
@@ -98,9 +94,7 @@ def handle_upload(file: UploadFile = File(...)):
         skill_names = [skill['name'] for skill in skills]
         jobs = get_ranked_job_posts(db, skill_names)
 
-
     db.close()
-
 
     response = {
         'skills': skills,
@@ -152,7 +146,7 @@ def get_path_data():
     return response
 
 @app.get('/job-data-by-role')
-async def get_path_data(role_type: str = ""):
+async def get_job_data_by_role(role_type: str = ""):
     db = Session()
     response = {
         'jobs': get_jobs_by_role(db, role_type)
@@ -164,16 +158,12 @@ async def get_path_data(role_type: str = ""):
 @app.get('/report-data')
 def get_report_data():
     db = Session()
-    skill_counts = get_skill_counts(db)
-    years_of_experience_counts = get_years_of_experience(db)
-    location_counts = get_location_counts(db)
-    db.close()
-
     response = {
-        'skill_counts': skill_counts,
-        'years_of_experience_counts': years_of_experience_counts,
-        'location_counts': location_counts
+        'skill_counts': get_skill_counts(db),
+        'years_of_experience_counts': get_years_of_experience(db),
+        'location_counts': get_location_counts(db) 
     }
+    db.close()
 
     return response
 

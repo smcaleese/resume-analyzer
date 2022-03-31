@@ -84,7 +84,6 @@ def get_years_of_experience(db):
     years_counts = [0] * (max(years) + 1)
     for num in years:
         years_counts[num] += 1
-    print(years_counts)
 
     return years_counts
 

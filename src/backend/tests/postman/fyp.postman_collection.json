@@ -60,7 +60,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "../../backend/test-resume.pdf"
+							"src": "../test-resume.pdf"
 						}
 					]
 				},

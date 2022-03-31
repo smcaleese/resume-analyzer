@@ -1,12 +1,10 @@
-fastapi==0.70.1
+fastapi==0.75.0
+gensim==4.1.2
+nltk==3.5
+numpy==1.17.4
 pdfplumber==0.6.0
 pydantic==1.8.2
+scikit_learn==1.0.2
 spacy==3.2.1
 SQLAlchemy==1.4.29
-psycopg2-binary==2.9.3
 uvicorn==0.16.0
-python-multipart==0.0.5
-nltk==3.5
-gensim==4.1.2
-scikit-learn==1.0.2
-click==8.0.4

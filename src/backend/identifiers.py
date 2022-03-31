@@ -28,12 +28,19 @@ lda_stop_words.extend(['from', 'subject', 're', 'edu', 'use', 'experience', 'tea
 def extract_requirements(description, skills):
     stop_words = set(stopwords.words('english'))
     words = word_tokenize(description)
-    potential_skill_words = []
     # nltk processing from https://realpython.com/nltk-nlp-python/
 
-    for word in words:
+    potential_skill_words = [words[0]]
+
+    for i in range(1, len(words)):
+        word = words[i]
+        bigram = f'{words[i - 1]}{word}'
+
         if word.casefold() not in stop_words:
             potential_skill_words.append(word)
+
+        if bigram not in stop_words:
+            potential_skill_words.append(bigram)
 
     requirements = set()
     for word in potential_skill_words:
@@ -43,11 +50,10 @@ def extract_requirements(description, skills):
 
     return list(requirements)
 
-# make all chars lowercase, remove punctuation and unnecessary spaces
+# make all chars lowercase, remove any chars which are not letters or numbers
 def normalize_text(text):
     text = text.strip()
-    special_chars = string.punctuation + '’'
-    cleaned_text = ''.join([char.lower() if char not in special_chars else ' ' for char in text])
+    cleaned_text = ''.join([char.lower() if char.isalnum() else ' ' for char in text])
     normalized_text = ' '.join(cleaned_text.split())
     return normalized_text
 
@@ -60,21 +66,22 @@ def get_years_of_experience(description):
     # match range from normalized text, e.g. 3-5 years of experience -> 3 5 years of experience
     range_expression = r'(([a-z]+\s){1,10}[0-9]\s[0-9]\syears([a-z]*\s){0,10}experience)+'
 
-    number_match = re.search(number_expression, normalized_description)
-    range_match = re.search(range_expression, normalized_description)
+    number_matches = re.findall(number_expression, normalized_description)
+    range_matches = re.findall(range_expression, normalized_description)
 
     years = []
-    if number_match:
-        number_match_string = number_match.group()
-        years_found = [int(token) for token in number_match_string.split() if token.isdigit() and int(token) < 20]
-        years.extend(years_found)
 
-    if range_match:
-        range_match_string = range_match.group()
-        years_found = [int(token) for token in range_match_string.split() if token.isdigit() and int(token) < 20]
-        if years_found:
-            average_years = sum(years_found) / len(years_found)
-            years.append(round(average_years))
+    for match in number_matches:
+        for s in match:
+            years_found = [int(token) for token in s.split() if token.isdigit() and int(token) < 20]
+            years.extend(years_found)
+
+    for match in range_matches:
+        for s in match:
+            years_found = [int(token) for token in s.split() if token.isdigit() and int(token) < 20]
+            if years_found:
+                average_years = sum(years_found) / len(years_found)
+                years.append(round(average_years))
 
     return years
 
@@ -101,8 +108,6 @@ def vectorize_text(text, lda_model=None ,corpus=None, id2word=None):
     topic_vec = np.array(topic_vec)
 
     return topic_vec
-    
-
 
 def get_lda(id_descs):
     # Load corpus data
@@ -121,28 +126,32 @@ def get_lda(id_descs):
 
 def get_roles(dataset):
     #Number of roles should equal number of clusters
-    
-    roles = {
-        'Junior Frontend Developer':   [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Senior Frontend Developer':   [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Junior Backend Developer':    [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Senior Backend Developer':    [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Junior Full Stack Developer': [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Full Stack Developer':        [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Senior Full Stack Developer': [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'QA Engineer':                 [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Senior QA Engineer':          [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Business Analyst':            [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Development Lead':            [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Software Architect':          [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Product Owner':               [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Project Manager':             [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Devops':                      [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Senior Devops':               [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Automation Engineer':         [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Cloud Engineer':              [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
-        'Database Admin (DBA)':        [0, 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0],
+
+    role_names = {
+        'Junior Frontend Developer',
+        'Senior Frontend Developer',  
+        'Junior Backend Developer',
+        'Senior Backend Developer',
+        'Junior Full Stack Developer',
+        'Full Stack Developer',
+        'Senior Full Stack Developer',
+        'QA Engineer',
+        'Senior QA Engineer',
+        'Business Analyst',
+        'Development Lead',
+        'Software Architect',
+        'Product Owner',
+        'Project Manager',
+        'Devops',
+        'Senior Devops',
+        'Automation Engineer',
+        'Cloud Engineer',
+        'Database Admin (DBA)'
     }
+
+    roles = {}
+    for role_name in role_names:
+        roles[role_name] = [0] * 20
 
     #Patterns
     fd_p = r'((\bfrontend)|(\bui)|(\bux)|(\bfront end))'

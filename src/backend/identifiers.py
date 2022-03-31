@@ -44,7 +44,7 @@ def extract_requirements(description, skills):
 
     all_skills = {}
     for skill, altnames in skills.items():
-        all_skills[skill] = skill
+        all_skills[skill.lower()] = skill
         if altnames:
             for name in altnames:
                 all_skills[name] = skill

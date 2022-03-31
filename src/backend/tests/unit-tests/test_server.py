@@ -5,6 +5,7 @@ from server import gen_skill_colors
 from server import extract_skills
 import pdfplumber
 from database import Session
+import os
 
 class TestServer(unittest.TestCase):
     def test_gen_skill_colors(self):
@@ -15,6 +16,7 @@ class TestServer(unittest.TestCase):
 
     def test_extract_skills(self):
         db = Session()
+        os.chdir('tests/unit-tests')
         with pdfplumber.open('../test-resume.pdf') as pdf:
             pages = [page.extract_text() for page in pdf.pages]
             skills = extract_skills(' '.join(pages), db)

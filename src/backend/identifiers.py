@@ -17,6 +17,7 @@ import sklearn
 import pickle
 import numpy as np
 import heapq
+from apyori import apriori
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -282,4 +283,21 @@ def get_roles(dataset):
         job[3] = role_map[job[3]]
 
     return dataset, role_map
+
+def get_rules(dataset, min_support=0.2, min_lift=1.1):
+    rules = []
+    rules_list = list(apriori(dataset, min_support=min_support, min_lift=min_lift))
+    for rule in rules_list:
+        lhs = list(rule[0])[:-1]
+        rhs = list(rule[0])[-1]
+
+        support = rule[1]
+        confidence = rule[2][0][2]
+        lift = rule[2][0][3]
+
+
+        rules.append([lhs, rhs, support, confidence, lift])
+    
+    return rules
+
 

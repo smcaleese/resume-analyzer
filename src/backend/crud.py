@@ -63,6 +63,12 @@ def add_skill(db: Session, new_skill: schemas.Skill):
     db.refresh(new_skill)
     return new_skill
 
+def add_rule(db: Session, new_rule: schemas.Rule):
+    db.add(new_rule)
+    db.commit()
+    db.refresh(new_rule)
+    return new_rule
+
 def get_all_skills(db: Session):
     print('getting all skills', end='\n\n')
     return db.query(Skill).distinct().all()

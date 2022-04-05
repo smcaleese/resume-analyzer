@@ -1,8 +1,8 @@
 import csv
 from database import engine, Base, Session 
-from models import JobPost, Skill
-from crud import add_job_post, add_skill
-from identifiers import extract_requirements, get_years_of_experience, get_lda, get_roles
+from models import JobPost, Skill, Rule
+from crud import add_job_post, add_skill, add_rule
+from identifiers import extract_requirements, get_years_of_experience, get_lda, get_roles, get_rules
 from collections import defaultdict
 from sklearn.cluster import KMeans
 import numpy as np
@@ -47,6 +47,13 @@ def compute_roles(job_post_row_data):
     for arr in clustered_data:
         id, description, title, role = arr
         job_post_row_data[id]['role'] = role
+
+def compute_req_rules(job_post_row_data):
+    dataset = []
+    for key in job_post_row_data:
+        if job_post_row_data[key]['requirements']:
+            dataset.append(job_post_row_data[key]['requirements'])
+    return get_rules(dataset, min_support=0.03)
 
 def gather_data(filename, job_post_row_data, skill_counts, skills, count):
     with open(f'../data/{filename}', newline='') as csvfile:
@@ -106,11 +113,26 @@ def insert_skill_rows(db, skills, skill_counts):
         print(f'added row {row} to skill table')
         row += 1
 
+def insert_rule_rows(db, rules):
+    for i, rule in enumerate(rules):
+        row_data = {
+            'id': i,
+            'lhs': rule[0],
+            'rhs': rule[1],
+            'support': rule[2],
+            'confidence': rule[3],
+            'lift': rule[4]
+        }
+        new_row = Rule(**row_data)
+        add_rule(db, new_row)
+
 def drop_tables():
     JobPost.__table__.drop(engine, checkfirst=True)
     JobPost.__table__.create(engine)
     Skill.__table__.drop(engine, checkfirst=True)
     Skill.__table__.create(engine)
+    Rule.__table__.drop(engine, checkfirst=True)
+    Rule.__table__.create(engine)
 
 def main():
     db = Session()
@@ -123,18 +145,23 @@ def main():
 
     skills = get_skills()
     count = {'total': 1}
-    gather_data('indeed-scraped-data-formatted.csv', job_post_row_data, skill_counts, skills, count)
+    gather_data('indeed-scraped-data.csv', job_post_row_data, skill_counts, skills, count)
     gather_data('linkedin-scraped-data-software-engineer-ireland-formatted.csv', job_post_row_data, skill_counts, skills, count)
 
     print('Pre-computing classifications')
     compute_roles(job_post_row_data)
 
+    print('Pre-computing association rules')
+    rules = compute_req_rules(job_post_row_data)
+
     print('Inserting job posts into database')
     insert_job_post_rows(db, job_post_row_data)
     insert_skill_rows(db, skills, skill_counts)
+    insert_rule_rows(db, rules)
 
     print('\nInserted {} rows into job_post\n'.format(db.query(JobPost).count()))
     print('\nInserted {} rows into skill\n'.format(db.query(Skill).count()))
+    print('\nInserted {} rows into rule\n'.format(db.query(Rule).count()))
 
     db.close()
 

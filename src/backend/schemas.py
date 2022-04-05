@@ -21,3 +21,15 @@ class Skill(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Rule(BaseModel):
+    id: int
+    lhs: list
+    rhs: str
+    support: float
+    confidence: float
+    lift: float
+
+    class Config:
+        orm_mode = True
+

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, String, Text, ARRAY, Integer
+from sqlalchemy import Column, BigInteger, String, Text, ARRAY, Integer, Float
 from sqlalchemy.schema import Identity
 from sqlalchemy.dialects.postgresql import ARRAY
 from database import Base
@@ -28,4 +28,17 @@ class Skill(Base):
     def __repr__(self):
         return '<Skill id={} name={} altnames={} count={}>' \
                 .format(self.id, self.name, self.altnames, self.count)
+
+class Rule(Base):
+    __tablename__ = 'rule'
+    id = Column(BigInteger, primary_key=True, nullable=False)
+    lhs = Column(ARRAY(String))
+    rhs = Column(String)
+    support = Column(Float)
+    confidence = Column(Float)
+    lift = Column(Float)
+
+    def __repr__(self):
+        return '<Rule id={} lhs={} rhs={} support={} confidence={} lift={}>' \
+                .format(self.id, self.lhs, self.rhs, self.support, self.confidence, self.lift)
 

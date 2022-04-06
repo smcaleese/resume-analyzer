@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import pdfplumber
 import spacy
 from database import engine, Base, Session
-from crud import get_skill_counts, get_ranked_job_posts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role
+from crud import get_skill_counts, get_ranked_job_posts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role, get_ranked_recommendations
 from populate_database import get_skills
 import uvicorn
 import colorsys
@@ -93,12 +93,14 @@ def handle_upload(file: UploadFile = File(...)):
         # get skills in resume
         skills = extract_skills(' '.join(pages))
         skill_names = [skill['name'] for skill in skills]
+        recommendations = get_ranked_recommendations(db, skill_names)
         jobs = get_ranked_job_posts(db, skill_names)
 
     db.close()
 
     response = {
         'skills': skills,
+        'recommendations': recommendations,
         'skill_counts': skill_counts,
         'jobs': jobs,
     }

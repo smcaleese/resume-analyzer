@@ -1,10 +1,11 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, ARRAY
 from sqlalchemy.sql import text
-from models import JobPost, Skill
+from models import JobPost, Skill, Rule
 import schemas
 from collections import defaultdict
 from collections import Counter
+from  itertools import chain, combinations
 
 def add_job_post(db: Session, new_job_post: schemas.JobPost):
     db.add(new_job_post)
@@ -116,3 +117,25 @@ def get_role_skills(db, role):
 def get_jobs_by_role(db, role):
     jobposts = db.query(JobPost).filter_by(role=role).all()
     return jobposts
+
+def get_ranked_recommendations(db, skills):
+
+    # longest_lhs =  query_response = db.query().from_statement(text("""
+    #     SELECT i.lhs
+    #     FROM   rule i
+    #     ORDER BY GREATEST(array_length(lhs, 1)) DESC;""".format(skills=skills))).all()
+
+    longest_lhs = len(db.query(Rule.lhs).from_statement(text("Select * from rule order by greatest(array_length(lhs, 1)) desc")).first()[0])
+    sub_lists = list(chain(*(combinations(skills, i) for i in range(1,longest_lhs+1))))
+    
+    matches = []
+    for skill_group in sub_lists:
+        matches += list(db.query(Rule).from_statement(text("""
+        SELECT *
+        FROM rule
+        WHERE lhs = ARRAY{skill_group}::VARCHAR[] AND  NOT rhs = any(ARRAY{skills}::VARCHAR[])
+
+        """.format(skill_group=list(skill_group), skills=skills))).all())
+    matches.sort(key=lambda x: (x.lift, x.support), reverse=True)
+
+    return matches[:10]

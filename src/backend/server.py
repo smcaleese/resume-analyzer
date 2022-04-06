@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import pdfplumber
 import spacy
 from database import engine, Base, Session
-from crud import get_skill_counts, get_ranked_job_posts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role
+from crud import get_skill_counts, get_ranked_job_posts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role, get_ranked_recommendations
 from populate_database import get_skills
 import uvicorn
 import colorsys
@@ -84,7 +84,6 @@ def handle_upload(file: UploadFile = File(...)):
     print('find all skills:')
 
     skill_counts = get_skill_counts(db)
-    years_of_experience_counts = get_years_of_experience(db)
 
     with pdfplumber.open(file.file) as pdf:
         pages = []
@@ -94,15 +93,16 @@ def handle_upload(file: UploadFile = File(...)):
         # get skills in resume
         skills = extract_skills(' '.join(pages))
         skill_names = [skill['name'] for skill in skills]
+        recommendations = get_ranked_recommendations(db, skill_names)
         jobs = get_ranked_job_posts(db, skill_names)
 
     db.close()
 
     response = {
         'skills': skills,
+        'recommendations': recommendations,
         'skill_counts': skill_counts,
         'jobs': jobs,
-        'years_of_experience_counts': years_of_experience_counts
     }
 
     return response
@@ -110,14 +110,6 @@ def handle_upload(file: UploadFile = File(...)):
 @app.get('/path-data')
 def get_path_data():
     db = Session()
-
-    #Classify users role
-    # lda_vec = vectorize_text(" ".join(pages)).reshape(1,-1)
-    # with open('./models/k-means-model/k-mean.pkl', 'rb') as f:
-    #     kmeans_model=pickle.load(f)
-    # role = int(kmeans_model.predict(lda_vec)[0])
-
-    db.close()
 
     roles = [
         'Junior Frontend Developer',
@@ -143,7 +135,8 @@ def get_path_data():
 
     response = {}
     for role in roles:
-        response[role] = get_jobs_by_role(db, role)
+        response[role] = get_role_skills(db, role)
+    db.close()
 
     return response
 

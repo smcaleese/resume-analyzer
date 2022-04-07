@@ -71,7 +71,8 @@ const SkillsDisplayPanel = ({ className }) => {
 
 const StyledSkillsDisplayPanel = styled(SkillsDisplayPanel)`
     .skill-list {
-        overflow-y: auto; 
+        height: 10rem;
+        overflow-y: scroll; 
     }
 `
 

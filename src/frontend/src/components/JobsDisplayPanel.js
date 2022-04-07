@@ -66,7 +66,7 @@ export const StyledJobsTable = styled(JobsTable)`
     }
 
     .description {
-        font-size: 1.25rem;
+        font-size: 1rem;
         font-family: 'Roboto', sans-serif;
     }
 `
@@ -76,7 +76,7 @@ const JobsDisplayPanel = ({ className }) => {
     const { skills, jobs } = appState.resultsData
 
     return (
-        <DisplayCard header='Matching Jobs' className={className} height='50vh'>
+        <DisplayCard header='Matching Jobs' className={className} height='50rem'>
             <StyledJobsTable jobs={jobs} skills={skills} numJobs={20} />
         </DisplayCard>
     )

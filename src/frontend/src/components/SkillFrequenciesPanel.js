@@ -101,7 +101,6 @@ const SkillFrequenciesPanel = ({ className }) => {
 }
 
 export default styled(SkillFrequenciesPanel)`
-    width: calc(100% - 10px);
     overflow-y: auto;
 
     .doughnut-chart {

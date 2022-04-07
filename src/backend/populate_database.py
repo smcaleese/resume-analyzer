@@ -145,7 +145,7 @@ def main():
 
     skills = get_skills()
     count = {'total': 1}
-    gather_data('indeed-scraped-data.csv', job_post_row_data, skill_counts, skills, count)
+    gather_data('indeed-scraped-data-formatted.csv', job_post_row_data, skill_counts, skills, count)
     gather_data('linkedin-scraped-data-software-engineer-ireland-formatted.csv', job_post_row_data, skill_counts, skills, count)
 
     print('Pre-computing classifications')

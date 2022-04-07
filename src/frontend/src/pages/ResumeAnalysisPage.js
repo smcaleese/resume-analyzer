@@ -47,34 +47,28 @@ const FileDisplayPage = ({ className }) => {
         return <StyledNoResumePage />
     }
 
+    // width in columns and height in rowHeight
     const layouts = {
         lg: [
-            {i: 'skills', x: 0, y: 0, w: 4, h: 15},
+            {i: 'skills', x: 0, y: 0, w: 4, h: 14},
             {i: 'skill-frequencies', x: 0, y: 1, w: 4, h: 38},
-            {i: 'score-panel', x: 4, y: 0, w: 4, h: 40},
+            {i: 'score-panel', x: 4, y: 0, w: 4, h: 32},
             {i: 'pdf-viewer', x: 8, y: 0, w: 4, h: 60},
-            {i: 'matching-jobs', x: 0, y: 2, w: 8, h: 52},
+            {i: 'matching-jobs', x: 0, y: 52, w: 8, h: 42},
         ], 
         md: [
             {i: 'skills', x: 0, y: 0, w: 3, h: 15},
             {i: 'skill-frequencies', x: 3, y: 0, w: 3, h: 38},
-            {i: 'score-panel', x: 4, y: 0, w: 4, h: 40},
-            {i: 'pdf-viewer', x: 3, y: 2, w: 3, h: 44},
-            {i: 'matching-jobs', x: 0, y: 2, w: 3, h: 26},
+            {i: 'score-panel', x: 0, y: 0, w: 3, h: 32},
+            {i: 'pdf-viewer', x: 3, y: 0, w: 3, h: 45},
+            {i: 'matching-jobs', x: 0, y: 0, w: 3, h: 42},
         ],
         sm: [
-            {i: 'skills', x: 0, y: 0, w: 2, h: 12},
-            {i: 'skill-frequencies', x: 0, y: 1, w: 2, h: 38},
-            {i: 'score-panel', x: 4, y: 0, w: 4, h: 40},
-            {i: 'pdf-viewer', x: 0, y: 2, w: 2, h: 70},
-            {i: 'matching-jobs', x: 0, y: 6, w: 2, h: 50},
-        ],
-        xs: [
-            {i: 'skills', x: 0, y: 0, w: 2, h: 25},
-            {i: 'skill-frequencies', x: 0, y: 1, w: 2, h: 42},
-            {i: 'score-panel', x: 4, y: 0, w: 4, h: 40},
-            {i: 'pdf-viewer', x: 0, y: 2, w: 2, h: 30},
-            {i: 'matching-jobs', x: 0, y: 6, w: 2, h: 50},
+            {i: 'skills', x: 0, y: 0, w: 2, h: 14},
+            {i: 'skill-frequencies', x: 0, y: 14, w: 2, h: 40},
+            {i: 'score-panel', x: 0, y: 52, w: 2, h: 32},
+            {i: 'matching-jobs', x: 0, y: 86, w: 2, h: 50},
+            {i: 'pdf-viewer', x: 0, y: 136, w: 2, h: 70},
         ]
     }
 
@@ -83,9 +77,9 @@ const FileDisplayPage = ({ className }) => {
             className={className}
             layouts={layouts}
             rowHeight={10}
-            breakpoints={{ lg: 1200, md: 1000, sm: 800, xs: 600 }}
-            cols={{ lg: 12, md: 6, sm: 2, xs: 2 }}
-            style={{ height: '100vh' }}
+            breakpoints={{ lg: 1400, md: 1000, sm: 800 }}
+            cols={{ lg: 12, md: 6, sm: 2 }}
+            autoSize={true}
             draggableHandle='.draggable-handle'
         >
             <div key='skills'>
@@ -112,11 +106,6 @@ const StyledFileDisplayPage = styled(FileDisplayPage)`
 
     .react-grid-layout {
         margin: 0;
-    }
-
-    .skillFreqPanel {
-        padding-right: 0;
-        margin-bottom: 10px;
     }
 
     .card-heading {

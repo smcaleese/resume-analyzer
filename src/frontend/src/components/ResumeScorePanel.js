@@ -16,6 +16,7 @@ const ResumeScorePanel = ({ className }) => {
     const [lengthScore, setLengthScore] = useState(resume_score.length_score)
 
     const options = {
+        aspectRatio: 1.2,
         plugins: {
             legend: {
                 display: false,
@@ -40,34 +41,34 @@ const ResumeScorePanel = ({ className }) => {
 
     return (
         <DisplayCard header='Resume Score' className={className}>
-            <Row>
-                <Col className='center doughnut'>
-                    <h1 className='score'>{ resumeScore }</h1>
-                    <div className='chart'>
-                        <Doughnut options={options} data={data} />
-                    </div>
-                </Col>
-            </Row>
-            <Row>
-                <Col className='bar-rows'>
-                    <Row>
-                        <h3>Skills</h3>
-                        <ProgressBar now={skillScore} variant='score' />
-                    </Row>
-                    <Row>
-                        <h3>Length</h3>
-                        <ProgressBar now={lengthScore} variant='score' />
-                    </Row>
-                </Col>
-            </Row>
+            <div className='doughnut center'>
+                <h1 className='score'>{ resumeScore }</h1>
+                <div className='chart'>
+                    <Doughnut options={options} data={data} />
+                </div>
+            </div>
+            <div className='bar-rows'>
+                <div>
+                    <h3>Skills</h3>
+                    <ProgressBar now={skillScore} variant='score' />
+                </div>
+                <div>
+                    <h3>Length</h3>
+                    <ProgressBar now={lengthScore} variant='score' />
+                </div>
+            </div>
         </DisplayCard>
     )
 }
 
 export default styled(ResumeScorePanel)`
+    .doughnut {
+        position: relative;
+    }
+
     .score {
         position: absolute;
-        font-size: 4rem;
+        font-size: calc(1.5rem + 1vw);
         margin: 0;
     }
 

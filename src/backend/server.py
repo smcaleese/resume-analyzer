@@ -12,8 +12,9 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import sklearn
-import pickle
 from identifiers import vectorize_text
+import math
+import numpy as np
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -56,6 +57,7 @@ def extract_skills(text):
     
     words = word_tokenize(text)
     filtered_words = [word for word in words if word.casefold() not in stop_words]
+    filtered_words.extend([word for word in text.split() if word.casefold() not in stop_words])
 
     skills = set()
     for word in filtered_words:
@@ -72,6 +74,37 @@ def extract_skills(text):
         skill_items.append({'name': skill, 'color': skill_colors[idx]})
         
     return skill_items
+
+def calculate_resume_score(skill_counts, skills, resume_text):
+    def calculate_skill_score(skills, skill_counts):
+        average_skill_count = np.mean(list(skill_counts.values()))
+        score = 0
+        for skill in skills:
+            count = skill_counts[skill['name']]
+            weight = count / average_skill_count
+            score += weight
+        normalized_skill_score = math.tanh(score * 0.025) * 100
+        return round(normalized_skill_score)
+
+    def calculate_length_score(resume_text):
+        word_count = len(resume_text.split())
+        # calculate the length score using a normal distribution of the word count
+        b = 350  # mean of curve
+        c = 150  # standard deviation
+        # produce a value between 0.0 and 1.0 based on the word count
+        standard_deviation_function = lambda x: math.e ** (-(x - b)**2 / (2 * c**2))
+        length_score = standard_deviation_function(word_count) * 100
+        return round(length_score)
+
+    skill_score = calculate_skill_score(skills, skill_counts)
+    length_score = calculate_length_score(resume_text)
+    overall_score = round(np.mean([skill_score, length_score]))
+
+    return {
+        'overall_score': overall_score,
+        'skill_score': skill_score,
+        'length_score': length_score
+    }
 
 # Routes
 @app.get('/status')
@@ -91,18 +124,22 @@ def handle_upload(file: UploadFile = File(...)):
             pages.append(page.extract_text())
     
         # get skills in resume
-        skills = extract_skills(' '.join(pages))
+        resume_text = ' '.join(pages)
+        skills = extract_skills(resume_text)
         skill_names = [skill['name'] for skill in skills]
         recommendations = get_ranked_recommendations(db, skill_names)
         jobs = get_ranked_job_posts(db, skill_names)
 
     db.close()
 
+    resume_score = calculate_resume_score(skill_counts, skills, resume_text)
+
     response = {
         'skills': skills,
         'recommendations': recommendations,
         'skill_counts': skill_counts,
         'jobs': jobs,
+        'resume_score': resume_score
     }
 
     return response

@@ -6,6 +6,7 @@ import SkillsDisplayPanel from '../components/SkillsDisplayPanel'
 import SkillFrequenciesPanel from '../components/SkillFrequenciesPanel'
 import JobsDisplayPanel from '../components/JobsDisplayPanel'
 import YearsOfExperiencePanel from '../components/report-components/YearsOfExperienceBarChart'
+import ResumeScorePanel from '../components/ResumeScorePanel'
 import { Container, Col, Row, Card } from 'react-bootstrap'
 import classnames from 'classnames'
 import { AppContext } from '../App'
@@ -48,26 +49,30 @@ const FileDisplayPage = ({ className }) => {
 
     const layouts = {
         lg: [
-            {i: 'skills', x: 0, y: 0, w: 4, h: 12},
-            {i: 'skill-frequencies', x: 4, y: 0, w: 4, h: 38},
-            {i: 'pdf-viewer', x: 8, y: 0, w: 4, h: 54},
+            {i: 'skills', x: 0, y: 0, w: 4, h: 15},
+            {i: 'skill-frequencies', x: 0, y: 1, w: 4, h: 38},
+            {i: 'score-panel', x: 4, y: 0, w: 4, h: 40},
+            {i: 'pdf-viewer', x: 8, y: 0, w: 4, h: 60},
             {i: 'matching-jobs', x: 0, y: 2, w: 8, h: 52},
-        ],
+        ], 
         md: [
             {i: 'skills', x: 0, y: 0, w: 3, h: 15},
             {i: 'skill-frequencies', x: 3, y: 0, w: 3, h: 38},
+            {i: 'score-panel', x: 4, y: 0, w: 4, h: 40},
             {i: 'pdf-viewer', x: 3, y: 2, w: 3, h: 44},
             {i: 'matching-jobs', x: 0, y: 2, w: 3, h: 26},
         ],
         sm: [
             {i: 'skills', x: 0, y: 0, w: 2, h: 12},
             {i: 'skill-frequencies', x: 0, y: 1, w: 2, h: 38},
+            {i: 'score-panel', x: 4, y: 0, w: 4, h: 40},
             {i: 'pdf-viewer', x: 0, y: 2, w: 2, h: 70},
             {i: 'matching-jobs', x: 0, y: 6, w: 2, h: 50},
         ],
         xs: [
             {i: 'skills', x: 0, y: 0, w: 2, h: 25},
             {i: 'skill-frequencies', x: 0, y: 1, w: 2, h: 42},
+            {i: 'score-panel', x: 4, y: 0, w: 4, h: 40},
             {i: 'pdf-viewer', x: 0, y: 2, w: 2, h: 30},
             {i: 'matching-jobs', x: 0, y: 6, w: 2, h: 50},
         ]
@@ -88,6 +93,9 @@ const FileDisplayPage = ({ className }) => {
             </div>
             <div key='skill-frequencies'>
                 <SkillFrequenciesPanel />
+            </div>
+            <div key='score-panel'>
+                <ResumeScorePanel />
             </div>
             <div key='pdf-viewer'>
                 <PDFPageViewer />

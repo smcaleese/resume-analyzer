@@ -66,7 +66,7 @@ export const StyledJobsTable = styled(JobsTable)`
     }
 
     .description {
-        font-size: 1.25em;
+        font-size: 1.25rem;
         font-family: 'Roboto', sans-serif;
     }
 `

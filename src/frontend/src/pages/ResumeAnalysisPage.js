@@ -11,6 +11,7 @@ import { Container, Col, Row, Card } from 'react-bootstrap'
 import classnames from 'classnames'
 import { AppContext } from '../App'
 import { Responsive, WidthProvider } from 'react-grid-layout'
+import RecommendationsPanel from '../components/RecommendationsPanel'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -52,7 +53,8 @@ const FileDisplayPage = ({ className }) => {
         lg: [
             {i: 'skills', x: 0, y: 0, w: 4, h: 14},
             {i: 'skill-frequencies', x: 0, y: 1, w: 4, h: 38},
-            {i: 'score-panel', x: 4, y: 0, w: 4, h: 32},
+            {i: 'score-panel', x: 4, y: 0, w: 4, h: 31},
+            {i: 'recommendations-panel', x: 4, y: 0, w: 4, h: 20.5},
             {i: 'pdf-viewer', x: 8, y: 0, w: 4, h: 60},
             {i: 'matching-jobs', x: 0, y: 52, w: 8, h: 42},
         ], 
@@ -60,15 +62,17 @@ const FileDisplayPage = ({ className }) => {
             {i: 'skills', x: 0, y: 0, w: 3, h: 15},
             {i: 'skill-frequencies', x: 3, y: 0, w: 3, h: 38},
             {i: 'score-panel', x: 0, y: 0, w: 3, h: 32},
-            {i: 'pdf-viewer', x: 3, y: 0, w: 3, h: 45},
-            {i: 'matching-jobs', x: 0, y: 0, w: 3, h: 42},
+            {i: 'recommendations-panel', x: 3, y: 0, w: 3, h: 20.5},
+            {i: 'pdf-viewer', x: 0, y: 0, w: 3, h: 45},
+            {i: 'matching-jobs', x: 3, y: 0, w: 3, h: 42},
         ],
         sm: [
             {i: 'skills', x: 0, y: 0, w: 2, h: 14},
             {i: 'skill-frequencies', x: 0, y: 14, w: 2, h: 40},
             {i: 'score-panel', x: 0, y: 52, w: 2, h: 32},
-            {i: 'matching-jobs', x: 0, y: 86, w: 2, h: 50},
-            {i: 'pdf-viewer', x: 0, y: 136, w: 2, h: 70},
+            {i: 'recommendations-panel', x: 0, y: 86, w: 4, h: 20.5},
+            {i: 'matching-jobs', x: 0, y: 100, w: 2, h: 50},
+            {i: 'pdf-viewer', x: 0, y: 150, w: 2, h: 70},
         ]
     }
 
@@ -90,6 +94,9 @@ const FileDisplayPage = ({ className }) => {
             </div>
             <div key='score-panel'>
                 <ResumeScorePanel />
+            </div>
+            <div key='recommendations-panel'>
+                <RecommendationsPanel />
             </div>
             <div key='pdf-viewer'>
                 <PDFPageViewer />

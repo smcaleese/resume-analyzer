@@ -27,10 +27,18 @@ const jobs = [
 
 const years_of_experience_counts = [1, 2, 5, 4, 1]
 
+const resume_score = {
+    'overall_score': 50, 
+    'skill_score': 50,
+    'length_score': 50 
+}
+
+const recommendations = []
+
 export const server = setupServer(
     rest.post('http://localhost:8000/resume-upload', (req, res, ctx) => {
         return res(
-            ctx.json({ skills, skill_counts, jobs, years_of_experience_counts })
+            ctx.json({ skills, recommendations, skill_counts, jobs, resume_score })
         )
     }),
     rest.get('http://localhost:8000/report-data', (req, res, ctx) => {
@@ -70,9 +78,6 @@ export const server = setupServer(
             ctx.json(response)
         )
     })
-    // rest.get('http://localhost:8000/job-data-by-role', (req, res, ctx) => {
-                    
-    // })
 )
 
 // docs: https://mswjs.io/docs/getting-started/integrate/node

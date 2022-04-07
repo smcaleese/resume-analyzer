@@ -49,7 +49,7 @@ describe('Test resume upload', () => {
         const submitButton = await screen.findByText(/submit/i)
         clickButton(submitButton)
 
-        const panelNames = ['Skills', 'Skill Frequencies', 'Resume', 'Matching Jobs']
+        const panelNames = ['Resume Skills', 'Skill Frequencies', 'Resume Score', 'Resume', 'Matching Jobs']
 
         for (const panelName of panelNames) {
             const panel = await screen.findByText(panelName)

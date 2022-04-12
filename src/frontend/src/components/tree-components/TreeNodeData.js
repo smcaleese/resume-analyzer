@@ -86,7 +86,7 @@ const TreeNode = ({ title, data, skills }) => {
     return (
         <>
             {title}
-            <JobRequirementsIndicator onClick={() => { console.log('test') }} skills={skills} reqs={data} size={10} />
+            <JobRequirementsIndicator skills={skills} reqs={data} size={10} />
         </>
 
     )
@@ -121,7 +121,6 @@ export const getNodes = (data, cvData) => {
         'Database Admin (DBA)': data['Database Admin (DBA)'] ? getReqs(data['Database Admin (DBA)']) : [],
         'Product Owner': data['Product Owner'] ? getReqs(data['Product Owner']) : []
     }
-
     return [
         {
             // QA Engineer
@@ -130,7 +129,7 @@ export const getNodes = (data, cvData) => {
             style: getStyle('1', reqs['QA Engineer'], skills, reqs),
             data: {
                 label: (
-                    <TreeNode title='QA Engineer' reqs={reqs['QA Engineer']} skills={skills} />
+                    <TreeNode title='QA Engineer' data={reqs['QA Engineer']} skills={skills} />
                 ),
             },
             position: { x: 600, y: 0 },

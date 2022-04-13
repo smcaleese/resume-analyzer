@@ -76,7 +76,7 @@ const getStyle = (id, reqs, skills, reqs_map) => {
         }
         else {
             return {
-                background: `linear-gradient(90deg, #33DAC1 ${(score * 150) - 25}%, rgba(255,255,255,0) ${score * 150}%, rgba(255,255,255,0) 100%)`
+                background: `linear-gradient(90deg, #33DAC1 ${(score * 150) - 25}%, rgba(255,255,255,1) ${score * 150}%, rgba(255,255,255,1) 100%)`
             }
         }
     }

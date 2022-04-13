@@ -9,7 +9,7 @@ import selected_tree_icon from '../assets/Icons/Tree-Selected.png'
 import unselected_tree_icon from '../assets/Icons/Tree-Unselected.png'
 import selected_reports_icon from '../assets/Icons/Reports-Selected.png'
 import unselected_reports_icon from '../assets/Icons/Reports-Unselected.png'
-import { Nav } from 'react-bootstrap'
+import { Nav, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import classnames from 'classnames'
 
@@ -41,44 +41,80 @@ const Sidebar = ({ className, page, setPage }) => {
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link className='icon-container center' style={getStyle('home')} eventKey='home'>
-                    <img
-                        alt='Home Icon'
-                        src={page === 'home' ? selected_home_icon : unselected_home_icon}
-                        width='50'
-                        className='icon'
-                    />
-                </Nav.Link>
+                <OverlayTrigger
+                    placement='right'
+                    overlay={
+                        <Tooltip className='nav-tooltip'>
+                            Home
+                        </Tooltip>
+                    }
+                >
+                    <Nav.Link className='icon-container center' style={getStyle('home')} eventKey='home'>
+                        <img
+                            alt='Home Icon'
+                            src={page === 'home' ? selected_home_icon : unselected_home_icon}
+                            width='50'
+                            className='icon'
+                        />
+                    </Nav.Link>
+                </OverlayTrigger>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link className='icon-container center' style={getStyle('results')} eventKey='results'>
-                    <img
-                        alt='Results Icon'
-                        src={page === 'results' ? selected_chart_icon : unselected_chart_icon}
-                        width='50'
-                        className='icon'
-                    />
-                </Nav.Link>
+                <OverlayTrigger
+                    placement='right'
+                    overlay={
+                        <Tooltip className='nav-tooltip'>
+                            Analysis
+                        </Tooltip>
+                    }
+                >
+                    <Nav.Link className='icon-container center' style={getStyle('results')} eventKey='results'>
+                        <img
+                            alt='Results Icon'
+                            src={page === 'results' ? selected_chart_icon : unselected_chart_icon}
+                            width='50'
+                            className='icon'
+                        />
+                    </Nav.Link>
+                </OverlayTrigger>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link className='icon-container center' style={getStyle('reports')} eventKey='reports'>
-                    <img
-                        alt='Reports Icon'
-                        src={page === 'reports' ? selected_reports_icon : unselected_reports_icon}
-                        width='50'
-                        className='icon'
-                    />
-                </Nav.Link>
+                <OverlayTrigger
+                    placement='right'
+                    overlay={
+                        <Tooltip className='nav-tooltip'>
+                            Reports
+                        </Tooltip>
+                    }
+                >
+                    <Nav.Link className='icon-container center' style={getStyle('reports')} eventKey='reports'>
+                        <img
+                            alt='Reports Icon'
+                            src={page === 'reports' ? selected_reports_icon : unselected_reports_icon}
+                            width='50'
+                            className='icon'
+                        />
+                    </Nav.Link>
+                </OverlayTrigger>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link className='icon-container center' style={getStyle('tree')} eventKey='tree'>
-                    <img
-                        alt='Tree Icon'
-                        src={page === 'tree' ? selected_tree_icon : unselected_tree_icon}
-                        width='50'
-                        className='icon'
-                    />
-                </Nav.Link>
+                <OverlayTrigger
+                    placement='right'
+                    overlay={
+                        <Tooltip className='nav-tooltip'>
+                            Career Path
+                        </Tooltip>
+                    }
+                >
+                    <Nav.Link className='icon-container center' style={getStyle('tree')} eventKey='tree'>
+                        <img
+                            alt='Tree Icon'
+                            src={page === 'tree' ? selected_tree_icon : unselected_tree_icon}
+                            width='50'
+                            className='icon'
+                        />
+                    </Nav.Link>
+                </OverlayTrigger>
             </Nav.Item>
         </Nav>
     )

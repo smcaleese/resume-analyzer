@@ -21,7 +21,6 @@ const RecommendationsPanel = ({ className }) => {
     return (
         <DisplayCard header='Skill Recommendations' className={className}>
             {recommendations.map((rec, index) => {
-                console.log(rec)
                 return (
                     <div className='rec-item' key={index}>
                         {rec.lhs.map((skill, i) => {

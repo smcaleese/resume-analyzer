@@ -89,8 +89,8 @@ def calculate_resume_score(skill_counts, skills, resume_text):
     def calculate_length_score(resume_text):
         word_count = len(resume_text.split())
         # calculate the length score using a normal distribution of the word count
-        b = 350  # mean of curve
-        c = 150  # standard deviation
+        b = 700  # mean of curve
+        c = 200  # standard deviation
         # produce a value between 0.0 and 1.0 based on the word count
         standard_deviation_function = lambda x: math.e ** (-(x - b)**2 / (2 * c**2))
         length_score = standard_deviation_function(word_count) * 100
@@ -98,7 +98,7 @@ def calculate_resume_score(skill_counts, skills, resume_text):
 
     skill_score = calculate_skill_score(skills, skill_counts)
     length_score = calculate_length_score(resume_text)
-    overall_score = round(np.mean([skill_score, length_score]))
+    overall_score = round(np.average([skill_score, length_score], weights=[2,1]))
 
     return {
         'overall_score': overall_score,

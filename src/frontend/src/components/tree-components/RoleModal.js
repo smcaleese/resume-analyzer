@@ -80,5 +80,4 @@ export default styled(RoleModal)`
         max-height: 30vh;
         overflow-y: scroll;
     }
-   
 `

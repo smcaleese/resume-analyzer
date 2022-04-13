@@ -3,6 +3,7 @@ import { MarkerType } from 'react-flow-renderer'
 import JobRequirementsIndicator from '../JobRequirementsIndicator'
 
 //https://www.tutorialspoint.com/find-n-highest-values-in-an-object-javascript
+// Filters all requirements to just the 12 most frequently occuring in job posts
 const getReqs = (counts) => {
     var reqs = []
     var keys = Object.keys(counts)
@@ -22,9 +23,15 @@ const getReqs = (counts) => {
     return reqs
 }
 
+// Check that the parent node in the tree is satisfied
 const checkParents = (id, skills, reqs_map) => {
     const parentEdges = edges.filter(edge => edge.target == id)
+    // If no parents then its valid
     if (parentEdges.length == 0) {
+        return true
+    }
+    // If its an entry level position
+    if (id < 6){
         return true
     }
     const parentIds = parentEdges.map(edge => {

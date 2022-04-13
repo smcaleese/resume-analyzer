@@ -63,6 +63,7 @@ export default styled(JobRequirementsIndicator)`
 
         .circle {
             border-radius: 50%;
+            margin-top: 2px;
         }
     }
 `

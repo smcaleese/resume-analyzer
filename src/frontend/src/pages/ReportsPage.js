@@ -29,7 +29,7 @@ const allReports = [
     {
         title: 'job post skill frequencies distribution bar chart',
         component: <SkillFrequenciesBarChart />,
-        width: 2,
+        width: 1,
     },
 ]
 

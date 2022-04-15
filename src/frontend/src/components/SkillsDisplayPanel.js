@@ -5,9 +5,9 @@ import SkillIcon from '../assets/Icons/skill.png'
 import { Col, Row } from 'react-bootstrap'
 import { AppContext } from '../App'
 
-const SkillBadge = ({ className, skill }) => {
+const SkillBadge = ({ className, skill, key }) => {
     return (
-        <div className={className}>
+        <div className={className} key={key}>
             {skill}
         </div>
     )

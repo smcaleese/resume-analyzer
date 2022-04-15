@@ -118,24 +118,31 @@ def get_jobs_by_role(db, role):
     jobposts = db.query(JobPost).filter_by(role=role).all()
     return jobposts
 
-def get_ranked_recommendations(db, skills):
+def get_ranked_recommendations(db, resume_skill_names):
+    longest_lhs = len(db.query(Rule.lhs).order_by(text("array_length(lhs, 1) DESC")).first()[0])
+    sub_lists = list(chain(*(combinations(resume_skill_names, i) for i in range(1, longest_lhs + 1))))
 
-    # longest_lhs =  query_response = db.query().from_statement(text("""
-    #     SELECT i.lhs
-    #     FROM   rule i
-    #     ORDER BY GREATEST(array_length(lhs, 1)) DESC;""".format(skills=skills))).all()
+    db_data = db.query(Rule).all()
+    table = {}
+    for row in db_data:
+        lhs_key = tuple(row.lhs)
+        if lhs_key not in table:
+            table[lhs_key] = {
+                'rhs': [],
+                'lift': [],
+                'support': [] 
+            } 
+        for s in ['rhs', 'lift', 'support']:
+            table[lhs_key][s].append(row.__dict__[s])
 
-    longest_lhs = len(db.query(Rule.lhs).from_statement(text("Select * from rule order by greatest(array_length(lhs, 1)) desc")).first()[0])
-    sub_lists = list(chain(*(combinations(skills, i) for i in range(1,longest_lhs+1))))
-    
     matches = []
-    for skill_group in sub_lists:
-        matches += list(db.query(Rule).from_statement(text("""
-        SELECT *
-        FROM rule
-        WHERE lhs = ARRAY{skill_group}::VARCHAR[] AND  NOT rhs = any(ARRAY{skills}::VARCHAR[])
+    for comb in sub_lists:
+        if comb in table:
+            rhs, lift, support = table[comb]['rhs'], table[comb]['lift'], table[comb]['support']
+            for i, skill in enumerate(rhs):
+                if skill not in set(resume_skill_names):
+                    matches.append({'lhs': comb, 'rhs': skill, 'lift': lift[i], 'support': support[i]})
 
-        """.format(skill_group=list(skill_group), skills=skills))).all())
-    matches.sort(key=lambda x: (x.lift, x.support), reverse=True)
+    matches.sort(key=lambda x: (x['lift'], x['support']), reverse=True)
 
     return matches[:10]

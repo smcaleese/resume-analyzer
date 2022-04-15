@@ -11,7 +11,6 @@ from math import floor
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-import sklearn
 from identifiers import vectorize_text
 import math
 import numpy as np
@@ -51,7 +50,7 @@ def gen_skill_colors(skills):
 
     return encoded_rgb_skill_colors
 
-def extract_skills(text):
+def extract_resume_skills(text):
     stop_words = set(stopwords.words('english'))
     all_skills = get_skills()
     
@@ -125,7 +124,7 @@ def handle_upload(file: UploadFile = File(...)):
     
         # get skills in resume
         resume_text = ' '.join(pages)
-        skills = extract_skills(resume_text)
+        skills = extract_resume_skills(resume_text)
         skill_names = [skill['name'] for skill in skills]
         recommendations = get_ranked_recommendations(db, skill_names)
         jobs = get_ranked_job_posts(db, skill_names)

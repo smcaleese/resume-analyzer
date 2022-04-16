@@ -23,7 +23,8 @@ def delete_all_job_posts(db: Session):
     db.commit()
 
 def get_ranked_job_posts(db: Session, skills: list):
-    query_response = list(db.query(Column('company',String), Column('title',String), Column('description',String), Column('requirements',String), Column('skill_match',String), Column('match_count',String)).from_statement(text("""
+    if not skills: skills = ['']
+    query_response = list(db.execute(text("""
         SELECT i.company, i.title, i.description, i.requirements, skill_match, match_count 
         FROM   job_post i
             , Lateral (
@@ -42,21 +43,17 @@ def get_ranked_job_posts(db: Session, skills: list):
     for row in query_response:
         row = list(row)
         job_obj = {}
-        job_obj['company'] = row[0]
-        job_obj['title'] = row[1]
-        job_obj['description'] = row[2]
-        job_obj['requirements'] = row[3]
-
+        for i, s in enumerate(['company', 'title', 'description', 'requirements']):
+            job_obj[s] = row[i]
         skill_str = row[4][1:-1]
         if not skill_str:
             continue
         skill_str = skill_str[2:-2]
         skills_arr = skill_str.split(',')
         job_obj['skill_match'] = skills_arr
-
         ranked_list.append(job_obj)
 
-    return sorted(ranked_list, key=lambda d: len(d['skill_match']) / len(d['requirements']), reverse=True) 
+    return sorted(ranked_list, key=lambda x: len(x['skill_match']) / len(x['requirements']), reverse=True) 
 
 def add_skill(db: Session, new_skill: schemas.Skill):
     db.add(new_skill)

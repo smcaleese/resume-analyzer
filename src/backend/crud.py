@@ -23,7 +23,8 @@ def delete_all_job_posts(db: Session):
     db.commit()
 
 def get_ranked_job_posts(db: Session, skills: list):
-    query_response = list(db.query(Column('company',String), Column('title',String), Column('description',String), Column('requirements',String), Column('skill_match',String), Column('match_count',String)).from_statement(text("""
+    if not skills: skills = ['']
+    query_response = list(db.execute(text("""
         SELECT i.company, i.title, i.description, i.requirements, skill_match, match_count 
         FROM   job_post i
             , Lateral (
@@ -42,21 +43,17 @@ def get_ranked_job_posts(db: Session, skills: list):
     for row in query_response:
         row = list(row)
         job_obj = {}
-        job_obj['company'] = row[0]
-        job_obj['title'] = row[1]
-        job_obj['description'] = row[2]
-        job_obj['requirements'] = row[3]
-
+        for i, s in enumerate(['company', 'title', 'description', 'requirements']):
+            job_obj[s] = row[i]
         skill_str = row[4][1:-1]
         if not skill_str:
             continue
         skill_str = skill_str[2:-2]
         skills_arr = skill_str.split(',')
         job_obj['skill_match'] = skills_arr
-
         ranked_list.append(job_obj)
 
-    return sorted(ranked_list, key=lambda d: len(d['skill_match']) / len(d['requirements']), reverse=True) 
+    return sorted(ranked_list, key=lambda x: len(x['skill_match']) / len(x['requirements']), reverse=True) 
 
 def add_skill(db: Session, new_skill: schemas.Skill):
     db.add(new_skill)
@@ -118,24 +115,31 @@ def get_jobs_by_role(db, role):
     jobposts = db.query(JobPost).filter_by(role=role).all()
     return jobposts
 
-def get_ranked_recommendations(db, skills):
+def get_ranked_recommendations(db, resume_skill_names):
+    longest_lhs = len(db.query(Rule.lhs).order_by(text("array_length(lhs, 1) DESC")).first()[0])
+    sub_lists = list(chain(*(combinations(resume_skill_names, i) for i in range(1, longest_lhs + 1))))
 
-    # longest_lhs =  query_response = db.query().from_statement(text("""
-    #     SELECT i.lhs
-    #     FROM   rule i
-    #     ORDER BY GREATEST(array_length(lhs, 1)) DESC;""".format(skills=skills))).all()
+    db_data = db.query(Rule).all()
+    table = {}
+    for row in db_data:
+        lhs_key = tuple(row.lhs)
+        if lhs_key not in table:
+            table[lhs_key] = {
+                'rhs': [],
+                'lift': [],
+                'support': [] 
+            } 
+        for s in ['rhs', 'lift', 'support']:
+            table[lhs_key][s].append(row.__dict__[s])
 
-    longest_lhs = len(db.query(Rule.lhs).from_statement(text("Select * from rule order by greatest(array_length(lhs, 1)) desc")).first()[0])
-    sub_lists = list(chain(*(combinations(skills, i) for i in range(1,longest_lhs+1))))
-    
     matches = []
-    for skill_group in sub_lists:
-        matches += list(db.query(Rule).from_statement(text("""
-        SELECT *
-        FROM rule
-        WHERE lhs = ARRAY{skill_group}::VARCHAR[] AND  NOT rhs = any(ARRAY{skills}::VARCHAR[])
+    for comb in sub_lists:
+        if comb in table:
+            rhs, lift, support = table[comb]['rhs'], table[comb]['lift'], table[comb]['support']
+            for i, skill in enumerate(rhs):
+                if skill not in set(resume_skill_names):
+                    matches.append({'lhs': comb, 'rhs': skill, 'lift': lift[i], 'support': support[i]})
 
-        """.format(skill_group=list(skill_group), skills=skills))).all())
-    matches.sort(key=lambda x: (x.lift, x.support), reverse=True)
+    matches.sort(key=lambda x: (x['lift'], x['support']), reverse=True)
 
     return matches[:10]

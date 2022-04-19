@@ -10,12 +10,7 @@ const RecommendationsPanel = ({ className }) => {
 
     const getSkillColor = (name) => {
         const resumeSkillMatch = skills.find((skill) => name.toLowerCase() === skill.name.toLowerCase())
-        if (resumeSkillMatch) {
-            return resumeSkillMatch.color
-        }
-        else {
-            return '187,187,187'
-        }
+        return resumeSkillMatch ? resumeSkillMatch.color : '187,187,187'
     }
 
     return (
@@ -24,22 +19,22 @@ const RecommendationsPanel = ({ className }) => {
                 return (
                     <div className='rec-item' key={index}>
                         {rec.lhs.map((skill, i) => {
-                            if (i === rec.lhs.length -1){
-                                return(
-                                    <StyledSkillBadge key={i} skill={skill} color={getSkillColor(skill)}/>
+                            if (i === rec.lhs.length - 1) {
+                                return (
+                                    <StyledSkillBadge key={i} skill={skill} color={getSkillColor(skill)} />
                                 )
                             }
-                            else{
-                                return(
-                                    <span>
-                                        <StyledSkillBadge key={i} skill={skill} color={getSkillColor(skill)} />
+                            else {
+                                return (
+                                    <span key={i}>
+                                        <StyledSkillBadge skill={skill} color={getSkillColor(skill)} />
                                         +
                                     </span>
                                 )
                             }
                         })}
                         &rarr;
-                        <StyledSkillBadge skill={rec.rhs} color={getSkillColor(rec.rhs)} />
+                        <StyledSkillBadge key={index} skill={rec.rhs} color={getSkillColor(rec.rhs)} />
                     </div>
                 )
             })}
@@ -51,9 +46,8 @@ export default styled(RecommendationsPanel)`
     overflow: auto;
     height: 100%;
 
-    .rec-item{
+    .rec-item {
         padding: 0.2em 0 0.2em 0;
         border-bottom: 1px solid  rgba(187,187,187,0.8);
     }
-   
 `

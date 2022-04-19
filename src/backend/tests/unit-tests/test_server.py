@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append('../../')
 from server import gen_skill_colors
-from server import extract_skills
+from server import extract_resume_skills
 import pdfplumber
 import os
 
@@ -18,7 +18,7 @@ class TestServer(unittest.TestCase):
         with pdfplumber.open('../test-resume.pdf') as pdf:
             pages = [page.extract_text() for page in pdf.pages]
         os.chdir('../../')
-        skill_items = extract_skills(' '.join(pages))
+        skill_items = extract_resume_skills(' '.join(pages))
         actual_skill_names = [skill['name'] for skill in skill_items]
         expected_skill_names = ['Python', 'JavaScript', 'ReactJS', 'Java']
         self.assertEqual(set(expected_skill_names), set(actual_skill_names))

@@ -51,7 +51,7 @@ def gen_skill_colors(skills):
 
 def extract_resume_skills(text):
     stop_words = set(stopwords.words('english'))
-    all_skills = get_skills()
+    all_skills = get_skills('skills')
     
     words = word_tokenize(text)
     filtered_words = [word for word in words if word.casefold() not in stop_words]

@@ -27,6 +27,7 @@ const postResume = async (file) => {
 const FileUploadPage = ({ className, setPage }) => {
     const [file, setFile] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(false)
 
     const { dispatch } = useContext(AppContext)
     const navigate = useNavigate()
@@ -51,8 +52,13 @@ const FileUploadPage = ({ className, setPage }) => {
         console.log('file to upload:', file)
 
         setLoading(true)
+        const timeoutCountdown = setTimeout(() => {
+            setLoading(false)
+            setError(true)
+        }, 10000)
         let data = await postResume(file)
         setLoading(false)
+        clearInterval(timeoutCountdown)
 
         console.log(data)
         dispatch({type: 'SET_RESULTS_DATA', payload: data})
@@ -74,6 +80,15 @@ const FileUploadPage = ({ className, setPage }) => {
 
     if (loading) {
         return <LoadingSpinner />
+    }
+
+    if (error) {
+        return (
+            <div className={classnames('error-page', 'center')}>
+                <h1>Error</h1>
+                <p>Server timeout. Please reload the page and try again.</p>
+            </div>
+        )
     }
 
     return (
@@ -146,5 +161,13 @@ export default styled(FileUploadPage)`
         color: white;
         background-color: var(--button-blue);
     }
-  }
+
+    .error-page {
+        h1 {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 1.2rem;
+        }
+    }
 `

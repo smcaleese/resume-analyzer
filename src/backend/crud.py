@@ -1,11 +1,10 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import Column, String, ARRAY
 from sqlalchemy.sql import text
-from models import JobPost, Skill, Rule
+from models import JobPost, Skill, SoftSkill, Rule
 import schemas
 from collections import defaultdict
 from collections import Counter
-from  itertools import chain, combinations
+from itertools import chain, combinations
 
 def add_job_post(db: Session, new_job_post: schemas.JobPost):
     db.add(new_job_post)
@@ -61,6 +60,12 @@ def add_skill(db: Session, new_skill: schemas.Skill):
     db.refresh(new_skill)
     return new_skill
 
+def add_soft_skill(db: Session, new_soft_skill: schemas.SoftSkill):
+    db.add(new_soft_skill)
+    db.commit()
+    db.refresh(new_soft_skill)
+    return new_soft_skill
+
 def add_rule(db: Session, new_rule: schemas.Rule):
     db.add(new_rule)
     db.commit()
@@ -76,7 +81,14 @@ def get_skill_counts(db):
     for row in db.query(Skill.name, Skill.count).all():
         name, count = row
         skill_counts[name] = count
-    return skill_counts
+    return skill_counts 
+
+def get_soft_soft_skill_counts(db):
+    soft_skill_counts = {}
+    for row in db.query(SoftSkill.name, SoftSkill.count).all():
+        name, count = row
+        soft_skill_counts[name] = count
+    return soft_skill_counts 
 
 def get_years_of_experience(db):
     years = []
@@ -88,7 +100,6 @@ def get_years_of_experience(db):
     years_counts = [0] * (max(years) + 1)
     for num in years:
         years_counts[num] += 1
-
     return years_counts
 
 def get_location_counts(db):
@@ -101,8 +112,7 @@ def get_location_counts(db):
     location_counts = defaultdict(int)
     for location in edited_locations:
         location_counts[location] += 1
-    sorted_location_counts = sorted(location_counts.items(), key=lambda x: x[1], reverse=True)
-    return sorted_location_counts 
+    return location_counts 
 
 def get_role_skills(db, role):
     reqs = []
@@ -141,5 +151,4 @@ def get_ranked_recommendations(db, resume_skill_names):
                     matches.append({'lhs': comb, 'rhs': skill, 'lift': lift[i], 'support': support[i]})
 
     matches.sort(key=lambda x: (x['lift'], x['support']), reverse=True)
-
     return matches[:10]

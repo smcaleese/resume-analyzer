@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import pdfplumber
 import spacy
 from database import engine, Base, Session
-from crud import get_skill_counts, get_ranked_job_posts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role, get_ranked_recommendations
+from crud import get_skill_counts, get_ranked_job_posts, get_soft_soft_skill_counts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role, get_ranked_recommendations
 from populate_database import get_skills
 import uvicorn
 import colorsys
@@ -11,7 +11,6 @@ from math import floor
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from identifiers import vectorize_text
 import math
 import numpy as np
 
@@ -191,6 +190,7 @@ def get_report_data():
     db = Session()
     response = {
         'skill_counts': get_skill_counts(db),
+        'soft_skill_counts': get_soft_soft_skill_counts(db),
         'years_of_experience_counts': get_years_of_experience(db),
         'location_counts': get_location_counts(db) 
     }

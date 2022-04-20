@@ -1,19 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
-import DisplayCard from '../components/DisplayCard'
-import YearsOfExperiencePanel from '../components/report-components/YearsOfExperienceBarChart'
+import ReportBarChart from '../components/report-components/ReportBarChart'
 import SkillFrequenciesTable from '../components/report-components/SkillFrequenciesTable'
-import SkillFrequenciesBarChart from '../components/report-components/SkillFrequenciesBarChart'
 import LoadingSpinner from '../components/LoadingSpinner'
-import LocationsBarChart from '../components/report-components/LocationsBarChart'
 import { Container, Row, Col, Form, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { AppContext } from '../App'
 import {apiUrl} from '../config.js'
 
 const allReports = [
     {
-        title: 'years of experience required bar chart',
-        component: <YearsOfExperiencePanel />,
+        title: 'job post years of experience required bar chart',
+        component: (
+            <ReportBarChart 
+                header='Job post years of experience requirements'
+                dataKey='years_of_experience_counts'
+                sorted={false}
+            />
+        ),
         width: 1,
     },
     {
@@ -23,14 +26,37 @@ const allReports = [
     },
     {
         title: 'job post locations bar chart',
-        component: <LocationsBarChart />,
+        component: (
+            <ReportBarChart 
+                header='Job post locations' 
+                dataKey='location_counts'
+                sorted={true}
+            />
+        ),
         width: 1,
     },
     {
         title: 'job post skill frequencies distribution bar chart',
-        component: <SkillFrequenciesBarChart />,
+        component: (
+            <ReportBarChart 
+                header='Job post skill frequencies' 
+                dataKey='skill_counts'
+                sorted={true}
+            />
+        ),
         width: 1,
     },
+    {
+        title: 'job post soft skills bar chart',
+        component: (
+            <ReportBarChart 
+                header='Job post soft skill frequencies' 
+                dataKey='soft_skill_counts'
+                sorted={true}
+            />
+        ),
+        width: 1,
+    }
 ]
 
 const ReportsPage = ({ className }) => {
@@ -78,7 +104,6 @@ const ReportsPage = ({ className }) => {
             acc.push([])
         }
         return acc
-
     }, [[]])
 
     return (

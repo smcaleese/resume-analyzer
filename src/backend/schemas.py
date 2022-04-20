@@ -22,6 +22,15 @@ class Skill(BaseModel):
     class Config:
         orm_mode = True
 
+class SoftSkill(BaseModel):
+    id: int
+    name: str
+    altnames: list
+    count: int
+
+    class Config:
+        orm_mode = True
+
 class Rule(BaseModel):
     id: int
     lhs: list

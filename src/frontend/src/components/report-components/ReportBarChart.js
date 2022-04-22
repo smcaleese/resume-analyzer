@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react'
 import DisplayCard from '../DisplayCard'
-import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
 import { AppContext } from '../../App'
 import LoadingSpinner from '../LoadingSpinner'

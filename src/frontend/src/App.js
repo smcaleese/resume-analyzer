@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState, useMemo } from 'react'
+import React, { useReducer, useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import FileUploadPage from './pages/FileUploadPage'

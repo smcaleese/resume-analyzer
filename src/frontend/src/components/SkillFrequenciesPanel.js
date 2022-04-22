@@ -5,14 +5,26 @@ import DisplayCard from './DisplayCard'
 import SkillIcon from '../assets/Icons/skill.png'
 import { Table } from 'react-bootstrap'
 import { AppContext } from '../App'
+import { roles } from '../constants'
 
 const SkillFrequenciesPanel = ({ className }) => {
     const { appState } = useContext(AppContext)
-    const { skills, skill_counts: skillCounts } = appState.resultsData
+    const { skills, skill_counts } = appState.resultsData
+    const [sortedSkillCounts, setSortedSkillCounts] = useState([])
+    const [labels, setLabels] = useState([])
+    const [values, setValues] = useState([])
 
-    const sortedRequirementsDesc = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 50)
-    const labels = sortedRequirementsDesc.map(req => req[0])
-    const values = sortedRequirementsDesc.map(req => req[1])
+    useEffect(() => {
+        const roleKey = roles[appState.role]
+        const roleSkillCounts = skill_counts[roleKey]
+        const sortedSkillCounts = Object.entries(roleSkillCounts).sort((a, b) => b[1] - a[1])
+        const truncatedSortedCounts = sortedSkillCounts.slice(0, 50)
+        const labels = truncatedSortedCounts.map(e => e[0])
+        const values = truncatedSortedCounts.map(e => e[1])
+        setSortedSkillCounts(truncatedSortedCounts)
+        setLabels(labels)
+        setValues(values)
+    }, [appState.role])
 
     const getSkillColor = (name) => {
         const resumeSkillMatch = skills.find((skill) => name.toLowerCase() === skill.name.toLowerCase())
@@ -24,9 +36,7 @@ const SkillFrequenciesPanel = ({ className }) => {
         }
     }
 
-    const backgroundColors = labels.map((label) => {
-        return `rgb(${getSkillColor(label)})`
-    })
+    const backgroundColors = labels.map((label) => `rgb(${getSkillColor(label)})`)
 
     const data = {
         labels: labels,
@@ -84,7 +94,7 @@ const SkillFrequenciesPanel = ({ className }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedRequirementsDesc.map((req, index) => {
+                        {sortedSkillCounts.map((req, index) => {
                             return (
                                 <tr key={index}>
                                     <td><div className='circle-indicator' style={{ backgroundColor: `rgb(${getSkillColor(req[0])})` }}></div></td>

@@ -5,6 +5,7 @@ import DisplayCard from '../DisplayCard'
 import { Table } from 'react-bootstrap'
 import { AppContext } from '../../App'
 import LoadingSpinner from '../LoadingSpinner'
+import { roles } from '../../constants'
 
 const SkillFrequenciesPanel = ({ className }) => {
     const { appState } = useContext(AppContext)
@@ -14,7 +15,9 @@ const SkillFrequenciesPanel = ({ className }) => {
         return <LoadingSpinner />
     }
 
-    const sortedRequirementsDesc = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]).slice(0, 50)
+    const roleKey = roles[appState.role]
+    const roleSkillCounts = skillCounts[roleKey]
+    const sortedSkillCounts = Object.entries(roleSkillCounts).sort((a, b) => b[1] - a[1]).slice(0, 50)
 
     const infoDescription = 'Keyword counts from job posts.'
 
@@ -29,7 +32,7 @@ const SkillFrequenciesPanel = ({ className }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedRequirementsDesc.map(([skill, count], index) => {
+                        {sortedSkillCounts.map(([skill, count], index) => {
                             return (
                                 <tr key={index}>
                                     <td>{skill}</td>

@@ -1,19 +1,27 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DisplayCard from './DisplayCard'
 import styled from 'styled-components'
-import { Col, Row, ProgressBar, Button } from 'react-bootstrap'
+import { ProgressBar } from 'react-bootstrap'
 import { AppContext } from '../App'
 import { Doughnut } from 'react-chartjs-2'
+import { roles } from '../constants'
 
 const ResumeScorePanel = ({ className }) => {
     const { appState } = useContext(AppContext)
-    const { skills, skill_counts: skillCounts, resume_score } = appState.resultsData
+    const { resume_score } = appState.resultsData
 
-    console.log('score:', resume_score)
+    const [resumeScore, setResumeScore] = useState(null)
+    const [skillScore, setSkillScore] = useState(null)
+    const [lengthScore, setLengthScore] = useState(null)
 
-    const [resumeScore, setResumeScore] = useState(resume_score.overall_score)
-    const [skillScore, setSkillScore] = useState(resume_score.skill_score)
-    const [lengthScore, setLengthScore] = useState(resume_score.length_score)
+    useEffect(() => {
+        const roleKey = roles[appState.role]
+        const { overall_scores, skill_scores, length_score } = resume_score
+
+        setResumeScore(overall_scores[roleKey])
+        setSkillScore(skill_scores[roleKey])
+        setLengthScore(length_score)
+    }, [appState.role])
 
     const options = {
         aspectRatio: 1.2,

@@ -127,9 +127,26 @@ def get_lda(id_descs):
 
     return id_descs
 
-def get_roles(dataset):
-    #Number of roles should equal number of clusters
+def get_role_type(title):
+    regular_expressions = {
+        'software': r'(\bsoftware)',
+        'frontend':  r'(\bfrontend)|(\bfront end)|(\bfront-end)',
+        'backend':  r'(\bbackend)|(\bback end)|(\bback-end)',
+        'fullstack': r'(\bfullstack)|(\bfull stack)|(\bfull-stack)',
+        'mobile': r'(\bmobile)|(\bandroid)|(\bios)',
+        'devops': r'(\bdevops)|(\bdev ops)|(\breliability)',
+        'qa': r'(\bqa)|(\bquality)|(\bassurance)',
+        'ds': r'(\bdata)|(\data scientist)|(\bstatistics)',
+        'ml': r'(\bml)|(\bmachine learning)|(\bnlp)|(\bai)'
+    }
+    for position, r_expression in regular_expressions.items():
+        match = re.search(r_expression, title, re.IGNORECASE)
+        if match:
+            return position
+    return 'other'
 
+def get_roles(dataset):
+    # Number of roles should equal number of clusters
     role_names = {
         'Junior Frontend Developer',
         'Senior Frontend Developer',  

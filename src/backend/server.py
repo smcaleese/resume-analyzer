@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import pdfplumber
 import spacy
 from database import engine, Base, Session
-from crud import get_skill_counts, get_ranked_job_posts, get_soft_soft_skill_counts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role, get_ranked_recommendations
+from crud import get_skill_counts, get_ranked_job_posts, get_soft_soft_skill_counts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role, get_ranked_recommendations, roles
 from populate_database import get_skills
 import uvicorn
 import colorsys
@@ -73,16 +73,21 @@ def extract_resume_skills(text):
         
     return skill_items
 
-def calculate_resume_score(skill_counts, skills, resume_text):
-    def calculate_skill_score(skills, skill_counts):
-        average_skill_count = np.mean(list(skill_counts.values()))
-        score = 0
-        for skill in skills:
-            count = skill_counts[skill['name']]
-            weight = count / average_skill_count
-            score += weight
-        normalized_skill_score = math.tanh(score * 0.025) * 100
-        return round(normalized_skill_score)
+def calculate_resume_score(skill_counts, role, resume_skills, resume_text):
+    def calculate_skill_scores(resume_skills, skill_counts):
+        skill_scores = {}
+        for role in roles:
+            role_skill_counts = [x for x in skill_counts[role].values()]
+            average_skill_count = np.mean(role_skill_counts)
+            score = 0
+            for skill in resume_skills:
+                skill_name = skill['name']
+                skill_count = skill_counts[role][skill_name] if skill_name in skill_counts[role] else 0
+                weight = skill_count / average_skill_count
+                score += weight
+            normalized_skill_score = math.tanh(score * 0.025) * 100
+            skill_scores[role] = round(normalized_skill_score)
+        return skill_scores 
 
     def calculate_length_score(resume_text):
         word_count = len(resume_text.split())
@@ -94,13 +99,15 @@ def calculate_resume_score(skill_counts, skills, resume_text):
         length_score = standard_deviation_function(word_count) * 100
         return round(length_score)
 
-    skill_score = calculate_skill_score(skills, skill_counts)
+    skill_scores = calculate_skill_scores(resume_skills, skill_counts)
     length_score = calculate_length_score(resume_text)
-    overall_score = round(np.average([skill_score, length_score], weights=[2,1]))
+    overall_scores = {}
+    for role in roles:
+        overall_scores[role] = round(np.average([skill_scores[role], length_score], weights=[2,1]))
 
     return {
-        'overall_score': overall_score,
-        'skill_score': skill_score,
+        'overall_scores': overall_scores,
+        'skill_scores': skill_scores,
         'length_score': length_score
     }
 
@@ -109,8 +116,8 @@ def calculate_resume_score(skill_counts, skills, resume_text):
 async def status():
     return { 'message': 'Server is running' }
 
-@app.post('/resume-upload')
-def handle_upload(file: UploadFile = File(...)):
+@app.post('/resume-upload/{role}')
+async def handle_upload(role: str, file: UploadFile = File(...)):
     db = Session()
     print('find all skills:')
 
@@ -123,17 +130,17 @@ def handle_upload(file: UploadFile = File(...)):
     
         # get skills in resume
         resume_text = ' '.join(pages)
-        skills = extract_resume_skills(resume_text)
-        skill_names = [skill['name'] for skill in skills]
+        resume_skills = extract_resume_skills(resume_text)
+        skill_names = [skill['name'] for skill in resume_skills]
         recommendations = get_ranked_recommendations(db, skill_names)
         jobs = get_ranked_job_posts(db, skill_names)
 
     db.close()
 
-    resume_score = calculate_resume_score(skill_counts, skills, resume_text)
+    resume_score = calculate_resume_score(skill_counts, role, resume_skills, resume_text)
 
     response = {
-        'skills': skills,
+        'skills': resume_skills,
         'recommendations': recommendations,
         'skill_counts': skill_counts,
         'jobs': jobs,
@@ -143,7 +150,7 @@ def handle_upload(file: UploadFile = File(...)):
     return response
 
 @app.get('/path-data')
-def get_path_data():
+async def get_path_data():
     db = Session()
 
     roles = [
@@ -186,7 +193,7 @@ async def get_job_data_by_role(role_type: str = ""):
     return response
 
 @app.get('/report-data')
-def get_report_data():
+async def get_report_data():
     db = Session()
     response = {
         'skill_counts': get_skill_counts(db),
@@ -195,7 +202,6 @@ def get_report_data():
         'location_counts': get_location_counts(db) 
     }
     db.close()
-
     return response
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ class JobPost(BaseModel):
 class Skill(BaseModel):
     id: int
     name: str
-    altnames: list
+    roles: list
     count: int
 
     class Config:
@@ -25,7 +25,6 @@ class Skill(BaseModel):
 class SoftSkill(BaseModel):
     id: int
     name: str
-    altnames: list
     count: int
 
     class Config:

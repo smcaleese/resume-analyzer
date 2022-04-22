@@ -4,16 +4,15 @@ import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../App'
+import { apiUrl } from '../config.js'
+import { roles } from '../constants'
 import LoadingSpinner from '../components/LoadingSpinner'
-import {apiUrl} from '../config.js'
 
-const postResume = async (file) => {
+export const postResume = async (file, role) => {
     const formData = new FormData()
-    formData.append(
-        'file',
-        file,
-    )
-    const response = await fetch(`${apiUrl}/resume-upload`, {
+    formData.append('file', file)
+    const roleKey = roles[role]
+    const response = await fetch(`${apiUrl}/resume-upload/${roleKey}`, {
         method: 'POST',
         mode: 'cors',
         body: formData,
@@ -26,10 +25,10 @@ const postResume = async (file) => {
 
 const FileUploadPage = ({ className, setPage }) => {
     const [file, setFile] = useState(null)
-    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
 
-    const { dispatch } = useContext(AppContext)
+    const { dispatch, appState } = useContext(AppContext)
     const navigate = useNavigate()
 
     const checkFileValidity = (file) => {
@@ -56,11 +55,10 @@ const FileUploadPage = ({ className, setPage }) => {
             setLoading(false)
             setError(true)
         }, 10000)
-        let data = await postResume(file)
+        let data = await postResume(file, appState.role)
         setLoading(false)
         clearInterval(timeoutCountdown)
 
-        console.log(data)
         dispatch({type: 'SET_RESULTS_DATA', payload: data})
         setPage('results')
         navigate('/results')
@@ -84,7 +82,7 @@ const FileUploadPage = ({ className, setPage }) => {
 
     if (error) {
         return (
-            <div className={classnames('error-page', 'center')}>
+            <div className={classnames(className, 'center', 'error-page')}>
                 <h1>Error</h1>
                 <p>Server timeout. Please reload the page and try again.</p>
             </div>

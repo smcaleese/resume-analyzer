@@ -1,0 +1,11 @@
+export const roles = {
+    'Software Engineer': 'software',
+    'Frontend Developer': 'frontend',
+    'Backend Developer': 'backend',
+    'Fullstack Developer': 'fullstack',
+    'Mobile Developer': 'mobile',
+    'DevOps Engineer': 'devops',
+    'QA Engineer': 'qa',
+    'Data Scientist': 'ds',
+    'Machine Learning Engineer': 'ml',
+}

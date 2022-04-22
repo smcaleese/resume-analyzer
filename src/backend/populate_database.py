@@ -17,7 +17,8 @@ def get_skills(filename):
         for row in csvrows:
             skill_name = row[0]
             altnames = row[1][1:-1].split('|')
-            skills[skill_name] = altnames if altnames[0] != '' else None
+            roles = row[2][1:-1].split('|')
+            skills[skill_name] = [altnames, roles]
 
     return skills
 
@@ -84,7 +85,6 @@ def gather_data(filename, job_post_row_data, skills, skill_counts, soft_skills, 
                     'location': location,
                     'description': description,
                     'requirements': requirements if requirements else None,
-                    'soft_skills': soft_skills_found if soft_skills_found else None,
                     'experience': years_of_experience if years_of_experience else None,
                     'role': 'n/a'
                 }
@@ -103,7 +103,8 @@ def insert_job_post_rows(db, job_post_row_data):
 
 def insert_skill_rows(db, skills, skill_counts, table):
     row = 1
-    for skill_name, altnames in skills.items():
+    for skill_name, value in skills.items():
+        altnames, roles = value
         skill_id = hash(skill_name)
         count = skill_counts[skill_name]
         row_data = {
@@ -113,6 +114,7 @@ def insert_skill_rows(db, skills, skill_counts, table):
             'count': count
         }
         if table == 'skill':
+            row_data['roles'] = roles if roles else None
             new_row = Skill(**row_data)
             add_skill(db, new_row)
         elif table == 'soft_skill':
@@ -162,10 +164,10 @@ def main():
     gather_data('indeed-scraped-data-formatted.csv', job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
     gather_data('linkedin-scraped-data-software-engineer-ireland-formatted.csv', job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
 
-    print('Pre-computing classifications')
+    # print('Pre-computing classifications')
     compute_roles(job_post_row_data)
 
-    print('Pre-computing association rules')
+    # print('Pre-computing association rules')
     rules = compute_req_rules(job_post_row_data)
 
     print('Inserting rows into database')

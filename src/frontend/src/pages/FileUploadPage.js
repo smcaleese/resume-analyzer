@@ -7,13 +7,10 @@ import { AppContext } from '../App'
 import LoadingSpinner from '../components/LoadingSpinner'
 import {apiUrl} from '../config.js'
 
-const postResume = async (file) => {
+const postResume = async (file, role) => {
     const formData = new FormData()
-    formData.append(
-        'file',
-        file,
-    )
-    const response = await fetch(`${apiUrl}/resume-upload`, {
+    formData.append('file', file)
+    const response = await fetch(`${apiUrl}/resume-upload/${role}`, {
         method: 'POST',
         mode: 'cors',
         body: formData,
@@ -29,7 +26,7 @@ const FileUploadPage = ({ className, setPage }) => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
 
-    const { dispatch } = useContext(AppContext)
+    const { dispatch, appState } = useContext(AppContext)
     const navigate = useNavigate()
 
     const checkFileValidity = (file) => {
@@ -56,7 +53,7 @@ const FileUploadPage = ({ className, setPage }) => {
             setLoading(false)
             setError(true)
         }, 10000)
-        let data = await postResume(file)
+        let data = await postResume(file, appState.role)
         setLoading(false)
         clearInterval(timeoutCountdown)
 

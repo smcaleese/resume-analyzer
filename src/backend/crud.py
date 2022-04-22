@@ -78,9 +78,9 @@ def get_all_skills(db: Session):
 
 def get_skill_counts(db):
     skill_counts = {}
-    for row in db.query(Skill.name, Skill.count).all():
-        name, count = row
-        skill_counts[name] = count
+    for row in db.query(Skill.name, Skill.roles, Skill.count).all():
+        name, roles, count = row
+        skill_counts[name] = [count, roles]
     return skill_counts 
 
 def get_soft_soft_skill_counts(db):

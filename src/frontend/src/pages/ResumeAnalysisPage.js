@@ -23,6 +23,7 @@ const NoResumePage = ({ className }) => (
 )
 
 const StyledNoResumePage = styled(NoResumePage)`
+    height: 50vh;
     margin: 0px 10px 0px 110px;
 
     .no-resume-page {
@@ -41,7 +42,7 @@ const StyledNoResumePage = styled(NoResumePage)`
 `
 
 const FileDisplayPage = ({ className }) => {
-    const {appState} = useContext(AppContext)
+    const { appState } = useContext(AppContext)
 
     if (!appState.resume) {
         return <StyledNoResumePage />

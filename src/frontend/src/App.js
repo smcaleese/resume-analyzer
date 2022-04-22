@@ -12,15 +12,18 @@ export const AppContext = React.createContext()
 
 const initialState = {
     resume: null,
+    role: 'all skills',
     resultsData: null,
     reportsData: null,
-    treeData: null
+    treeData: null,
 }
 
 const reducer = (state, action) => {
     switch(action.type) {
     case 'SET_RESUME':
         return { ...state, resume: action.payload }
+    case 'SET_ROLE':
+        return { ...state, role: action.payload}
     case 'SET_RESULTS_DATA':
         return { ...state, resultsData: action.payload }
     case 'SET_REPORTS_DATA':
@@ -38,10 +41,10 @@ const App = ({ className }) => {
 
     return (
         <div className={className}>
-            <Header page={page} />
             <Router>
-                <Sidebar page={page} setPage={setPage} />
                 <AppContext.Provider value={store}>
+                    <Header page={page} />
+                    <Sidebar page={page} setPage={setPage} />
                     <Routes>
                         <Route exact path='/' element={<Navigate to='/home' />} />
                         <Route path='/home' element={<FileUploadPage setPage={setPage} />} />

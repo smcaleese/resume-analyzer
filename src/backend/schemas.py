@@ -17,6 +17,7 @@ class Skill(BaseModel):
     id: int
     name: str
     altnames: list
+    roles: list
     count: int
 
     class Config:

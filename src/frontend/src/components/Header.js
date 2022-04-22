@@ -1,39 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { Dropdown, DropdownButton } from 'react-bootstrap'
+import { AppContext } from '../App' 
 
 const RoleDropdown = ({ className }) => {
-    const [role, setRole] = useState('All skills')
-
     const roles = [
-        'All roles (default)',
-        'Junior Frontend Developer',
-        'Senior Frontend Developer',  
-        'Junior Backend Developer',
-        'Senior Backend Developer',
-        'Junior Full Stack Developer',
-        'Full Stack Developer',
-        'Senior Full Stack Developer',
-        'QA Engineer',
-        'Senior QA Engineer',
-        'Business Analyst',
-        'Development Lead',
-        'Software Architect',
-        'Product Owner',
-        'Project Manager',
-        'Devops',
-        'Senior Devops',
-        'Automation Engineer',
-        'Cloud Engineer',
-        'Database Admin (DBA)'
+        'all skills',
+        'Frontend developer',
+        'Backend developer',
+        'Fullstack developer',
+        'Mobile developer',
+        'DevOps engineer',
+        'DS/ML engineer',
     ]
+
+    const { appState, dispatch } = useContext(AppContext)
+    const [dropdown, setDropdown] = useState(roles[0])
+
+    useEffect(() => {
+        console.log('role changed: ', appState)
+        dispatch({ type: 'SET_ROLE', payload: dropdown })
+    }, [dropdown])
 
     return (
         <div className={classnames('center', className)}>
-            <DropdownButton align='end' variant='success' title={role}>
+            <DropdownButton align='end' variant='success' title={dropdown}>
                 {roles.map((role, index) => {
-                    return <Dropdown.Item key={index} onClick={() => setRole(role)}>{role}</Dropdown.Item>
+                    return <Dropdown.Item key={index} onClick={() => setDropdown(role)}>{role}</Dropdown.Item>
                 })}
             </DropdownButton>
         </div>
@@ -55,7 +49,7 @@ const Header = ({ className, page }) => {
             <h1 className='product-name center'>
                 ResumeAnalyzer
             </h1>
-            { page === 'results' ? <StyledRoleDropdown /> : null }
+            { page === 'home' || page === 'results' ? <StyledRoleDropdown /> : null }
         </div>
     )
 }

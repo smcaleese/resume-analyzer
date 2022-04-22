@@ -73,12 +73,12 @@ def extract_resume_skills(text):
         
     return skill_items
 
-def calculate_resume_score(skill_counts, skills, resume_text):
+def calculate_resume_score(skill_counts, role, skills, resume_text):
     def calculate_skill_score(skills, skill_counts):
-        average_skill_count = np.mean(list(skill_counts.values()))
+        average_skill_count = np.mean(list([x[0] for x in skill_counts.values()]))
         score = 0
         for skill in skills:
-            count = skill_counts[skill['name']]
+            count = skill_counts[skill['name']][0]
             weight = count / average_skill_count
             score += weight
         normalized_skill_score = math.tanh(score * 0.025) * 100
@@ -109,8 +109,8 @@ def calculate_resume_score(skill_counts, skills, resume_text):
 async def status():
     return { 'message': 'Server is running' }
 
-@app.post('/resume-upload')
-def handle_upload(file: UploadFile = File(...)):
+@app.post('/resume-upload/{role}')
+def handle_upload(role: str, file: UploadFile = File(...)):
     db = Session()
     print('find all skills:')
 
@@ -123,17 +123,17 @@ def handle_upload(file: UploadFile = File(...)):
     
         # get skills in resume
         resume_text = ' '.join(pages)
-        skills = extract_resume_skills(resume_text)
-        skill_names = [skill['name'] for skill in skills]
+        resume_skills = extract_resume_skills(resume_text)
+        skill_names = [skill['name'] for skill in resume_skills]
         recommendations = get_ranked_recommendations(db, skill_names)
         jobs = get_ranked_job_posts(db, skill_names)
 
     db.close()
 
-    resume_score = calculate_resume_score(skill_counts, skills, resume_text)
+    resume_score = calculate_resume_score(skill_counts, role, resume_skills, resume_text)
 
     response = {
-        'skills': skills,
+        'skills': resume_skills,
         'recommendations': recommendations,
         'skill_counts': skill_counts,
         'jobs': jobs,

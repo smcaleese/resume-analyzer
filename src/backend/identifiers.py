@@ -39,7 +39,8 @@ def extract_requirements(description, skills):
             potential_skill_words.append(bigram)
 
     all_skills = {}
-    for skill, altnames in skills.items():
+    for skill, value in skills.items():
+        altnames, roles = value
         all_skills[skill.lower()] = skill
         if altnames:
             for name in altnames:
@@ -128,8 +129,7 @@ def get_lda(id_descs):
     return id_descs
 
 def get_roles(dataset):
-    #Number of roles should equal number of clusters
-
+    # Number of roles should equal number of clusters
     role_names = {
         'Junior Frontend Developer',
         'Senior Frontend Developer',  

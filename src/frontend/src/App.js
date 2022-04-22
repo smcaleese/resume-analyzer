@@ -38,7 +38,7 @@ const App = ({ className }) => {
 
     return (
         <div className={className}>
-            <Header />
+            <Header page={page} />
             <Router>
                 <Sidebar page={page} setPage={setPage} />
                 <AppContext.Provider value={store}>

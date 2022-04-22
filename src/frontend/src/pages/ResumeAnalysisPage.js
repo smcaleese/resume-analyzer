@@ -52,7 +52,7 @@ const FileDisplayPage = ({ className }) => {
         lg: [
             {i: 'skills', x: 0, y: 0, w: 4, h: 14},
             {i: 'skill-frequencies', x: 0, y: 1, w: 4, h: 38},
-            {i: 'score-panel', x: 4, y: 0, w: 4, h: 31},
+            {i: 'score-panel', x: 4, y: 0, w: 4, h: 32},
             {i: 'recommendations-panel', x: 4, y: 0, w: 4, h: 20.5},
             {i: 'pdf-viewer', x: 8, y: 0, w: 4, h: 60},
             {i: 'matching-jobs', x: 0, y: 52, w: 8, h: 42},

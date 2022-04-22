@@ -43,7 +43,7 @@ const RecommendationsPanel = ({ className }) => {
 }
 
 export default styled(RecommendationsPanel)`
-    overflow: auto;
+    overflow: scroll;
     height: 100%;
 
     .rec-item {

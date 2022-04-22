@@ -1,13 +1,61 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import logo from '../assets/Temp-Logo.svg'
+import classnames from 'classnames'
+import { Dropdown, DropdownButton } from 'react-bootstrap'
 
-const Header = ({ className }) => {
+const RoleDropdown = ({ className }) => {
+    const [role, setRole] = useState('All skills')
+
+    const roles = [
+        'All roles (default)',
+        'Junior Frontend Developer',
+        'Senior Frontend Developer',  
+        'Junior Backend Developer',
+        'Senior Backend Developer',
+        'Junior Full Stack Developer',
+        'Full Stack Developer',
+        'Senior Full Stack Developer',
+        'QA Engineer',
+        'Senior QA Engineer',
+        'Business Analyst',
+        'Development Lead',
+        'Software Architect',
+        'Product Owner',
+        'Project Manager',
+        'Devops',
+        'Senior Devops',
+        'Automation Engineer',
+        'Cloud Engineer',
+        'Database Admin (DBA)'
+    ]
+
+    return (
+        <div className={classnames('center', className)}>
+            <DropdownButton align='end' variant='success' title={role}>
+                {roles.map((role, index) => {
+                    return <Dropdown.Item key={index} onClick={() => setRole(role)}>{role}</Dropdown.Item>
+                })}
+            </DropdownButton>
+        </div>
+    )
+}
+
+const StyledRoleDropdown = styled(RoleDropdown)`
+    width: 20rem;
+
+    .btn {
+        padding: 0.5rem;
+        font-size: 1.1rem;
+    }
+`
+
+const Header = ({ className, page }) => {
     return (
         <div className={className}>
-            <h1 className='product-name'>
+            <h1 className='product-name center'>
                 ResumeAnalyzer
             </h1>
+            { page === 'results' ? <StyledRoleDropdown /> : null }
         </div>
     )
 }
@@ -17,8 +65,8 @@ export default styled(Header)`
     cursor: pointer;
     height: 120px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
 
     .product-name {
         margin: 0;

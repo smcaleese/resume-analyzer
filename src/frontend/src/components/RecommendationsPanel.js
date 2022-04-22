@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import DisplayCard from './DisplayCard'
 import styled from 'styled-components'
 import { AppContext } from '../App'

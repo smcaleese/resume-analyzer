@@ -68,13 +68,3 @@ describe('Test changing the page using the sidebar', () => {
         expect(searchText).toBeInTheDocument()
     })
 })
-
-// describe.only('Test changing to tree page using sidebar', () => {
-//     test('When the tree page icon is clicked, the tree page should be shown', async () => {
-//         render(<App />)
-//         act(() => clickSidebarLink('Tree Icon'))
-//         const treePage = await screen.findByAltText('tree page')
-//         screen.debug()
-//         expect(treePage).toBeInTheDocument()
-//     }) 
-// })

@@ -73,7 +73,7 @@ def extract_resume_skills(text):
         
     return skill_items
 
-def calculate_resume_score(skill_counts, role, resume_skills, resume_text):
+def calculate_resume_score(skill_counts, resume_skills, resume_text):
     def calculate_skill_scores(resume_skills, skill_counts):
         skill_scores = {}
         for role in roles:
@@ -92,8 +92,8 @@ def calculate_resume_score(skill_counts, role, resume_skills, resume_text):
     def calculate_length_score(resume_text):
         word_count = len(resume_text.split())
         # calculate the length score using a normal distribution of the word count
-        b = 700  # mean of curve
-        c = 200  # standard deviation
+        b = 500  # mean of curve
+        c = 250  # standard deviation
         # produce a value between 0.0 and 1.0 based on the word count
         standard_deviation_function = lambda x: math.e ** (-(x - b)**2 / (2 * c**2))
         length_score = standard_deviation_function(word_count) * 100
@@ -137,7 +137,7 @@ async def handle_upload(role: str, file: UploadFile = File(...)):
 
     db.close()
 
-    resume_score = calculate_resume_score(skill_counts, role, resume_skills, resume_text)
+    resume_score = calculate_resume_score(skill_counts, resume_skills, resume_text)
 
     response = {
         'skills': resume_skills,

@@ -1,18 +1,42 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
+const soft_skill_counts = {
+    'Agile': 5,
+    'Communication': 3,
+    'Collaboration': 6
+}
+
+const years_of_experience_counts = [1, 2, 5, 4, 1]
+
+const location_counts = {
+    'Dublin': 25,
+    'Cork': 6,
+    'Athlone': 3
+}
+
 const skills = [
+    {
+        name: 'Python',
+        color: '220,91,91',
+    },
     {
         name: 'SQL',
         color: '229,91,91',
-    }
+    },
 ]
 
 const skill_counts = {
-    'JavaScript': 1,
-    'Python': 2,
-    'SQL': 4,
-    'CSS': 3,
+    'software': { 'Java': 5 },
+    'fullstack': { 'NodeJS': 2},
+    'backend': { 'Spring': 15 },
+    'frontend': { 'ReactJS': 12 },
+    'devops': { 'Jenkins': 6 },
+    'qa': { 'Junit': 8 },
+    'mobile': { 'Android': 5 },
+    'ds': { 'Pandas': 4 },
+    'ml': { 'PyTorch': 6 },
+    'other': { 'GraphQL': 1 }
 }
 
 const jobs = [
@@ -20,30 +44,66 @@ const jobs = [
         company: 'Salesforce',
         title: 'Software Engineer',
         description: 'Salesforce is a leading developer of software',
-        requirements: ['SQL', 'Python', 'CSS'],
-        skill_match: ['SQL'],
+        requirements: [
+            'SQL',
+            'Python', 
+            'CSS'
+        ],
+        skill_match: [
+            'SQL'
+        ],
+    },
+    {
+        company: 'Meta',
+        title: 'Front End Engineer',
+        description: 'Meta is a leading developer of software',
+        requirements: [
+            'HTML',
+            'ReactJS',
+            'JavaScript'
+        ],
+        skill_match: [
+            'HTML',
+            'ReactJS',
+            'JavaScript'
+        ]
     }
 ]
 
-const years_of_experience_counts = [1, 2, 5, 4, 1]
-
 const resume_score = {
-    'overall_score': 50, 
-    'skill_score': 50,
-    'length_score': 50 
+    'overall_scores': {'frontend': 37, 'ds': 27, 'ml': 17, 'fullstack': 33, 'qa': 25, 'backend': 21, 'devops': 20, 'mobile': 24, 'software': 41},
+    'skill_scores': {'frontend': 47, 'ds': 32, 'ml': 18, 'fullstack': 41, 'qa': 30, 'backend': 24, 'devops': 22, 'mobile': 28, 'software': 54},
+    'length_score': 16
 }
 
-const recommendations = []
+const recommendations = [
+    {
+        'lhs': [
+            'Spring'
+        ],
+        'rhs': 'Microservices',
+        'lift': 2.9206349206349205,
+        'support': 0.03770491803278689
+    },
+    {
+        'lhs': [
+            'CSS'
+        ],
+        'rhs': 'AngularJS',
+        'lift': 2.578884004815634,
+        'support': 0.061885245901639345
+    }
+]
 
 export const server = setupServer(
-    rest.post('http://localhost:8000/resume-upload', (req, res, ctx) => {
+    rest.post('http://localhost:8000/resume-upload/*', (req, res, ctx) => {
         return res(
             ctx.json({ skills, recommendations, skill_counts, jobs, resume_score })
         )
     }),
     rest.get('http://localhost:8000/report-data', (req, res, ctx) => {
         return res(
-            ctx.json({ skill_counts, jobs, years_of_experience_counts })
+            ctx.json({ skill_counts, soft_skill_counts, years_of_experience_counts, location_counts })
         )
     }),
     rest.get('http://localhost:8000/path-data', (req, res, ctx) => {

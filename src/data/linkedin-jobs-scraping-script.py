@@ -79,7 +79,7 @@ def main():
     browser.get(login_link)
     login(browser)
 
-    search_job_title = 'software engineer'
+    search_job_title = 'machine learning engineer'
     search_location = 'ireland'
 
     url_root = 'https://www.linkedin.com/jobs/search?geoId='

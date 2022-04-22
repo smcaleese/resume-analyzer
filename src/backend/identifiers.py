@@ -39,8 +39,7 @@ def extract_requirements(description, skills):
             potential_skill_words.append(bigram)
 
     all_skills = {}
-    for skill, value in skills.items():
-        altnames, roles = value
+    for skill, altnames in skills.items():
         all_skills[skill.lower()] = skill
         if altnames:
             for name in altnames:
@@ -127,6 +126,24 @@ def get_lda(id_descs):
         id_descs[i] = [id_descs[i][0], id_descs[i][1], vectorize_text(id_descs[i][1], lda_model=lda_model, corpus=corpus, id2word=id2word)]
 
     return id_descs
+
+def get_role_type(title):
+    regular_expressions = {
+        'software': r'(\bsoftware)',
+        'frontend':  r'(\bfrontend)|(\bfront end)|(\bfront-end)',
+        'backend':  r'(\bbackend)|(\bback end)|(\bback-end)',
+        'fullstack': r'(\bfullstack)|(\bfull stack)|(\bfull-stack)',
+        'mobile': r'(\bmobile)|(\bandroid)|(\bios)',
+        'devops': r'(\bdevops)|(\bdev ops)|(\breliability)',
+        'qa': r'(\bqa)|(\bquality)|(\bassurance)',
+        'ds': r'(\bdata)|(\data scientist)|(\bstatistics)',
+        'ml': r'(\bml)|(\bmachine learning)|(\bnlp)|(\bai)'
+    }
+    for position, r_expression in regular_expressions.items():
+        match = re.search(r_expression, title, re.IGNORECASE)
+        if match:
+            return position
+    return 'other'
 
 def get_roles(dataset):
     # Number of roles should equal number of clusters

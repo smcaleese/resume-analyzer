@@ -5,12 +5,14 @@ import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../App'
 import LoadingSpinner from '../components/LoadingSpinner'
-import {apiUrl} from '../config.js'
+import { apiUrl } from '../config.js'
+import { roles } from '../constants'
 
 const postResume = async (file, role) => {
     const formData = new FormData()
     formData.append('file', file)
-    const response = await fetch(`${apiUrl}/resume-upload/${role}`, {
+    const roleKey = roles[role]
+    const response = await fetch(`${apiUrl}/resume-upload/${roleKey}`, {
         method: 'POST',
         mode: 'cors',
         body: formData,
@@ -81,7 +83,7 @@ const FileUploadPage = ({ className, setPage }) => {
 
     if (error) {
         return (
-            <div className={classnames('error-page', 'center')}>
+            <div className={classnames(className, 'center', 'error-page')}>
                 <h1>Error</h1>
                 <p>Server timeout. Please reload the page and try again.</p>
             </div>

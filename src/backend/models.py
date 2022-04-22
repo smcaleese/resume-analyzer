@@ -22,24 +22,22 @@ class Skill(Base):
     __tablename__ = 'skill'
     id = Column(BigInteger, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
-    altnames = Column(ARRAY(String))
-    roles = Column(ARRAY(String))
+    role = Column(String, nullable=False)
     count = Column(Integer, nullable=False)
 
     def __repr__(self):
-        return '<Skill id={} name={} altnames={} roles={} count={}>' \
-                .format(self.id, self.name, self.altnames, self.roles, self.count)
+        return '<Skill id={} name={} role={} count={}>' \
+                .format(self.id, self.name, self.role, self.count)
 
 class SoftSkill(Base):
     __tablename__ = 'soft_skill'
     id = Column(BigInteger, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
-    altnames = Column(ARRAY(String))
     count = Column(Integer, nullable=False)
 
     def __repr__(self):
-        return '<SoftSkill id={} name={} altnames={} count={}>' \
-                .format(self.id, self.name, self.altnames, self.count)
+        return '<SoftSkill id={} name={} count={}>' \
+                .format(self.id, self.name, self.count)
 
 class Rule(Base):
     __tablename__ = 'rule'

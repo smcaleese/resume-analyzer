@@ -2,7 +2,7 @@ import csv
 from database import engine, Base, Session 
 from models import JobPost, Skill, Rule, SoftSkill
 from crud import add_job_post, add_skill, add_soft_skill, add_rule
-from identifiers import extract_requirements, get_years_of_experience, get_lda, get_roles, get_rules
+from identifiers import extract_requirements, get_years_of_experience, get_lda, get_roles, get_rules, get_role_type
 from collections import defaultdict
 from sklearn.cluster import KMeans
 import numpy as np
@@ -17,8 +17,7 @@ def get_skills(filename):
         for row in csvrows:
             skill_name = row[0]
             altnames = row[1][1:-1].split('|')
-            roles = row[2][1:-1].split('|')
-            skills[skill_name] = [altnames, roles]
+            skills[skill_name] = altnames
 
     return skills
 
@@ -68,9 +67,10 @@ def gather_data(filename, job_post_row_data, skills, skill_counts, soft_skills, 
                 if row_id in job_post_row_data or len(description) == 0:
                     continue
 
+                role_type = get_role_type(title)
                 requirements = extract_requirements(description, skills)
                 for skill_name in requirements:
-                    skill_counts[skill_name] += 1
+                    skill_counts[(skill_name, role_type)] += 1
 
                 soft_skills_found = extract_requirements(description, soft_skills)
                 for skill_name in soft_skills_found:
@@ -101,27 +101,34 @@ def insert_job_post_rows(db, job_post_row_data):
         add_job_post(db, new_job_post)
         print(f'added row {i + 1} to job_post table')
 
-def insert_skill_rows(db, skills, skill_counts, table):
+def insert_skill_rows(db, skill_counts):
     row = 1
-    for skill_name, value in skills.items():
-        altnames, roles = value
-        skill_id = hash(skill_name)
-        count = skill_counts[skill_name]
+    for key, count in skill_counts.items():
+        skill_name, role = key
+        skill_id = hash(f'{skill_name}{role}')
         row_data = {
             'id': skill_id,
             'name': skill_name,
-            'altnames': altnames if altnames else None,
+            'role': role,
             'count': count
         }
-        if table == 'skill':
-            row_data['roles'] = roles if roles else None
-            new_row = Skill(**row_data)
-            add_skill(db, new_row)
-        elif table == 'soft_skill':
-            new_row = SoftSkill(**row_data)
-            add_soft_skill(db, new_row)
+        new_row = Skill(**row_data)
+        add_skill(db, new_row)
+        print(f'added row {row} to skill table')
+        row += 1
 
-        print(f'added row {row} to {table} table')
+def insert_soft_skill_rows(db, soft_skill_counts):
+    row = 1
+    for skill_name, count in soft_skill_counts.items():
+        skill_id = hash(skill_name)
+        row_data = {
+            'id': skill_id,
+            'name': skill_name,
+            'count': count
+        }
+        new_row = SoftSkill(**row_data)
+        add_soft_skill(db, new_row)
+        print(f'added row {row} to soft_skills table')
         row += 1
 
 def insert_rule_rows(db, rules):
@@ -161,8 +168,23 @@ def main():
     soft_skills = get_skills('soft-skills')
 
     count = {'total': 1}
-    gather_data('indeed-scraped-data-formatted.csv', job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
-    gather_data('linkedin-scraped-data-software-engineer-ireland-formatted.csv', job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
+
+    gather_data('indeed-scraped-data.csv', job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
+
+    linkedin_csv_files = [
+        'linkedin-software-engineer-ireland.csv',
+        'linkedin-frontend-developer-ireland.csv',
+        'linkedin-backend-developer-ireland.csv',
+        'linkedin-full-stack-developer-ireland.csv',
+        'linkedin-mobile-developer-ireland.csv',
+        'linkedin-devops-engineer-ireland.csv',
+        'linkedin-qa-engineer-ireland.csv',
+        'linkedin-data-scientist-ireland.csv',
+        'linkedin-machine-learning-engineer-ireland.csv'
+    ]
+
+    for filename in linkedin_csv_files:
+        gather_data(filename, job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
 
     # print('Pre-computing classifications')
     compute_roles(job_post_row_data)
@@ -172,8 +194,8 @@ def main():
 
     print('Inserting rows into database')
     insert_job_post_rows(db, job_post_row_data)
-    insert_skill_rows(db, skills, skill_counts, 'skill')
-    insert_skill_rows(db, soft_skills, soft_skill_counts, 'soft_skill')
+    insert_skill_rows(db, skill_counts)
+    insert_soft_skill_rows(db, soft_skill_counts)
     insert_rule_rows(db, rules)
 
     print('\nInserted {} rows into job_post\n'.format(db.query(JobPost).count()))

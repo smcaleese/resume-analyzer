@@ -77,10 +77,15 @@ def get_all_skills(db: Session):
     return db.query(Skill).distinct().all()
 
 def get_skill_counts(db):
-    skill_counts = {}
-    for row in db.query(Skill.name, Skill.roles, Skill.count).all():
-        name, roles, count = row
-        skill_counts[name] = [count, roles]
+    roles = {'software', 'frontend', 'backend', 'fullstack', 'mobile', 'devops', 'qa', 'ds', 'ml'}
+    skill_counts = defaultdict(dict)
+    db_rows = db.query(Skill.name, Skill.role, Skill.count).all()
+    for row in db_rows:
+        name, role, count = row
+        if role in roles:
+            skill_counts[role][name] = count
+        else:
+            skill_counts['other'][name] = count
     return skill_counts 
 
 def get_soft_soft_skill_counts(db):

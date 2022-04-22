@@ -12,7 +12,7 @@ export const AppContext = React.createContext()
 
 const initialState = {
     resume: null,
-    role: 'all skills',
+    role: 'Software Engineer',
     resultsData: null,
     reportsData: null,
     treeData: null,

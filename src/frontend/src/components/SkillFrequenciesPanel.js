@@ -5,15 +5,7 @@ import DisplayCard from './DisplayCard'
 import SkillIcon from '../assets/Icons/skill.png'
 import { Table } from 'react-bootstrap'
 import { AppContext } from '../App'
-
-const roleKeys = {
-    'Frontend developer': 'frontend',
-    'Backend developer': 'backend',
-    'Fullstack developer': 'fullstack',
-    'Mobile developer': 'mobile',
-    'DevOps engineer': 'devops',
-    'DS/ML engineer': 'ml'
-}
+import { roles } from '../constants'
 
 const SkillFrequenciesPanel = ({ className }) => {
     const { appState } = useContext(AppContext)
@@ -23,14 +15,13 @@ const SkillFrequenciesPanel = ({ className }) => {
     const [values, setValues] = useState([])
 
     useEffect(() => {
-        const roleSkillCounts = appState.role === 'all skills' ?
-            Object.entries(skill_counts)
-            : Object.entries(skill_counts).filter(([skill, [count, roles]]) => roles.includes(roleKeys[appState.role]))
-
-        const sortedSkillCounts = roleSkillCounts.sort((a, b) => b[1][0] - a[1][0]).slice(0, 50)
-        const labels = sortedSkillCounts.map(e => e[0])
-        const values = sortedSkillCounts.map(e => e[1][0])
-        setSortedSkillCounts(sortedSkillCounts)
+        const roleKey = roles[appState.role]
+        const roleSkillCounts = skill_counts[roleKey]
+        const sortedSkillCounts = Object.entries(roleSkillCounts).sort((a, b) => b[1] - a[1])
+        const truncatedSortedCounts = sortedSkillCounts.slice(0, 50)
+        const labels = truncatedSortedCounts.map(e => e[0])
+        const values = truncatedSortedCounts.map(e => e[1])
+        setSortedSkillCounts(truncatedSortedCounts)
         setLabels(labels)
         setValues(values)
     }, [appState.role])
@@ -108,7 +99,7 @@ const SkillFrequenciesPanel = ({ className }) => {
                                 <tr key={index}>
                                     <td><div className='circle-indicator' style={{ backgroundColor: `rgb(${getSkillColor(req[0])})` }}></div></td>
                                     <td>{req[0]}</td>
-                                    <td>{req[1][0]}</td>
+                                    <td>{req[1]}</td>
                                 </tr>
                             )
                         })}

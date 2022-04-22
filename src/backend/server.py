@@ -73,12 +73,13 @@ def extract_resume_skills(text):
         
     return skill_items
 
-def calculate_resume_score(skill_counts, role, skills, resume_text):
-    def calculate_skill_score(skills, skill_counts):
-        average_skill_count = np.mean(list([x[0] for x in skill_counts.values()]))
+def calculate_resume_score(skill_counts, role, resume_skills, resume_text):
+    def calculate_skill_score(resume_skill, skill_counts):
+        average_skill_count = np.mean(list([x for x in skill_counts[role].values()]))
         score = 0
-        for skill in skills:
-            count = skill_counts[skill['name']][0]
+        for skill in resume_skill:
+            skill_name = skill['name']
+            count = skill_counts[role][skill_name] if skill_name in skill_counts[role] else 0
             weight = count / average_skill_count
             score += weight
         normalized_skill_score = math.tanh(score * 0.025) * 100
@@ -94,7 +95,7 @@ def calculate_resume_score(skill_counts, role, skills, resume_text):
         length_score = standard_deviation_function(word_count) * 100
         return round(length_score)
 
-    skill_score = calculate_skill_score(skills, skill_counts)
+    skill_score = calculate_skill_score(resume_skills, skill_counts)
     length_score = calculate_length_score(resume_text)
     overall_score = round(np.average([skill_score, length_score], weights=[2,1]))
 

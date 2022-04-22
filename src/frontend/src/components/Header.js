@@ -3,20 +3,11 @@ import styled from 'styled-components'
 import classnames from 'classnames'
 import { Dropdown, DropdownButton } from 'react-bootstrap'
 import { AppContext } from '../App' 
+import { roles } from '../constants'
 
 const RoleDropdown = ({ className }) => {
-    const roles = [
-        'all skills',
-        'Frontend developer',
-        'Backend developer',
-        'Fullstack developer',
-        'Mobile developer',
-        'DevOps engineer',
-        'DS/ML engineer',
-    ]
-
     const { appState, dispatch } = useContext(AppContext)
-    const [dropdown, setDropdown] = useState(roles[0])
+    const [dropdown, setDropdown] = useState('Software Engineer')
 
     useEffect(() => {
         console.log('role changed: ', appState)
@@ -26,7 +17,7 @@ const RoleDropdown = ({ className }) => {
     return (
         <div className={classnames('center', className)}>
             <DropdownButton align='end' variant='success' title={dropdown}>
-                {roles.map((role, index) => {
+                {Object.keys(roles).map((role, index) => {
                     return <Dropdown.Item key={index} onClick={() => setDropdown(role)}>{role}</Dropdown.Item>
                 })}
             </DropdownButton>

@@ -1,11 +1,7 @@
 from nltk.tokenize import word_tokenize
-from numpy import number
 import spacy
-from spacy.matcher import Matcher
 from database import Session
 from crud import get_all_job_posts
-from models import JobPost
-import string
 import nltk
 from nltk.corpus import stopwords
 from database import Session
@@ -16,7 +12,6 @@ from gensim import models as gm
 import sklearn
 import pickle
 import numpy as np
-import heapq
 from apyori import apriori
 
 nltk.download('stopwords')

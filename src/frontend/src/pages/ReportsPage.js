@@ -145,6 +145,11 @@ const ReportsPage = ({ className }) => {
 export default styled(ReportsPage)`
     margin: 0 20px 0 110px;
 
+    .input-box {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+
     .row {
         padding: 20px;
     }

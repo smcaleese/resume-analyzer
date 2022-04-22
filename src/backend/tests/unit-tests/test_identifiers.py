@@ -13,7 +13,7 @@ with open('./test_data.json') as json_file:
 class TestIdentifiers(unittest.TestCase):
     def test_extract_requirements(self):
         os.chdir('../../')
-        skills = get_skills()
+        skills = get_skills('skills')
 
         for obj in test_data:
             description = obj['description']

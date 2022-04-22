@@ -38,20 +38,10 @@ class TestIdentifiers(unittest.TestCase):
             self.assertEqual(expected, actual)
     
     def test_vectorize_text(self):
-        os.chdir('tests/unit-tests')
-        with pdfplumber.open('../test-resume.pdf') as pdf:
-            pages1 = [page.extract_text() for page in pdf.pages]
-        with pdfplumber.open('../test-resume2.pdf') as pdf:
-            pages2 = [page.extract_text() for page in pdf.pages]
-        os.chdir('../../')
-
-        text = ' '.join(pages1)
-        vec = vectorize_text(text)
-        self.assertEqual(len(vec), 17)
-        
-        text = ' '.join(pages2)
-        vec = vectorize_text(text)
-        self.assertEqual(len(vec), 17)
+        for obj in test_data:
+            description = obj['description']
+            vec = vectorize_text(description)
+            self.assertEqual(len(vec), 17)
     
     def test_get_lda(self):
         os.chdir('tests/unit-tests')
@@ -60,19 +50,22 @@ class TestIdentifiers(unittest.TestCase):
         with pdfplumber.open('../test-resume2.pdf') as pdf:
             pages2 = [page.extract_text() for page in pdf.pages]
         os.chdir('../../')
+        descriptions = []
+        i = 1
+        for obj in test_data:
+            descriptions.append([i, obj['description']])
+            i+=1
 
-        data = [
-            [1, ' '.join(pages1)], [2, ' '.join(pages2)]
-        ]
-        lda = get_lda(data)
-        self.assertEqual(lda[0][0], 1)
-        self.assertEqual(lda[1][0], 2)
 
-        self.assertEqual(lda[0][1], ' '.join(pages1))
-        self.assertEqual(lda[1][1], ' '.join(pages2))
+        lda_results = get_lda(descriptions)
+        i = 1
+        for obj in test_data:
+            self.assertEqual(lda_results[i-1][0], i)
 
-        self.assertEqual(len(lda[0][2]), 17)
-        self.assertEqual(len(lda[1][2]), 17)
+            self.assertEqual(lda_results[i-1][1], obj['description'])
+
+            self.assertEqual(len(lda_results[i-1][2]), 17)
+            i+=1
     
     def test_get_rules(self):
         dummy_transactions = [

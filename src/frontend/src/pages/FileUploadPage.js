@@ -4,11 +4,11 @@ import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../App'
-import LoadingSpinner from '../components/LoadingSpinner'
 import { apiUrl } from '../config.js'
 import { roles } from '../constants'
+import LoadingSpinner from '../components/LoadingSpinner'
 
-const postResume = async (file, role) => {
+export const postResume = async (file, role) => {
     const formData = new FormData()
     formData.append('file', file)
     const roleKey = roles[role]
@@ -25,8 +25,8 @@ const postResume = async (file, role) => {
 
 const FileUploadPage = ({ className, setPage }) => {
     const [file, setFile] = useState(null)
-    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const { dispatch, appState } = useContext(AppContext)
     const navigate = useNavigate()
@@ -59,7 +59,6 @@ const FileUploadPage = ({ className, setPage }) => {
         setLoading(false)
         clearInterval(timeoutCountdown)
 
-        console.log(data)
         dispatch({type: 'SET_RESULTS_DATA', payload: data})
         setPage('results')
         navigate('/results')

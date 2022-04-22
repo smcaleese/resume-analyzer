@@ -76,8 +76,9 @@ def get_all_skills(db: Session):
     print('getting all skills', end='\n\n')
     return db.query(Skill).distinct().all()
 
+roles = {'software', 'frontend', 'backend', 'fullstack', 'mobile', 'devops', 'qa', 'ds', 'ml'}
+
 def get_skill_counts(db):
-    roles = {'software', 'frontend', 'backend', 'fullstack', 'mobile', 'devops', 'qa', 'ds', 'ml'}
     skill_counts = defaultdict(dict)
     db_rows = db.query(Skill.name, Skill.role, Skill.count).all()
     for row in db_rows:

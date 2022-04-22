@@ -4,6 +4,7 @@ import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2'
 import { AppContext } from '../../App'
 import LoadingSpinner from '../LoadingSpinner'
+import { roles } from '../../constants'
 
 const ReportBarChart = ({ className, dataKey, sorted, header }) => {
     const options = {
@@ -16,7 +17,11 @@ const ReportBarChart = ({ className, dataKey, sorted, header }) => {
         },
     }
     const { appState } = useContext(AppContext)
-    const chartData = appState.reportsData[dataKey]
+    const roleKey = roles[appState.role]
+    const chartData = dataKey === 'skill_counts' ? 
+        appState.reportsData[dataKey][roleKey] 
+        : appState.reportsData[dataKey]
+
     const [colsToShow, setColsToShow] = useState(20)
 
     if (!chartData) {

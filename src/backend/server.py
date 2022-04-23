@@ -116,8 +116,8 @@ def calculate_resume_score(skill_counts, resume_skills, resume_text):
 async def status():
     return { 'message': 'Server is running' }
 
-@app.post('/resume-upload/{role}')
-async def handle_upload(role: str, file: UploadFile = File(...)):
+@app.post('/resume-upload')
+async def handle_upload(file: UploadFile = File(...)):
     db = Session()
     print('find all skills:')
 

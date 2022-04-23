@@ -5,14 +5,12 @@ import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../App'
 import { apiUrl } from '../config.js'
-import { roles } from '../constants'
 import LoadingSpinner from '../components/LoadingSpinner'
 
-export const postResume = async (file, role) => {
+export const postResume = async (file) => {
     const formData = new FormData()
     formData.append('file', file)
-    const roleKey = roles[role]
-    const response = await fetch(`${apiUrl}/resume-upload/${roleKey}`, {
+    const response = await fetch(`${apiUrl}/resume-upload`, {
         method: 'POST',
         mode: 'cors',
         body: formData,
@@ -55,7 +53,7 @@ const FileUploadPage = ({ className, setPage }) => {
             setLoading(false)
             setError(true)
         }, 10000)
-        let data = await postResume(file, appState.role)
+        let data = await postResume(file)
         setLoading(false)
         clearInterval(timeoutCountdown)
 

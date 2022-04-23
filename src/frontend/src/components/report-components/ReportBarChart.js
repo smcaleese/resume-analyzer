@@ -4,6 +4,7 @@ import { Bar } from 'react-chartjs-2'
 import { AppContext } from '../../App'
 import LoadingSpinner from '../LoadingSpinner'
 import { roles } from '../../constants'
+import RoleDropdown from '../RoleDropdown'
 
 const ReportBarChart = ({ className, dataKey, sorted, header }) => {
     const options = {
@@ -17,8 +18,7 @@ const ReportBarChart = ({ className, dataKey, sorted, header }) => {
     }
     const { appState } = useContext(AppContext)
     const roleKey = roles[appState.role]
-    const chartData = dataKey === 'skill_counts' ? 
-        appState.reportsData[dataKey][roleKey] 
+    const chartData = dataKey === 'skill_counts' ? appState.reportsData[dataKey][roleKey]
         : appState.reportsData[dataKey]
 
     const [colsToShow, setColsToShow] = useState(20)
@@ -35,8 +35,7 @@ const ReportBarChart = ({ className, dataKey, sorted, header }) => {
         }
     }, [])
 
-    const chartEntries = sorted ?
-        Object.entries(chartData).sort((a, b) => b[1] - a[1]).slice(0, colsToShow)
+    const chartEntries = sorted ? Object.entries(chartData).sort((a, b) => b[1] - a[1]).slice(0, colsToShow)
         : Object.entries(chartData)
 
     const labels = chartEntries.map(e => e[0])
@@ -53,8 +52,10 @@ const ReportBarChart = ({ className, dataKey, sorted, header }) => {
         ]
     }
 
+    const roleDropdown = dataKey === 'skill_counts' ? <RoleDropdown /> : null
+
     return (
-        <DisplayCard header={header} className={className}>
+        <DisplayCard header={header} className={className} roleDropdown={roleDropdown}>
             <Bar options={options} data={data} />
         </DisplayCard>
     )

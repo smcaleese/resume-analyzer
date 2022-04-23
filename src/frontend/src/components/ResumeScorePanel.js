@@ -5,6 +5,7 @@ import { ProgressBar } from 'react-bootstrap'
 import { AppContext } from '../App'
 import { Doughnut } from 'react-chartjs-2'
 import { roles } from '../constants'
+import RoleDropdown from './RoleDropdown'
 
 const ResumeScorePanel = ({ className }) => {
     const { appState } = useContext(AppContext)
@@ -48,7 +49,7 @@ const ResumeScorePanel = ({ className }) => {
     }
 
     return (
-        <DisplayCard header='Resume Score' className={className}>
+        <DisplayCard header='Resume Score' className={className} roleDropdown={<RoleDropdown />}>
             <div className='doughnut center'>
                 <h1 className='score'>{ resumeScore }</h1>
                 <div className='chart'>

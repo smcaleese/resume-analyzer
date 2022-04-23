@@ -30,23 +30,31 @@ const StyledInfoToolTip = styled(InfoToolTip)`
     float: right;
 `
 
-const DisplayCard = ({ header, children, info, className }) => {
+const DisplayCard = ({ header, children, info, className, roleDropdown }) => {
+    const colWidths =
+        info && roleDropdown ? {'header': 7, 'roleDropdown': 4, 'info': 1}
+            : roleDropdown ? {'header': 8, 'roleDropdown': 4, 'info': 0} 
+                : {'header': 11, 'roleDropdown': 0, 'info': 1}
+
     return (
         <Card className={className} as='h3'>
             <Card.Header className='card-heading draggable-handle'>
                 <Row>
-                    <Col xs={11}>
+                    <Col xs={colWidths['header']}>
                         <span className='card-title'>
-                            {header}
+                            { header }
                         </span>
                     </Col>
-                    <Col xs={1}>
-                        {info ?
-                            <>
-                                <StyledInfoToolTip info={info} />
-                            </>
-                            : null}
-                    </Col>
+                    {roleDropdown ? (
+                        <Col xs={colWidths['roleDropdown']}>
+                            { roleDropdown }
+                        </Col>
+                    ) : null}
+                    {info ? (
+                        <Col xs={colWidths['info']} className='center'>
+                            <StyledInfoToolTip info={info} />
+                        </Col>
+                    ) : null}
                 </Row>
             </Card.Header>
             <Card.Body className='card-body'>

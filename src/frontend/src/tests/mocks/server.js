@@ -96,7 +96,7 @@ const recommendations = [
 ]
 
 export const server = setupServer(
-    rest.post('http://localhost:8000/resume-upload/*', (req, res, ctx) => {
+    rest.post('http://localhost:8000/resume-upload', (req, res, ctx) => {
         return res(
             ctx.json({ skills, recommendations, skill_counts, jobs, resume_score })
         )

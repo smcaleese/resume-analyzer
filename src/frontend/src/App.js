@@ -7,6 +7,7 @@ import ReportsPage from './pages/ReportsPage'
 import TreePage from './pages/TreePage'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
+import Chart from 'chart.js/auto'
 
 export const AppContext = React.createContext()
 
@@ -31,7 +32,6 @@ const reducer = (state, action) => {
     case 'SET_TREE_DATA':
         return { ...state, treeData: action.payload }
     }
-    
 }
 
 const App = ({ className }) => {

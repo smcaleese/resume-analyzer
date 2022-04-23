@@ -55,8 +55,8 @@ class TestServer(unittest.TestCase):
         
         actual_resume_score = calculate_resume_score(skill_counts, skills, resume_text)
         expected_resume_score = {
-            'overall_scores': {'frontend': 37, 'ds': 27, 'ml': 17, 'fullstack': 33, 'qa': 25, 'backend': 21, 'devops': 20, 'mobile': 24, 'software': 41},
-            'skill_scores': {'frontend': 47, 'ds': 32, 'ml': 18, 'fullstack': 41, 'qa': 30, 'backend': 24, 'devops': 22, 'mobile': 28, 'software': 54},
+            'overall_scores': {'frontend': 37, 'ds': 27, 'ml': 17, 'fullstack': 33, 'qa': 25, 'backend': 21, 'devops': 20, 'mobile': 24, 'software': 41, 'all': 44},
+            'skill_scores': {'frontend': 47, 'ds': 32, 'ml': 18, 'fullstack': 41, 'qa': 30, 'backend': 24, 'devops': 22, 'mobile': 28, 'software': 54, 'all': 58},
             'length_score': 16
         }
         self.assertEqual(expected_resume_score, actual_resume_score)
@@ -78,8 +78,8 @@ class TestServer(unittest.TestCase):
         print('length score:', actual_resume_score['length_score'])
 
         expected_resume_score = {
-            'overall_scores': {'qa': 38, 'backend': 40, 'mobile': 34, 'frontend': 49, 'ml': 32, 'fullstack': 47, 'ds': 40, 'software': 58, 'devops': 36},
-            'skill_scores': {'qa': 35, 'backend': 38, 'mobile': 30, 'frontend': 52, 'ml': 26, 'fullstack': 49, 'ds': 39, 'software': 65, 'devops': 33},
+            'overall_scores': {'qa': 38, 'backend': 40, 'mobile': 34, 'frontend': 49, 'ml': 32, 'fullstack': 47, 'ds': 40, 'software': 58, 'devops': 36, 'all': 60},
+            'skill_scores': {'qa': 35, 'backend': 38, 'mobile': 30, 'frontend': 52, 'ml': 26, 'fullstack': 49, 'ds': 39, 'software': 65, 'devops': 33, 'all': 68},
             'length_score': 43
         }
 

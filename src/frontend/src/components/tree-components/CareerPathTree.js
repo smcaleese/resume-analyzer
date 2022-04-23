@@ -27,7 +27,6 @@ const CareerPathTree = ({ className }) => {
     const handleClose = () => { setShow(false), setModalState({ title: '', skills: [] }) }
     const handleShow = () => setShow(true)
 
-
     useEffect(() => {
         if (nodes.length == 0) {
             fetch(`${apiUrl}/path-data`)

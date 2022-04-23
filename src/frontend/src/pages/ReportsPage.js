@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import ReportBarChart from '../components/report-components/ReportBarChart'
 import SkillFrequenciesTable from '../components/report-components/SkillFrequenciesTable'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { Container, Row, Col, Form, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { AppContext } from '../App'
 import {apiUrl} from '../config.js'
 

@@ -7,5 +7,5 @@ export const roles = {
     'DevOps Engineer': 'devops',
     'QA Engineer': 'qa',
     'Data Scientist': 'ds',
-    'Machine Learning Engineer': 'ml',
+    'ML Engineer': 'ml',
 }

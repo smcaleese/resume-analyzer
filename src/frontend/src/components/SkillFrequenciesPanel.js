@@ -6,6 +6,7 @@ import SkillIcon from '../assets/Icons/skill.png'
 import { Table } from 'react-bootstrap'
 import { AppContext } from '../App'
 import { roles } from '../constants'
+import RoleDropdown from './RoleDropdown'
 
 const SkillFrequenciesPanel = ({ className }) => {
     const { appState } = useContext(AppContext)
@@ -80,7 +81,7 @@ const SkillFrequenciesPanel = ({ className }) => {
     const infoDescription = 'Keyword counts from job posts.'
 
     return (
-        <DisplayCard className={className} header='Skill Frequencies' info={infoDescription}>
+        <DisplayCard className={className} header='Skill Frequencies' info={infoDescription} roleDropdown={<RoleDropdown />}>
             <div className='doughnut-chart'>
                 <Doughnut options={options} data={data} plugins={plugins} />
             </div>

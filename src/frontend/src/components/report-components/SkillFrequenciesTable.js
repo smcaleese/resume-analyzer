@@ -6,6 +6,7 @@ import { Table } from 'react-bootstrap'
 import { AppContext } from '../../App'
 import LoadingSpinner from '../LoadingSpinner'
 import { roles } from '../../constants'
+import RoleDropdown from '../RoleDropdown'
 
 const SkillFrequenciesPanel = ({ className }) => {
     const { appState } = useContext(AppContext)
@@ -22,7 +23,13 @@ const SkillFrequenciesPanel = ({ className }) => {
     const infoDescription = 'Keyword counts from job posts.'
 
     return (
-        <DisplayCard className={className} header='Job post skill frequencies' info={infoDescription} height='max(710px, 40vh)'>
+        <DisplayCard
+            className={className}
+            header='Job post skill frequencies'
+            info={infoDescription}
+            height='max(710px, 40vh)'
+            roleDropdown={<RoleDropdown />}
+        >
             <div className='count-table'>
                 <Table responsive='sm' size='sm'>
                     <thead>

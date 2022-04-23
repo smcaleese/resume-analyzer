@@ -1,4 +1,5 @@
 export const roles = {
+    'All/Any': 'all',
     'Software Engineer': 'software',
     'Frontend Developer': 'frontend',
     'Backend Developer': 'backend',

@@ -4,7 +4,8 @@ from models import JobPost, Skill, SoftSkill, Rule
 import schemas
 from collections import defaultdict
 from collections import Counter
-from itertools import chain, combinations
+from itertools import chain, combinations, groupby
+from operator import itemgetter
 
 def add_job_post(db: Session, new_job_post: schemas.JobPost):
     db.add(new_job_post)
@@ -76,7 +77,7 @@ def get_all_skills(db: Session):
     print('getting all skills', end='\n\n')
     return db.query(Skill).distinct().all()
 
-roles = {'software', 'frontend', 'backend', 'fullstack', 'mobile', 'devops', 'qa', 'ds', 'ml'}
+roles = {'software', 'frontend', 'backend', 'fullstack', 'mobile', 'devops', 'qa', 'ds', 'ml', 'all'}
 
 def get_skill_counts(db):
     skill_counts = defaultdict(dict)
@@ -87,6 +88,12 @@ def get_skill_counts(db):
             skill_counts[role][name] = count
         else:
             skill_counts['other'][name] = count
+    for row in groupby(sorted(db_rows), lambda x: x[0]):
+        name, groups = row
+        count = 0
+        for group in groups:
+            count += group[2]
+        skill_counts['all'][name] = count
     return skill_counts 
 
 def get_soft_soft_skill_counts(db):

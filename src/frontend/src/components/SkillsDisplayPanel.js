@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import SkillIcon from '../assets/Icons/skill.png'
 import { Col, Row } from 'react-bootstrap'
 import { AppContext } from '../App'
+import { roles } from '../constants'
 
 const SkillBadge = ({ className, skill, key }) => {
     return (
@@ -27,25 +28,20 @@ export const StyledSkillBadge = styled(SkillBadge)`
 const SkillsDisplayPanel = ({ className }) => {
     const { appState } = useContext(AppContext)
     const { skills, skill_counts: skillCounts } = appState.resultsData
+    const { role } = appState
+    const roleKey = roles[role]
 
     const resumeSkillCounts = skills.reduce((acc, skill) => {
-        const skillName = skill.name.toLowerCase()
-        const key = Object.keys(skillCounts).find(key => skillName === key.toLowerCase())
+        const match = Object.keys(skillCounts[roleKey]).find(key => key.toLowerCase() === skill.name.toLowerCase())
 
-        acc[skillName] = 0
-        if (key) {
-            acc[skillName] = skillCounts[key]
+        acc[skill.name] = 0
+        if (match) {
+            acc[skill.name] = skillCounts[roleKey][match]
         }
-
         return acc
     }, {})
 
-    const sortedSkills = skills.sort((a, b) => {
-        const aCount = resumeSkillCounts[a.name.toLowerCase()]
-        const bCount = resumeSkillCounts[b.name.toLowerCase()]
-
-        return bCount - aCount
-    })
+    const sortedSkills = skills.sort((a, b) => resumeSkillCounts[b.name] - resumeSkillCounts[a.name])
 
     const skillBoxes = sortedSkills.map((skill, index) =>
         <StyledSkillBadge key={index} skill={skill.name} color={skill.color} />

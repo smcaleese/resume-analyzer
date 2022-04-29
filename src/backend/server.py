@@ -23,7 +23,8 @@ app = FastAPI()
 origins = [
     'http://localhost:3000',
     'https://fourth-year-project-front-end.herokuapp.com',
-    'http://www.resumeanalyzer.xyz'
+    'http://www.resumeanalyzer.xyz',
+    'http://resumeanalyzer.xyz'
 ]
 
 app.add_middleware(

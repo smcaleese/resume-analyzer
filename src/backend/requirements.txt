@@ -1,4 +1,5 @@
-fastapi==0.75.0
+apyori==1.1.2
+fastapi==0.75.2
 gensim==4.1.2
 nltk==3.5
 numpy==1.17.4
@@ -6,10 +7,5 @@ pdfplumber==0.6.0
 pydantic==1.8.2
 scikit_learn==1.0.2
 spacy==3.2.1
-SQLAlchemy==1.4.29
+SQLAlchemy==1.3.12
 uvicorn==0.16.0
-psycopg2-binary==2.9.3
-python-multipart==0.0.5
-scikit-learn==1.0.2
-click==8.0.4
-apyori==1.1.2

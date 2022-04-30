@@ -1,1 +1,1 @@
-web: uvicorn server:app
+web: gunicorn server:app --workers=4 --worker-class=uvicorn.workers.UvicornWorker

@@ -36,7 +36,7 @@ def get_ranked_job_posts(db: Session, skills: list):
                 FROM   unnest(i.requirements) uid 
                 WHERE  uid ILIKE ANY(ARRAY{skills})
             ) match_count
-        ORDER BY match_count DESC;""".format(skills=skills))).all())
+        ORDER BY match_count DESC;""".format(skills=skills))))
 
     ranked_list = []
     for row in query_response:

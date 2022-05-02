@@ -1,5 +1,4 @@
 from nltk.tokenize import word_tokenize
-from database import Session
 import nltk
 from nltk.corpus import stopwords
 from database import Session

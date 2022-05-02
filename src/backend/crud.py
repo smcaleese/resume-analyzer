@@ -5,7 +5,6 @@ import schemas
 from collections import defaultdict
 from collections import Counter
 from itertools import chain, combinations, groupby
-from operator import itemgetter
 
 def add_job_post(db: Session, new_job_post: schemas.JobPost):
     db.add(new_job_post)

@@ -1,5 +1,5 @@
 import csv
-from database import engine, Base, Session 
+from database import engine, Session 
 from models import JobPost, Skill, Rule, SoftSkill
 from crud import add_job_post, add_skill, add_soft_skill, add_rule
 from identifiers import extract_requirements, get_years_of_experience, get_lda, get_roles, get_rules, get_role_type
@@ -99,7 +99,7 @@ def insert_job_post_rows(db, job_post_row_data):
     for i, new_row in enumerate(job_post_row_data.values()):
         new_job_post = JobPost(**new_row)
         add_job_post(db, new_job_post)
-        print(f'added row {i + 1} to job_post table')
+        print(f'added row {i + 1} to the job_post table', end='\n\n')
 
 def insert_skill_rows(db, skill_counts):
     row = 1
@@ -114,7 +114,7 @@ def insert_skill_rows(db, skill_counts):
         }
         new_row = Skill(**row_data)
         add_skill(db, new_row)
-        print(f'added row {row} to skill table')
+        print(f'added row {row} to the skill table', end='\n\n')
         row += 1
 
 def insert_soft_skill_rows(db, soft_skill_counts):
@@ -128,10 +128,11 @@ def insert_soft_skill_rows(db, soft_skill_counts):
         }
         new_row = SoftSkill(**row_data)
         add_soft_skill(db, new_row)
-        print(f'added row {row} to soft_skills table')
+        print(f'added row {row} to the soft_skills table', end='\n\n')
         row += 1
 
 def insert_rule_rows(db, rules):
+    row = 1
     for i, rule in enumerate(rules):
         row_data = {
             'id': i,
@@ -143,6 +144,8 @@ def insert_rule_rows(db, rules):
         }
         new_row = Rule(**row_data)
         add_rule(db, new_row)
+        print(f'added row {row} to the rule table', end='\n\n')
+        row += 1
 
 def drop_tables():
     JobPost.__table__.drop(engine, checkfirst=True)
@@ -157,8 +160,7 @@ def drop_tables():
 def main():
     db = Session()
 
-    with db.begin():
-        drop_tables()
+    drop_tables()
 
     job_post_row_data = {}
     skill_counts = defaultdict(int)
@@ -186,10 +188,10 @@ def main():
     for filename in linkedin_csv_files:
         gather_data(filename, job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
 
-    # print('Pre-computing classifications')
+    print('Pre-computing classifications')
     compute_roles(job_post_row_data)
 
-    # print('Pre-computing association rules')
+    print('Pre-computing association rules')
     rules = compute_req_rules(job_post_row_data)
 
     print('Inserting rows into database')

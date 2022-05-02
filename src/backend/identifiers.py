@@ -1,7 +1,5 @@
 from nltk.tokenize import word_tokenize
-import spacy
 from database import Session
-from crud import get_all_job_posts
 import nltk
 from nltk.corpus import stopwords
 from database import Session
@@ -9,7 +7,6 @@ import re
 import pickle
 import gensim
 from gensim import models as gm
-import sklearn
 import pickle
 import numpy as np
 from apyori import apriori
@@ -307,9 +304,6 @@ def get_rules(dataset, min_support=0.2, min_lift=1.1):
         confidence = rule[2][0][2]
         lift = rule[2][0][3]
 
-
         rules.append([lhs, rhs, support, confidence, lift])
     
     return rules
-
-

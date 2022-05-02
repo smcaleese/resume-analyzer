@@ -1,7 +1,6 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 import pdfplumber
-import spacy
 from database import engine, Base, Session
 from crud import get_skill_counts, get_ranked_job_posts, get_soft_soft_skill_counts, get_years_of_experience, get_location_counts, get_role_skills, get_jobs_by_role, get_ranked_recommendations, roles
 from populate_database import get_skills

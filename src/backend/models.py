@@ -1,5 +1,4 @@
 from sqlalchemy import Column, BigInteger, String, Text, ARRAY, Integer, Float
-from sqlalchemy.schema import Identity
 from sqlalchemy.dialects.postgresql import ARRAY
 from database import Base
 

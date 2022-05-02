@@ -112,9 +112,9 @@ def calculate_resume_score(skill_counts, resume_skills, resume_text):
     }
 
 # Routes
-@app.get('/status')
+@app.get('/')
 async def status():
-    return { 'message': 'Server is running' }
+    return { 'status': 'ok' }
 
 @app.post('/resume-upload')
 async def handle_upload(file: UploadFile = File(...)):

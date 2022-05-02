@@ -1,3 +1,3 @@
-export const apiUrl = 'http://resume-analyzer-backend-env.eu-west-1.elasticbeanstalk.com'
+export const apiUrl = 'https://resume-analyzer-api.com'
 
 // export const apiUrl = 'http://localhost:8000'

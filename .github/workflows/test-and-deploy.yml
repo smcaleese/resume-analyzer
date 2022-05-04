@@ -61,4 +61,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: deploy frontend
-      run: curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL }}" -H "Content-Type: application/json"
+      run: |
+          URL="${{ secrets.AMPLIFY_WEBHOOK_URL }}"
+          curl -X POST -d {} "$URL" -H "Content-Type: application/json"

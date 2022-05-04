@@ -78,6 +78,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: resume-analyzer-backend 
         environment_name: resume-analyzer-backend-env
-        version_label: 12345
+        version_label: "${{ github.sha }}"
         region: eu-west-1
         deployment_package: deploy.zip

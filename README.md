@@ -1,4 +1,4 @@
-# Job Posting and Resume Analyzer
+# ResumeAnalyzer 
 
 ResumeAnalyzer is a 4th year project that was created by Darragh McGonigle and Stephen 
 McAleese and can be found running at https://resumeanalyzer.xyz.

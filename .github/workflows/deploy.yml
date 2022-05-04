@@ -1,0 +1,33 @@
+name: deploy
+on:
+  workflow_run:
+    workflows: ["test"]
+    branches: [master]
+    types: [completed]
+jobs:
+  deploy-frontend:
+    needs: [test-frontend, test-api]
+    runs-on: ubuntu-latest
+    steps:
+    - name: deploy frontend
+      run: |
+          URL="${{ secrets.AMPLIFY_WEBHOOK_URL }}"
+          curl -X POST -d {} "$URL" -H "Content-Type: application/json"
+  deploy-backend:
+    needs: [test-backend, test-api]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: create zip file
+      working-directory: ./src/backend
+      run: zip -r deploy.zip . -x '*.git*'
+    - name: deploy backend to Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: resume-analyzer-backend 
+        environment_name: resume-analyzer-backend-env
+        version_label: "${{ github.sha }}"
+        region: eu-west-1
+        deployment_package: ./src/backend/deploy.zip

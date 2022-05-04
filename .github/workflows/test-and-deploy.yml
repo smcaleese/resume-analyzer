@@ -70,9 +70,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: create zip file
-      run: zip -r deploy.zip ./src/backend -x '*.git*'
-    - name: deploy backend to Elastic Beanstalk
+      working-directory: ./src/backend
+      run: zip -r deploy.zip . -x '*.git*'
+    - name: configure deployment
       uses: einaregilsson/beanstalk-deploy@v20
+    - name: deploy backend to Elastic Beanstalk
+      working-directory: ./src/backend
+      run: echo "Deploying to Elastic Beanstalk..."
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

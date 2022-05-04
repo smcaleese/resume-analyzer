@@ -185,8 +185,8 @@ def main():
         'linkedin-machine-learning-engineer-ireland.csv'
     ]
 
-    # for filename in linkedin_csv_files:
-    #     gather_data(filename, job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
+    for filename in linkedin_csv_files:
+        gather_data(filename, job_post_row_data, skills, skill_counts, soft_skills, soft_skill_counts, count)
 
     print('Pre-computing classifications')
     compute_roles(job_post_row_data)

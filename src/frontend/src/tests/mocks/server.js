@@ -95,10 +95,51 @@ const recommendations = [
     }
 ]
 
+const getPathData = () => {
+    const roles = [
+        'Junior Frontend Developer',
+        'Senior Frontend Developer',
+        'Junior Backend Developer',
+        'Senior Backend Developer',
+        'Junior Full Stack Developer',
+        'Full Stack Developer',
+        'Senior Full Stack Developer',
+        'QA Engineer',              
+        'Senior QA Engineer',
+        'Business Analyst',      
+        'Development Lead',  
+        'Software Architect',
+        'Product Owner',              
+        'Project Manager',    
+        'Devops',              
+        'Senior Devops',              
+        'Automation Engineer',
+        'Cloud Engineer',              
+        'Database Admin (DBA)'
+    ]
+
+    const data = roles.reduce((acc, role) => {
+        acc[role] = skill_counts
+        return acc
+    }, {})
+    
+    return data
+}
+
 export const server = setupServer(
     rest.post('http://localhost:8000/resume-upload', (req, res, ctx) => {
         return res(
             ctx.json({ skills, recommendations, skill_counts, jobs, resume_score })
+        )
+    }),
+    rest.post('https://resume-analyzer-api.com/resume-upload', (req, res, ctx) => {
+        return res(
+            ctx.json({ skills, recommendations, skill_counts, jobs, resume_score })
+        )
+    }),
+    rest.get('https://resume-analyzer-api.com/report-data', (req, res, ctx) => {
+        return res(
+            ctx.json({ skill_counts, soft_skill_counts, years_of_experience_counts, location_counts })
         )
     }),
     rest.get('http://localhost:8000/report-data', (req, res, ctx) => {
@@ -106,36 +147,16 @@ export const server = setupServer(
             ctx.json({ skill_counts, soft_skill_counts, years_of_experience_counts, location_counts })
         )
     }),
-    rest.get('http://localhost:8000/path-data', (req, res, ctx) => {
-        const roles = [
-            'Junior Frontend Developer',
-            'Senior Frontend Developer',
-            'Junior Backend Developer',
-            'Senior Backend Developer',
-            'Junior Full Stack Developer',
-            'Full Stack Developer',
-            'Senior Full Stack Developer',
-            'QA Engineer',              
-            'Senior QA Engineer',
-            'Business Analyst',      
-            'Development Lead',  
-            'Software Architect',
-            'Product Owner',              
-            'Project Manager',    
-            'Devops',              
-            'Senior Devops',              
-            'Automation Engineer',
-            'Cloud Engineer',              
-            'Database Admin (DBA)'
-        ]
-
-        const response = roles.reduce((acc, role) => {
-            acc[role] = skill_counts
-            return acc
-        }, {})
-
+    rest.get('https://resume-analyzer-api.com/path-data', (req, res, ctx) => {
+        const pathData = getPathData()
         return res(
-            ctx.json(response)
+            ctx.json(pathData)
+        )
+    }),
+    rest.get('http://localhost:8000/path-data', (req, res, ctx) => {
+        const pathData = getPathData()
+        return res(
+            ctx.json(pathData)
         )
     })
 )

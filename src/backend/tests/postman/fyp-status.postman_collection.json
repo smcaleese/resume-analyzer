@@ -25,7 +25,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/status",
+					"raw": "http://127.0.0.1:8000/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -34,9 +34,7 @@
 						"1"
 					],
 					"port": "8000",
-					"path": [
-						"status"
-					]
+					"path": []
 				}
 			},
 			"response": []

@@ -32,3 +32,26 @@ jobs:
     - name: Run unit tests
       working-directory: ./src/backend
       run: python -m unittest
+  api:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.8'
+    - name: Install Python dependencies
+      working-directory: ./src/backend
+      run: pip install -r requirements.txt
+    - name: Install newman
+      run: npm install -g newman
+    - name: Run server
+      working-directory: ./src/backend
+      run: uvicorn server:app &
+      run: ps aux | grep -i "[u]vicorn" | awk {'print $2'}
+    - name: Run newman tests
+      working-directory: ./src/backend/tests/postman
+      run: newman run fyp-status.postman_collection.json
+      run: newman run fyp.postman_collection.json
+    - name: Shut down server
+      run: ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9

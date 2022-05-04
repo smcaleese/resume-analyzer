@@ -7,9 +7,27 @@ jobs:
   frontend:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-node@v3
+    - uses: actions/checkout@v3
+    - name: Set up NodeJS
+      uses: actions/setup-node@v3
       with:
         node-version: '14.x'
-    - run: cd src/frontend
-    - run: npm install
-    - run: npm test
+    - name: Install frontend dependencies
+      working-directory: ./src/frontend
+      run: npm install
+    - name: Run tests
+      run: npm test
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.8'
+    - name: Install Python dependencies
+      working-directory: ./src/backend
+      run: pip install -r requirements.txt
+    - name: Run unit tests
+      working-directory: ./src/backend
+      run: python -m unittest

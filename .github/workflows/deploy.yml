@@ -6,7 +6,6 @@ on:
     types: [completed]
 jobs:
   deploy-frontend:
-    needs: [test-frontend, test-api]
     runs-on: ubuntu-latest
     steps:
     - name: deploy frontend
@@ -14,7 +13,6 @@ jobs:
           URL="${{ secrets.AMPLIFY_WEBHOOK_URL }}"
           curl -X POST -d {} "$URL" -H "Content-Type: application/json"
   deploy-backend:
-    needs: [test-backend, test-api]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

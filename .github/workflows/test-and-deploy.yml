@@ -1,4 +1,4 @@
-name: tests 
+name: deploy-and-test
 on:
   push:
     branches:
@@ -64,3 +64,20 @@ jobs:
       run: |
           URL="${{ secrets.AMPLIFY_WEBHOOK_URL }}"
           curl -X POST -d {} "$URL" -H "Content-Type: application/json"
+  deploy-backend:
+    needs: [test-backend, test-api]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: create zip file
+      run: zip -r deploy.zip ./src/backend -x '*.git*'
+    - name: deploy backend to Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: resume-analyzer-backend 
+        environment_name: resume-analyzer-backend-env
+        version_label: 12345
+        region: eu-west-1
+        deployment_package: deploy.zip

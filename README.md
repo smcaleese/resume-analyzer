@@ -6,7 +6,11 @@ McAleese and can be found running at https://resumeanalyzer.xyz.
 The project is an online web application that allows software engineers to upload and analyze their resumes to learn more 
 about how how valuable their skills are in the job market and how they could improve.
 
-ResumeAnalyzer extracts insights from large numbers of job posts and uses these insights to analyze users' resumes.
+ResumeAnalyzer extracts insights from large numbers of job posts and uses these insights to analyze users' resumes and provide 
+insights on the Irish job market for software engineers.
+
+This project was originally created in GitLab before being moved to GitHub. The original GitLab repository can be found here:
+https://gitlab.computing.dcu.ie/mcgonid3/2022-ca400-mcgonid3-mcalees2
 
 <br>
 

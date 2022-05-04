@@ -4,55 +4,78 @@ on:
     branches:
     - master
 jobs:
-  frontend:
+  test-frontend:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up NodeJS
+    - name: set up NodeJS
       uses: actions/setup-node@v3
       with:
         node-version: '14.x'
-    - name: Install frontend dependencies
+    - name: install frontend dependencies
       working-directory: ./src/frontend
       run: npm install
-    - name: Run tests
+    - name: run tests
       working-directory: ./src/frontend
       run: npm test
-  backend:
+  test-backend:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python
+    - name: set up Python
       uses: actions/setup-python@v3
       with:
         python-version: '3.8'
-    - name: Install Python dependencies
+    - name: install Python dependencies
       working-directory: ./src/backend
       run: pip install -r requirements.txt
-    - name: Run unit tests
+    - name: run unit tests
       working-directory: ./src/backend/tests/unit-tests
       run: python -m unittest
-  api:
+  test-api:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python
+    - name: set up Python
       uses: actions/setup-python@v3
       with:
         python-version: '3.8'
-    - name: Install Python dependencies
+    - name: install Python dependencies
       working-directory: ./src/backend
       run: pip install -r requirements.txt
-    - name: Install newman
+    - name: install newman
       run: npm install -g newman
-    - name: Run server
+    - name: run server
       working-directory: ./src/backend
       run: uvicorn server:app &
-    - name: Run newman tests 1
+    - name: run newman tests 1
       working-directory: ./src/backend/tests/postman
       run: newman run fyp-status.postman_collection.json
-    - name: Run newman tests 2
+    - name: run newman tests 2
       working-directory: ./src/backend/tests/postman
       run: newman run fyp.postman_collection.json
-    - name: Shut down server
+    - name: shut down server
       run: ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9
+  deploy-frontend:
+    needs: [test-frontend, test-api]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: configure amplify
+      uses: ambientlight/amplify-cli-action@0.3.0
+      with:
+        amplify_command: configure
+        amplify_env: prod
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: eu-west-1
+    - name: deploy frontend
+      uses: ambientlight/amplify-cli-action@0.3.0
+      with:
+        amplify_command: publish
+        amplify_env: prod
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: eu-west-1

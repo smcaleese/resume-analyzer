@@ -30,7 +30,7 @@ jobs:
       working-directory: ./src/backend
       run: pip install -r requirements.txt
     - name: Run unit tests
-      working-directory: ./src/backend
+      working-directory: ./src/backend/tests/unit-tests
       run: python -m unittest
   api:
     runs-on: ubuntu-latest

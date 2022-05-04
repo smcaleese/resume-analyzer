@@ -61,6 +61,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: deploy frontend
-      uses: wei/curl@master
-      with:
-        args: -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL }}" -H "Content-Type: application/json"
+      run: curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL }}" -H "Content-Type: application/json"

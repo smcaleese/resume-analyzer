@@ -49,9 +49,11 @@ jobs:
       working-directory: ./src/backend
       run: uvicorn server:app &
       run: ps aux | grep -i "[u]vicorn" | awk {'print $2'}
-    - name: Run newman tests
+    - name: Run newman tests 1
       working-directory: ./src/backend/tests/postman
       run: newman run fyp-status.postman_collection.json
+    - name: Run newman tests 2
+      working-directory: ./src/backend/tests/postman
       run: newman run fyp.postman_collection.json
     - name: Shut down server
       run: ps aux | grep -i "[u]vicorn" | awk {'print $2'} | xargs kill -9

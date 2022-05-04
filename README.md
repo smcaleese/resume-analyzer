@@ -1,5 +1,10 @@
 # Job Posting and Resume Analyzer
 
+Note: this is the original repository for this project and contains the version of the project that was submitted for grading. 
+Since then, the project has been moved to GitHub and the latest version can be found here: https://github.com/smcaleese/resume-analyzer
+
+## Description
+
 ResumeAnalyzer is a 4th year project that was created by Darragh McGonigle and Stephen 
 McAleese and can be found running at https://resumeanalyzer.xyz.
 

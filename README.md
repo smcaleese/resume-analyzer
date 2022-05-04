@@ -1,29 +1,41 @@
-# ResumeAnalyzer 
+# ResumeAnalyzer
 
-ResumeAnalyzer is a 4th year project that was created by Darragh McGonigle and Stephen 
-McAleese and can be found running at https://resumeanalyzer.xyz.
+Live app: https://resumeanalyzer.xyz.
 
-The project is an online web application that allows software engineers to upload and analyze their resumes to learn more 
-about how how valuable their skills are in the job market and how they could improve.
+## About
 
-ResumeAnalyzer extracts insights from large numbers of job posts and uses these insights to analyze users' resumes and provide 
-insights on the Irish job market for software engineers.
+ResumeAnalyzer is a DCU Computer Science 4th year project that was created by Darragh McGonigle and Stephen McAleese.
 
-This project was originally created in GitLab before being moved to GitHub. The original GitLab repository can be found here:
-https://gitlab.computing.dcu.ie/mcgonid3/2022-ca400-mcgonid3-mcalees2
+## Description
 
-<br>
+ResumeAnalyzer is an online web application that enables software engineers to upload and analyze their resumes and learn which skills are in-demand in the job market for software engineers in Ireland.
+
+Both features are powered by information that was acquired by analyzing and extracting insights from thousands of job posts.
+
+<br />
 
 ![](./res/project-screenshot.png)
 
-<br>
+The resume analysis page (above) has the following features:
+- **Overall resume score:** based on resume skills and length.
+- **Skill frequencies panel:** shows the number of job posts matching each skill keyword.
+- **Skill recommendations:** recommends skills similar to those found in the uploaded resume.
+- **Matching jobs:** job posts that match the skills found in the resume.
 
-## Additional resources
+The reports page shows information extracted from the collection of job posts to give an overview of the software engineering job market:
+- **Years of experience distribution:** shows how many years of experience are typically required for roles in the tech industry.
+- **Skill frequencies:** the number of job posts matching each skill keyword.
+- **Job post locations:** shows which locations have the most job posts.
+- **Soft skill frequencies:** shows the number of job posts that match each soft skill keyword.
 
-- Repo [hygiene](https://gitlab.computing.dcu.ie/sblott/local-gitlab-documentation/blob/master/repo-hygiene.md)
-- Git [cheat sheet](https://gitlab.computing.dcu.ie/sblott/local-gitlab-documentation/blob/master/cheat-sheet.md)
-- Gitlab [CI environment](https://gitlab.computing.dcu.ie/sblott/docker-ci-environment) and it's [available software](https://gitlab.computing.dcu.ie/sblott/docker-ci-environment/blob/master/Dockerfile)
-- Example projects with CI configured:
-   * [Python](https://gitlab.computing.dcu.ie/sblott/test-project-python)
-   * [Java](https://gitlab.computing.dcu.ie/sblott/test-project-java)
-   * [MySql](https://gitlab.computing.dcu.ie/sblott/test-project-mysql)
+The tree page contains a graph that shows several job roles in the tech industry. Clicking on each graph node shows a list of skills and job posts that match that role.
+
+## Tech stack
+- Frontend: ReactJS.
+- Backend: FastAPI.
+- Analysis: Python, NLTK, scikit-learn, Gensim.
+- Database: PostgreSQL, SQLAlchemy.
+
+## Note
+This project was originally created in GitLab before being moved to GitHub. The original GitLab repository can be found here:
+https://gitlab.computing.dcu.ie/mcgonid3/2022-ca400-mcgonid3-mcalees2.

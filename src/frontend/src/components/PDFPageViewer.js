@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
-import classnames from 'classnames'
-import { Card, Container, Pagination, Row } from 'react-bootstrap'
+import { Container, Pagination, Row } from 'react-bootstrap'
 import { pdfjs, Document, Page } from 'react-pdf'
 import { nanoid } from 'nanoid'
 import DisplayCard from './DisplayCard'

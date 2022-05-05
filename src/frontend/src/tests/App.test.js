@@ -15,6 +15,11 @@ jest.mock('react-pdf', () => ({
     Page: () => <div>page</div>
 }))
 
+jest.mock('react-ga', () => ({
+    initialize: () => null,
+    pageview: () => null,
+}))
+
 describe('Test loading the app', () => {
     test('When the app is loaded, the upload page should be shown', () => {
         render(<App />)

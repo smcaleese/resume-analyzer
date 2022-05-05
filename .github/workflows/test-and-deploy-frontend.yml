@@ -21,6 +21,7 @@ jobs:
       working-directory: ./src/frontend
       run: npm test
   deploy-frontend:
+    needs: test-frontend
     runs-on: ubuntu-latest
     steps:
     - name: deploy frontend

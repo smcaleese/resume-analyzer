@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ce6f4906-a4a3-48c4-9b99-7bbb98717a6c",
+		"_postman_id": "82c2b369-bdcd-4d5b-8523-28a4e11ddc85",
 		"name": "FYP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,16 +29,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/",
-					"protocol": "http",
+					"raw": "https://resume-analyzer-api.com",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "8000",
-					"path": []
+						"resume-analyzer-api",
+						"com"
+					]
 				},
 				"description": "Simple get request that checks server is running"
 			},
@@ -100,22 +96,19 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/resume-upload",
-					"protocol": "http",
+					"raw": "https://resume-analyzer-api.com/resume-upload",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"resume-analyzer-api",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"resume-upload"
 					],
 					"query": [
 						{
 							"key": "",
-							"value": null,
+							"value": "",
 							"disabled": true
 						}
 					]
@@ -136,7 +129,7 @@
 							"})\r",
 							"var data = pm.response.json();\r",
 							"pm.test('Skills', function() {\r",
-							"    var skillsList = [data.skills[0].name, data.skills[1].name, data.skills[2].name, data.skills[3].name, data.skills[4].name, data.skills[5].name, data.skills[6].name, data.skills[7].name,];\r",
+							"    var skillsList = [data.skills[0].name, data.skills[1].name, data.skills[2].name, data.skills[3].name, data.skills[4].name, data.skills[5].name, data.skills[6].name, data.skills[7].name];\r",
 							"    pm.expect(skillsList).to.contain('HTML')\r",
 							"    pm.expect(skillsList).to.contain('CSS')\r",
 							"    pm.expect(skillsList).to.contain('Java')\r",
@@ -186,22 +179,19 @@
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/resume-upload",
-					"protocol": "http",
+					"raw": "https://resume-analyzer-api.com/resume-upload",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"resume-analyzer-api",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"resume-upload"
 					],
 					"query": [
 						{
 							"key": "",
-							"value": null,
+							"value": "",
 							"disabled": true
 						}
 					]
@@ -252,15 +242,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/path-data",
-					"protocol": "http",
+					"raw": "https://resume-analyzer-api.com/path-data",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"resume-analyzer-api",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"path-data"
 					]
@@ -293,15 +280,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/job-data-by-role?role_type=Junior Frontend Developer",
-					"protocol": "http",
+					"raw": "https://resume-analyzer-api.com/job-data-by-role?role_type=Junior Frontend Developer",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"resume-analyzer-api",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"job-data-by-role"
 					],
@@ -340,15 +324,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/job-data-by-role?role_type=Devops",
-					"protocol": "http",
+					"raw": "https://resume-analyzer-api.com/job-data-by-role?role_type=Devops",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"resume-analyzer-api",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"job-data-by-role"
 					],
@@ -359,7 +340,7 @@
 						}
 					]
 				},
-				"description": "Get role data for Devops"
+				"description": "Get role data for a junior frontend Developer"
 			},
 			"response": []
 		},
@@ -399,15 +380,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/report-data",
-					"protocol": "http",
+					"raw": "https://resume-analyzer-api.com/report-data",
+					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"resume-analyzer-api",
+						"com"
 					],
-					"port": "8000",
 					"path": [
 						"report-data"
 					]

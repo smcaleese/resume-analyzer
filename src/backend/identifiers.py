@@ -1,7 +1,6 @@
 from nltk.tokenize import word_tokenize
 import nltk
 from nltk.corpus import stopwords
-from database import Session
 import re
 import pickle
 import gensim

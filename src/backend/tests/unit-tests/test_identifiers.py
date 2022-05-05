@@ -1,7 +1,6 @@
 import unittest
 import sys
 sys.path.append('../../')
-from database import Session
 from identifiers import extract_requirements, normalize_text, get_years_of_experience, vectorize_text, get_lda, get_rules
 from populate_database import get_skills
 import pdfplumber
@@ -56,7 +55,6 @@ class TestIdentifiers(unittest.TestCase):
             descriptions.append([i, obj['description']])
             i+=1
 
-
         lda_results = get_lda(descriptions)
         i = 1
         for obj in test_data:
@@ -73,7 +71,7 @@ class TestIdentifiers(unittest.TestCase):
             ["Java", "Python"],
             ["CSS", "HTML"],
             ["CSS", "HTML", "ReactJS"]
-            ]
+        ]
         
         rules = get_rules(dummy_transactions)
         dummy_rule1 = [['HTML'], 'CSS', 0.5, 1.0, 2.0]

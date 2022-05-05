@@ -1,8 +1,10 @@
-name: test 
+name: test-and-deploy-frontend
 on:
   push:
     branches:
     - master
+    paths:
+    - 'src/frontend/**'
 jobs:
   test-frontend:
     runs-on: ubuntu-latest
@@ -18,17 +20,10 @@ jobs:
     - name: run tests
       working-directory: ./src/frontend
       run: npm test
-  test-backend:
+  deploy-frontend:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.8'
-    - name: install Python dependencies
-      working-directory: ./src/backend
-      run: pip install -r requirements.txt
-    - name: run unit tests
-      working-directory: ./src/backend/tests/unit-tests
-      run: python -m unittest
+    - name: deploy frontend
+      run: |
+          URL="${{ secrets.AMPLIFY_WEBHOOK_URL }}"
+          curl -X POST -d {} "$URL" -H "Content-Type: application/json"

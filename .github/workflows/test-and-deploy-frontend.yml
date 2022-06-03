@@ -2,7 +2,7 @@ name: test-and-deploy-frontend
 on:
   push:
     branches:
-    - master
+    - main
     paths:
     - 'src/frontend/**'
 jobs:

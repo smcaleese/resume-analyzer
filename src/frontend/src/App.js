@@ -8,9 +8,6 @@ import TreePage from './pages/TreePage'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Chart from 'chart.js/auto'
-import ReactGA from 'react-ga'
-
-ReactGA.initialize('G-QVTNSFHV03')
 
 export const AppContext = React.createContext()
 
@@ -41,10 +38,6 @@ const App = ({ className }) => {
     const [page, setPage] = useState('home')
     const [appState, dispatch] = useReducer(reducer, initialState)
     const store = useMemo(() => ({ appState, dispatch }), [appState])
-
-    useEffect(() => {
-        ReactGA.pageview(window.location.pathname)
-    }, [page])
 
     return (
         <div className={className}>

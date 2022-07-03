@@ -1,7 +1,5 @@
 # ResumeAnalyzer
 
-Live app: https://resumeanalyzer.xyz.
-
 ## About
 
 ResumeAnalyzer is a DCU Computer Science 4th year project that was created by Darragh McGonigle and Stephen McAleese.

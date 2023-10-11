@@ -40,13 +40,6 @@ The app consists of a React front end application and a Python FastAPI server. T
 
 ### Set up the backend
 
-#### Database setup
-The web server uses a PostgreSQL database to store job posts and other information. You need to install PostgreSQL and populate the database before you can run the web app.
-
-1. First, you need to have PostgreSQL installed. You can install it on macOS with `brew install postgresql`.
-2. Change to the `backend` directory and run `python populate_database.py` to copy the job posts and other information stored in CSV files in the `./data` directory into the PostgreSQL database.
-3. Log into the PostgreSQL database with `sudo -u postgres psql` and run the `\dt` command to check that the tables were created successfully.
-
 #### Server setup
 1. Create a new virtual environment:
     - `python3 -m venv venv`
@@ -55,11 +48,19 @@ The web server uses a PostgreSQL database to store job posts and other informati
 2. Run the server: `uvicorn server:app --reload`
 3. Go to `http://127.0.0.1:8000` in the browser and check that the server is working correctly.
 
+#### Database setup
+The web server uses a PostgreSQL database to store job posts and other information. You need to install PostgreSQL and populate the database so that the server has the data it needs. 
+
+1. First, you need to have PostgreSQL installed. You can install it on macOS with `brew install postgresql`.
+2. Change to the `./src/backend` directory and run `python populate_database.py` to copy the job posts and other information stored in CSV files in the `./data` directory into the PostgreSQL database.
+3. In a new terminal, log into the PostgreSQL database with `sudo -u postgres psql` and run the `\dt` command to check that the tables were created successfully.
+4. Now that the database is populated, run the server with `uvicorn server:app --reload` so that it's ready to work with the frontend.
+
 ### Set up the frontend
 The ReactJS frontend app displays the web app's user interface.
 
 1. Open a new terminal for running the frontend web app.
-2. Change to the `frontend` directory and run `yarn` to install all necessary packages.
+2. Change to the `./src/frontend` directory and run `yarn` to install all necessary packages. Upgrade `node-sass` with `yarn add node-sass` if it's causing issues.
 3. Run `yarn start` to start the frontend app.
 3. Go to `http://localhost:3000` in the browser and upload a resume. If everything was set up correctly, the resume should be analyzed and the results should be displayed in the browser.
 

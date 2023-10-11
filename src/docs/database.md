@@ -1,5 +1,5 @@
 # Database
-For the sake of efficiency and convenience the job posts are stored in a SQL database in addition to being stored in CSV files. The `csv-to-db.py` script reads the job posts from the CSV files and inserts them into the database.
+For the sake of efficiency and convenience the job posts are stored in a SQL database in addition to being stored in CSV files. The `populate_database.py` script reads the job posts from the CSV files and inserts them into the database. Run this script to populate the database.
 
 PostgreSQL is used as the SQL database and the SQLAlchemy ORM is used to interact with it.
 

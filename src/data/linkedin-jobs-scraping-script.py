@@ -24,10 +24,10 @@ location_data = {
 
 def login(browser):
     elem = browser.find_element_by_id('username')
-    elem.send_keys('job.post.analyzer@gmail.com')
+    elem.send_keys('linkedin-email@gmail.com')
 
     elem = browser.find_element_by_id('password')
-    elem.send_keys('7j)5nQ#/')
+    elem.send_keys('linkedin-password')
     elem.submit()
 
 def get_total_num_pages(browser):

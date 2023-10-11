@@ -12,7 +12,7 @@
     "chart.js": "^3.7.0",
     "classnames": "^2.3.1",
     "jest": "^27.5.1",
-    "node-sass": "^7.0.1",
+    "node-sass": "^9.0.0",
     "react": "^18.0.0",
     "react-bootstrap": "^2.1.1",
     "react-chartjs-2": "^4.0.1",
